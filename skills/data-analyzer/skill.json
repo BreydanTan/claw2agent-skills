@@ -1,0 +1,49 @@
+{
+  "name": "data-analyzer",
+  "version": "1.0.0",
+  "displayName": "Data Analyzer",
+  "description": "Analyze JSON data arrays with operations like summary, average, count, filter, sort, and groupBy. Parses JSON input and performs statistical and structural analysis on datasets.",
+  "category": "Data",
+  "icon": "BarChart",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["data", "analysis", "statistics", "json", "filter", "sort", "aggregate"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "data_analyzer",
+    "description": "Analyze a JSON data array with various operations including summary statistics, averaging numeric fields, counting records, filtering by field values, sorting, and grouping by field.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "description": "JSON string representing an array of objects to analyze"
+        },
+        "operation": {
+          "type": "string",
+          "enum": ["summary", "average", "count", "filter", "sort", "groupBy"],
+          "description": "The analysis operation to perform on the data"
+        },
+        "field": {
+          "type": "string",
+          "description": "The field name to operate on (required for average, filter, sort, groupBy)"
+        },
+        "value": {
+          "type": "string",
+          "description": "The value to filter by (required for filter operation)"
+        },
+        "order": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "description": "Sort order (used with sort operation, default: asc)",
+          "default": "asc"
+        }
+      },
+      "required": ["data", "operation"]
+    }
+  }
+}

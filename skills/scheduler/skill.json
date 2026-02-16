@@ -1,0 +1,43 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "displayName": "Task Scheduler",
+  "description": "Schedule, list, and manage recurring or one-off tasks using cron-like expressions. Tasks are stored in-memory and executed via setTimeout intervals.",
+  "category": "Automation",
+  "icon": "Clock",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["scheduler", "cron", "automation", "tasks", "timer"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "scheduler",
+    "description": "Create, list, or delete scheduled tasks. Tasks use cron-like expressions to define when they run and execute shell commands or log messages.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create", "list", "delete"],
+          "description": "The scheduling operation: create (schedule a new task), list (show all tasks), delete (remove a task)"
+        },
+        "taskName": {
+          "type": "string",
+          "description": "Unique name for the task (required for create and delete)"
+        },
+        "cronExpression": {
+          "type": "string",
+          "description": "Cron-like expression defining the schedule. Supports: '*/N seconds' (every N seconds), '*/N minutes' (every N minutes), '*/N hours' (every N hours), 'once DELAY_SECONDS' (one-time after delay). Required for create action."
+        },
+        "command": {
+          "type": "string",
+          "description": "The command or message to execute when the task fires. Required for create action."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

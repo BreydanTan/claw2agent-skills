@@ -1,0 +1,38 @@
+{
+  "name": "coding-agent",
+  "version": "1.0.0",
+  "displayName": "Coding Agent",
+  "description": "A meta-skill that formats structured prompts for the LLM to generate code. Accepts a task description, target language, and optional existing code context to produce a well-structured code generation request.",
+  "category": "Development",
+  "icon": "Bot",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["code", "generation", "agent", "prompt", "llm", "developer"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "coding_agent",
+    "description": "Format a structured code generation prompt for the LLM. Provide a task description, target programming language, and optionally existing code to modify or extend. The skill returns a structured prompt that guides the LLM to produce high-quality code.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "description": "A description of what code to generate or what problem to solve"
+        },
+        "language": {
+          "type": "string",
+          "description": "The target programming language (e.g., javascript, python, typescript, rust, go)"
+        },
+        "existingCode": {
+          "type": "string",
+          "description": "Optional existing code to modify, extend, or use as context for the generation"
+        }
+      },
+      "required": ["task", "language"]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "displayName": "Telegram Bot",
+  "description": "Interact with the Telegram Bot API to send messages, get updates, and retrieve bot information.",
+  "category": "Communication",
+  "icon": "MessageCircle",
+  "author": "claw2agent",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Telegram Bot Token",
+  "tags": ["telegram", "bot", "messaging", "chat"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "telegram_bot",
+    "description": "Interact with the Telegram Bot API. Send messages to chats, retrieve recent updates, or get bot profile information.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["sendMessage", "getUpdates", "getMe"],
+          "description": "The Telegram Bot API action to perform. 'sendMessage' sends a message to a chat, 'getUpdates' retrieves recent incoming updates, 'getMe' returns basic info about the bot."
+        },
+        "chatId": {
+          "type": "string",
+          "description": "The target chat ID for sendMessage. Can be a numeric user/group ID or a @channel_username."
+        },
+        "text": {
+          "type": "string",
+          "description": "The message text to send when action is 'sendMessage'."
+        },
+        "parseMode": {
+          "type": "string",
+          "enum": ["Markdown", "MarkdownV2", "HTML"],
+          "description": "Optional formatting mode for the message text. Supports 'Markdown', 'MarkdownV2', or 'HTML'."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

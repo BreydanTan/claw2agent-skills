@@ -1,0 +1,35 @@
+{
+  "name": "deep-research",
+  "version": "1.0.0",
+  "displayName": "Deep Research",
+  "description": "Conduct multi-step research on any topic using DuckDuckGo. Generates search queries, fetches results, and compiles structured reports with summaries, key findings, and sources.",
+  "category": "Research",
+  "icon": "Search",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["research", "search", "analysis", "web", "report"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "deep_research",
+    "description": "Conduct deep multi-step research on a topic. Generates multiple search queries, fetches results from DuckDuckGo, and compiles a structured report with Summary, Key Findings, and Sources sections.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "topic": {
+          "type": "string",
+          "description": "The research topic or question to investigate."
+        },
+        "depth": {
+          "type": "string",
+          "enum": ["quick", "standard", "deep"],
+          "description": "Research depth. 'quick' generates 3 queries, 'standard' generates 4, 'deep' generates 5. More queries yield more comprehensive results."
+        }
+      },
+      "required": ["topic"]
+    }
+  }
+}

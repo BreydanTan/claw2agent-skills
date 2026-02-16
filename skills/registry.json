@@ -1,0 +1,606 @@
+[
+  {
+    "name": "web-search",
+    "version": "1.0.0",
+    "displayName": "Web Search",
+    "description": "Search the web using DuckDuckGo. Returns relevant search results with titles, URLs, and snippets. No API key required.",
+    "category": "Research",
+    "icon": "Search",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["search", "web", "duckduckgo", "research", "internet"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "web_search",
+      "description": "Search the web using DuckDuckGo and return relevant results with titles, URLs, and text snippets.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query string to look up on the web"
+          },
+          "maxResults": {
+            "type": "number",
+            "description": "Maximum number of results to return (default: 5, max: 20)",
+            "default": 5
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  },
+  {
+    "name": "file-manager",
+    "version": "1.0.0",
+    "displayName": "File Manager",
+    "description": "Manage files within a sandboxed /data/ directory. Supports reading, writing, listing, and deleting files and directories.",
+    "category": "Utilities",
+    "icon": "FolderOpen",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["files", "filesystem", "read", "write", "directory", "storage"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "file_manager",
+      "description": "Perform file operations (read, write, list, delete) within the sandboxed /data/ directory. All paths are resolved relative to /data/ and cannot escape it.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["read", "write", "list", "delete"],
+            "description": "The file operation to perform: read (get file contents), write (create/overwrite file), list (list directory contents), delete (remove file or directory)"
+          },
+          "path": {
+            "type": "string",
+            "description": "The file or directory path relative to /data/ (e.g., 'notes/todo.txt')"
+          },
+          "content": {
+            "type": "string",
+            "description": "The content to write to the file (required for write action)"
+          }
+        },
+        "required": ["action", "path"]
+      }
+    }
+  },
+  {
+    "name": "code-interpreter",
+    "version": "1.0.0",
+    "displayName": "Code Interpreter",
+    "description": "Execute JavaScript code in a sandboxed environment using Node.js vm module. Supports capturing console output and enforces a 10-second timeout for safe execution.",
+    "category": "Development",
+    "icon": "Code",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["code", "javascript", "python", "execute", "interpreter", "sandbox"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "code_interpreter",
+      "description": "Execute code in a sandboxed environment. Supports JavaScript (executed via Node.js vm module) and Python (requires python3 binary). Returns captured stdout output and execution metadata.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "enum": ["javascript", "python"],
+            "description": "The programming language of the code to execute"
+          },
+          "code": {
+            "type": "string",
+            "description": "The source code to execute"
+          }
+        },
+        "required": ["language", "code"]
+      }
+    }
+  },
+  {
+    "name": "telegram-bot",
+    "version": "1.0.0",
+    "displayName": "Telegram Bot",
+    "description": "Interact with the Telegram Bot API to send messages, get updates, and retrieve bot information.",
+    "category": "Communication",
+    "icon": "MessageCircle",
+    "author": "claw2agent",
+    "requiresApiKey": true,
+    "apiKeyLabel": "Telegram Bot Token",
+    "tags": ["telegram", "bot", "messaging", "chat"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "telegram_bot",
+      "description": "Interact with the Telegram Bot API. Send messages to chats, retrieve recent updates, or get bot profile information.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["sendMessage", "getUpdates", "getMe"],
+            "description": "The Telegram Bot API action to perform. 'sendMessage' sends a message to a chat, 'getUpdates' retrieves recent incoming updates, 'getMe' returns basic info about the bot."
+          },
+          "chatId": {
+            "type": "string",
+            "description": "The target chat ID for sendMessage. Can be a numeric user/group ID or a @channel_username."
+          },
+          "text": {
+            "type": "string",
+            "description": "The message text to send when action is 'sendMessage'."
+          },
+          "parseMode": {
+            "type": "string",
+            "enum": ["Markdown", "MarkdownV2", "HTML"],
+            "description": "Optional formatting mode for the message text. Supports 'Markdown', 'MarkdownV2', or 'HTML'."
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "discord-bot",
+    "version": "1.0.0",
+    "displayName": "Discord Bot",
+    "description": "Interact with the Discord API to send messages, get channel info, and list available channels in a guild.",
+    "category": "Communication",
+    "icon": "Hash",
+    "author": "claw2agent",
+    "requiresApiKey": true,
+    "apiKeyLabel": "Discord Bot Token",
+    "tags": ["discord", "bot", "messaging", "community"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "discord_bot",
+      "description": "Interact with the Discord API. Send messages to channels, get channel details, or list channels in a guild.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["sendMessage", "getChannel", "listChannels"],
+            "description": "The Discord API action to perform. 'sendMessage' posts a message to a channel, 'getChannel' retrieves channel details, 'listChannels' lists all channels in the channel's guild."
+          },
+          "channelId": {
+            "type": "string",
+            "description": "The Discord channel ID. Required for 'sendMessage' and 'getChannel' actions."
+          },
+          "content": {
+            "type": "string",
+            "description": "The message content to send when action is 'sendMessage'."
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "email-sender",
+    "version": "1.0.0",
+    "displayName": "Email Sender",
+    "description": "Send emails using the Resend API. Supports sending plain text emails with customizable sender, recipient, subject, and body. Requires a Resend API key.",
+    "category": "Communication",
+    "icon": "Mail",
+    "author": "claw2agent",
+    "requiresApiKey": true,
+    "apiKeyLabel": "Resend API Key",
+    "tags": ["email", "send", "resend", "communication", "notification"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "email_sender",
+      "description": "Send an email using the Resend API. Requires a valid Resend API key. Sends plain text emails to the specified recipient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "The recipient email address"
+          },
+          "subject": {
+            "type": "string",
+            "description": "The email subject line"
+          },
+          "body": {
+            "type": "string",
+            "description": "The email body content (plain text)"
+          },
+          "from": {
+            "type": "string",
+            "description": "The sender email address (must be a verified domain in Resend)",
+            "default": "onboarding@resend.dev"
+          }
+        },
+        "required": ["to", "subject", "body"]
+      }
+    }
+  },
+  {
+    "name": "data-analyzer",
+    "version": "1.0.0",
+    "displayName": "Data Analyzer",
+    "description": "Analyze JSON data arrays with operations like summary, average, count, filter, sort, and groupBy. Parses JSON input and performs statistical and structural analysis on datasets.",
+    "category": "Data",
+    "icon": "BarChart",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["data", "analysis", "statistics", "json", "filter", "sort", "aggregate"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "data_analyzer",
+      "description": "Analyze a JSON data array with various operations including summary statistics, averaging numeric fields, counting records, filtering by field values, sorting, and grouping by field.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "JSON string representing an array of objects to analyze"
+          },
+          "operation": {
+            "type": "string",
+            "enum": ["summary", "average", "count", "filter", "sort", "groupBy"],
+            "description": "The analysis operation to perform on the data"
+          },
+          "field": {
+            "type": "string",
+            "description": "The field name to operate on (required for average, filter, sort, groupBy)"
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to filter by (required for filter operation)"
+          },
+          "order": {
+            "type": "string",
+            "enum": ["asc", "desc"],
+            "description": "Sort order (used with sort operation, default: asc)",
+            "default": "asc"
+          }
+        },
+        "required": ["data", "operation"]
+      }
+    }
+  },
+  {
+    "name": "scheduler",
+    "version": "1.0.0",
+    "displayName": "Task Scheduler",
+    "description": "Schedule, list, and manage recurring or one-off tasks using cron-like expressions. Tasks are stored in-memory and executed via setTimeout intervals.",
+    "category": "Automation",
+    "icon": "Clock",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["scheduler", "cron", "automation", "tasks", "timer"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "scheduler",
+      "description": "Create, list, or delete scheduled tasks. Tasks use cron-like expressions to define when they run and execute shell commands or log messages.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["create", "list", "delete"],
+            "description": "The scheduling operation: create (schedule a new task), list (show all tasks), delete (remove a task)"
+          },
+          "taskName": {
+            "type": "string",
+            "description": "Unique name for the task (required for create and delete)"
+          },
+          "cronExpression": {
+            "type": "string",
+            "description": "Cron-like expression defining the schedule. Supports: '*/N seconds' (every N seconds), '*/N minutes' (every N minutes), '*/N hours' (every N hours), 'once DELAY_SECONDS' (one-time after delay). Required for create action."
+          },
+          "command": {
+            "type": "string",
+            "description": "The command or message to execute when the task fires. Required for create action."
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "deep-research",
+    "version": "1.0.0",
+    "displayName": "Deep Research",
+    "description": "Conduct multi-step research on any topic using DuckDuckGo. Generates search queries, fetches results, and compiles structured reports with summaries, key findings, and sources.",
+    "category": "Research",
+    "icon": "Search",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["research", "search", "analysis", "web", "report"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "deep_research",
+      "description": "Conduct deep multi-step research on a topic. Generates multiple search queries, fetches results from DuckDuckGo, and compiles a structured report with Summary, Key Findings, and Sources sections.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "The research topic or question to investigate."
+          },
+          "depth": {
+            "type": "string",
+            "enum": ["quick", "standard", "deep"],
+            "description": "Research depth. 'quick' generates 3 queries, 'standard' generates 4, 'deep' generates 5. More queries yield more comprehensive results."
+          }
+        },
+        "required": ["topic"]
+      }
+    }
+  },
+  {
+    "name": "excel-handler",
+    "version": "1.0.0",
+    "displayName": "Excel / CSV Handler",
+    "description": "Read, write, and analyze CSV files. Supports parsing CSV to JSON, converting JSON data to CSV format, and computing basic statistics on CSV datasets.",
+    "category": "Data",
+    "icon": "Table",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["csv", "excel", "spreadsheet", "data", "parse", "statistics"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "excel_handler",
+      "description": "Handle CSV file operations: read a CSV file and parse it to JSON, write JSON data to a CSV file, or analyze a CSV file to compute basic statistics (row count, column names, numeric column stats).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["read", "write", "analyze"],
+            "description": "The action to perform: read (CSV to JSON), write (JSON to CSV), or analyze (compute stats)"
+          },
+          "filePath": {
+            "type": "string",
+            "description": "The file path of the CSV file to read, write, or analyze"
+          },
+          "data": {
+            "type": "string",
+            "description": "JSON string of an array of objects to write to CSV (required for write action)"
+          },
+          "sheetName": {
+            "type": "string",
+            "description": "Optional sheet name label for organizational purposes",
+            "default": "Sheet1"
+          }
+        },
+        "required": ["action", "filePath"]
+      }
+    }
+  },
+  {
+    "name": "memory-manager",
+    "version": "1.0.0",
+    "displayName": "Memory Manager",
+    "description": "Persistent key-value memory storage using a local JSON file. Store, retrieve, search, list, and delete entries with automatic timestamping.",
+    "category": "Utility",
+    "icon": "Database",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["memory", "storage", "persistence", "key-value", "data"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "memory_manager",
+      "description": "Manage persistent memory entries stored in a local JSON file. Store key-value pairs, retrieve by key, search with fuzzy matching, list all entries, or delete entries.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["store", "retrieve", "search", "list", "delete"],
+            "description": "The memory operation to perform. 'store' saves a key-value pair, 'retrieve' gets by exact key, 'search' performs fuzzy matching on keys and values, 'list' shows all entries, 'delete' removes an entry by key."
+          },
+          "key": {
+            "type": "string",
+            "description": "The memory key. Required for 'store', 'retrieve', and 'delete' actions."
+          },
+          "value": {
+            "type": "string",
+            "description": "The value to store. Required for the 'store' action."
+          },
+          "query": {
+            "type": "string",
+            "description": "Search query for fuzzy matching keys and values. Required for the 'search' action."
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "coding-agent",
+    "version": "1.0.0",
+    "displayName": "Coding Agent",
+    "description": "A meta-skill that formats structured prompts for the LLM to generate code. Accepts a task description, target language, and optional existing code context to produce a well-structured code generation request.",
+    "category": "Development",
+    "icon": "Bot",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["code", "generation", "agent", "prompt", "llm", "developer"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "coding_agent",
+      "description": "Format a structured code generation prompt for the LLM. Provide a task description, target programming language, and optionally existing code to modify or extend. The skill returns a structured prompt that guides the LLM to produce high-quality code.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "A description of what code to generate or what problem to solve"
+          },
+          "language": {
+            "type": "string",
+            "description": "The target programming language (e.g., javascript, python, typescript, rust, go)"
+          },
+          "existingCode": {
+            "type": "string",
+            "description": "Optional existing code to modify, extend, or use as context for the generation"
+          }
+        },
+        "required": ["task", "language"]
+      }
+    }
+  },
+  {
+    "name": "knowledge-base",
+    "version": "1.0.0",
+    "displayName": "Knowledge Base",
+    "description": "In-memory keyword-based knowledge store. Add, search, list, and delete knowledge entries. Search uses TF-IDF-like scoring for relevance ranking.",
+    "category": "Knowledge",
+    "icon": "BookOpen",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["knowledge", "search", "memory", "store", "tfidf", "notes"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "knowledge_base",
+      "description": "Manage an in-memory knowledge store. Add entries with content and keywords, search by relevance using TF-IDF-like scoring, list all entries, or delete by key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["search", "add", "list", "delete"],
+            "description": "The operation: search (find relevant entries), add (store new entry), list (show all entries), delete (remove entry by key)"
+          },
+          "query": {
+            "type": "string",
+            "description": "Search query string (required for search action). Matched against keywords and content using TF-IDF-like scoring."
+          },
+          "content": {
+            "type": "string",
+            "description": "The knowledge content to store (required for add action)"
+          },
+          "key": {
+            "type": "string",
+            "description": "Unique identifier for the entry (required for add and delete actions)"
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "remind-me",
+    "version": "1.0.0",
+    "displayName": "Remind Me",
+    "description": "In-memory reminder system. Set timed reminders, list active reminders, or cancel pending ones.",
+    "category": "Productivity",
+    "icon": "Clock",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["reminder", "timer", "productivity", "schedule", "notification"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "remind_me",
+      "description": "Manage timed reminders. Set a new reminder with a delay, list all active reminders, or cancel a pending reminder by its ID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["set", "list", "cancel"],
+            "description": "The reminder action to perform. 'set' creates a new timed reminder, 'list' shows all active reminders, 'cancel' removes a pending reminder."
+          },
+          "message": {
+            "type": "string",
+            "description": "The reminder message. Required for the 'set' action."
+          },
+          "delay": {
+            "type": "number",
+            "description": "The delay before the reminder triggers. Required for the 'set' action."
+          },
+          "unit": {
+            "type": "string",
+            "enum": ["seconds", "minutes", "hours"],
+            "description": "The time unit for the delay. Defaults to 'minutes' if not specified."
+          }
+        },
+        "required": ["action"]
+      }
+    }
+  },
+  {
+    "name": "pdf-reader",
+    "version": "1.0.0",
+    "displayName": "PDF Reader",
+    "description": "Read and extract text content from PDF files. Uses raw buffer parsing to find text between BT/ET markers and decode stream objects without external dependencies.",
+    "category": "Documents",
+    "icon": "FileText",
+    "author": "claw2agent",
+    "requiresApiKey": false,
+    "apiKeyLabel": null,
+    "tags": ["pdf", "reader", "text-extraction", "documents", "parser"],
+    "verified": true,
+    "tier": "free",
+    "implemented": true,
+    "config": {},
+    "toolDefinition": {
+      "name": "pdf_reader",
+      "description": "Read a PDF file and extract its text content. Works by parsing raw PDF structure to locate and decode text objects. Returns extracted text and document metadata.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "filePath": {
+            "type": "string",
+            "description": "Absolute or relative path to the PDF file to read"
+          }
+        },
+        "required": ["filePath"]
+      }
+    }
+  }
+]

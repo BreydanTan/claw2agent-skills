@@ -1,0 +1,44 @@
+{
+  "name": "excel-handler",
+  "version": "1.0.0",
+  "displayName": "Excel / CSV Handler",
+  "description": "Read, write, and analyze CSV files. Supports parsing CSV to JSON, converting JSON data to CSV format, and computing basic statistics on CSV datasets.",
+  "category": "Data",
+  "icon": "Table",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["csv", "excel", "spreadsheet", "data", "parse", "statistics"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "excel_handler",
+    "description": "Handle CSV file operations: read a CSV file and parse it to JSON, write JSON data to a CSV file, or analyze a CSV file to compute basic statistics (row count, column names, numeric column stats).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["read", "write", "analyze"],
+          "description": "The action to perform: read (CSV to JSON), write (JSON to CSV), or analyze (compute stats)"
+        },
+        "filePath": {
+          "type": "string",
+          "description": "The file path of the CSV file to read, write, or analyze"
+        },
+        "data": {
+          "type": "string",
+          "description": "JSON string of an array of objects to write to CSV (required for write action)"
+        },
+        "sheetName": {
+          "type": "string",
+          "description": "Optional sheet name label for organizational purposes",
+          "default": "Sheet1"
+        }
+      },
+      "required": ["action", "filePath"]
+    }
+  }
+}

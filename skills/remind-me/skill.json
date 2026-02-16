@@ -1,0 +1,44 @@
+{
+  "name": "remind-me",
+  "version": "1.0.0",
+  "displayName": "Remind Me",
+  "description": "In-memory reminder system. Set timed reminders, list active reminders, or cancel pending ones.",
+  "category": "Productivity",
+  "icon": "Clock",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["reminder", "timer", "productivity", "schedule", "notification"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "remind_me",
+    "description": "Manage timed reminders. Set a new reminder with a delay, list all active reminders, or cancel a pending reminder by its ID.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["set", "list", "cancel"],
+          "description": "The reminder action to perform. 'set' creates a new timed reminder, 'list' shows all active reminders, 'cancel' removes a pending reminder."
+        },
+        "message": {
+          "type": "string",
+          "description": "The reminder message. Required for the 'set' action."
+        },
+        "delay": {
+          "type": "number",
+          "description": "The delay before the reminder triggers. Required for the 'set' action."
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["seconds", "minutes", "hours"],
+          "description": "The time unit for the delay. Defaults to 'minutes' if not specified."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

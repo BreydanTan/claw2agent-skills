@@ -1,0 +1,30 @@
+{
+  "name": "pdf-reader",
+  "version": "1.0.0",
+  "displayName": "PDF Reader",
+  "description": "Read and extract text content from PDF files. Uses raw buffer parsing to find text between BT/ET markers and decode stream objects without external dependencies.",
+  "category": "Documents",
+  "icon": "FileText",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["pdf", "reader", "text-extraction", "documents", "parser"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "pdf_reader",
+    "description": "Read a PDF file and extract its text content. Works by parsing raw PDF structure to locate and decode text objects. Returns extracted text and document metadata.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "filePath": {
+          "type": "string",
+          "description": "Absolute or relative path to the PDF file to read"
+        }
+      },
+      "required": ["filePath"]
+    }
+  }
+}

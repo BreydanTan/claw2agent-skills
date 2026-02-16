@@ -1,0 +1,39 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "displayName": "File Manager",
+  "description": "Manage files within a sandboxed /data/ directory. Supports reading, writing, listing, and deleting files and directories.",
+  "category": "Utilities",
+  "icon": "FolderOpen",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["files", "filesystem", "read", "write", "directory", "storage"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "file_manager",
+    "description": "Perform file operations (read, write, list, delete) within the sandboxed /data/ directory. All paths are resolved relative to /data/ and cannot escape it.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["read", "write", "list", "delete"],
+          "description": "The file operation to perform: read (get file contents), write (create/overwrite file), list (list directory contents), delete (remove file or directory)"
+        },
+        "path": {
+          "type": "string",
+          "description": "The file or directory path relative to /data/ (e.g., 'notes/todo.txt')"
+        },
+        "content": {
+          "type": "string",
+          "description": "The content to write to the file (required for write action)"
+        }
+      },
+      "required": ["action", "path"]
+    }
+  }
+}

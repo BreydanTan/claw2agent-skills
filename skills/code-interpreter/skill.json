@@ -1,0 +1,35 @@
+{
+  "name": "code-interpreter",
+  "version": "1.0.0",
+  "displayName": "Code Interpreter",
+  "description": "Execute JavaScript code in a sandboxed environment using Node.js vm module. Supports capturing console output and enforces a 10-second timeout for safe execution.",
+  "category": "Development",
+  "icon": "Code",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["code", "javascript", "python", "execute", "interpreter", "sandbox"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "code_interpreter",
+    "description": "Execute code in a sandboxed environment. Supports JavaScript (executed via Node.js vm module) and Python (requires python3 binary). Returns captured stdout output and execution metadata.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": ["javascript", "python"],
+          "description": "The programming language of the code to execute"
+        },
+        "code": {
+          "type": "string",
+          "description": "The source code to execute"
+        }
+      },
+      "required": ["language", "code"]
+    }
+  }
+}

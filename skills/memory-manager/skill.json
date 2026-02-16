@@ -1,0 +1,43 @@
+{
+  "name": "memory-manager",
+  "version": "1.0.0",
+  "displayName": "Memory Manager",
+  "description": "Persistent key-value memory storage using a local JSON file. Store, retrieve, search, list, and delete entries with automatic timestamping.",
+  "category": "Utility",
+  "icon": "Database",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["memory", "storage", "persistence", "key-value", "data"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "memory_manager",
+    "description": "Manage persistent memory entries stored in a local JSON file. Store key-value pairs, retrieve by key, search with fuzzy matching, list all entries, or delete entries.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["store", "retrieve", "search", "list", "delete"],
+          "description": "The memory operation to perform. 'store' saves a key-value pair, 'retrieve' gets by exact key, 'search' performs fuzzy matching on keys and values, 'list' shows all entries, 'delete' removes an entry by key."
+        },
+        "key": {
+          "type": "string",
+          "description": "The memory key. Required for 'store', 'retrieve', and 'delete' actions."
+        },
+        "value": {
+          "type": "string",
+          "description": "The value to store. Required for the 'store' action."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query for fuzzy matching keys and values. Required for the 'search' action."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

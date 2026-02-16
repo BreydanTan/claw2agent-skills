@@ -1,0 +1,43 @@
+{
+  "name": "knowledge-base",
+  "version": "1.0.0",
+  "displayName": "Knowledge Base",
+  "description": "In-memory keyword-based knowledge store. Add, search, list, and delete knowledge entries. Search uses TF-IDF-like scoring for relevance ranking.",
+  "category": "Knowledge",
+  "icon": "BookOpen",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["knowledge", "search", "memory", "store", "tfidf", "notes"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "knowledge_base",
+    "description": "Manage an in-memory knowledge store. Add entries with content and keywords, search by relevance using TF-IDF-like scoring, list all entries, or delete by key.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["search", "add", "list", "delete"],
+          "description": "The operation: search (find relevant entries), add (store new entry), list (show all entries), delete (remove entry by key)"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string (required for search action). Matched against keywords and content using TF-IDF-like scoring."
+        },
+        "content": {
+          "type": "string",
+          "description": "The knowledge content to store (required for add action)"
+        },
+        "key": {
+          "type": "string",
+          "description": "Unique identifier for the entry (required for add and delete actions)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

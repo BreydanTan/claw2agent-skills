@@ -1,0 +1,39 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "displayName": "Discord Bot",
+  "description": "Interact with the Discord API to send messages, get channel info, and list available channels in a guild.",
+  "category": "Communication",
+  "icon": "Hash",
+  "author": "claw2agent",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Discord Bot Token",
+  "tags": ["discord", "bot", "messaging", "community"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "discord_bot",
+    "description": "Interact with the Discord API. Send messages to channels, get channel details, or list channels in a guild.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["sendMessage", "getChannel", "listChannels"],
+          "description": "The Discord API action to perform. 'sendMessage' posts a message to a channel, 'getChannel' retrieves channel details, 'listChannels' lists all channels in the channel's guild."
+        },
+        "channelId": {
+          "type": "string",
+          "description": "The Discord channel ID. Required for 'sendMessage' and 'getChannel' actions."
+        },
+        "content": {
+          "type": "string",
+          "description": "The message content to send when action is 'sendMessage'."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

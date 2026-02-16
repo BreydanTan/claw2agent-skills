@@ -1,0 +1,43 @@
+{
+  "name": "email-sender",
+  "version": "1.0.0",
+  "displayName": "Email Sender",
+  "description": "Send emails using the Resend API. Supports sending plain text emails with customizable sender, recipient, subject, and body. Requires a Resend API key.",
+  "category": "Communication",
+  "icon": "Mail",
+  "author": "claw2agent",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Resend API Key",
+  "tags": ["email", "send", "resend", "communication", "notification"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "email_sender",
+    "description": "Send an email using the Resend API. Requires a valid Resend API key. Sends plain text emails to the specified recipient.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": {
+          "type": "string",
+          "description": "The recipient email address"
+        },
+        "subject": {
+          "type": "string",
+          "description": "The email subject line"
+        },
+        "body": {
+          "type": "string",
+          "description": "The email body content (plain text)"
+        },
+        "from": {
+          "type": "string",
+          "description": "The sender email address (must be a verified domain in Resend)",
+          "default": "onboarding@resend.dev"
+        }
+      },
+      "required": ["to", "subject", "body"]
+    }
+  }
+}

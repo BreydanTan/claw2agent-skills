@@ -1,0 +1,35 @@
+{
+  "name": "web-search",
+  "version": "1.0.0",
+  "displayName": "Web Search",
+  "description": "Search the web using DuckDuckGo. Returns relevant search results with titles, URLs, and snippets. No API key required.",
+  "category": "Research",
+  "icon": "Search",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["search", "web", "duckduckgo", "research", "internet"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "web_search",
+    "description": "Search the web using DuckDuckGo and return relevant results with titles, URLs, and text snippets.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The search query string to look up on the web"
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum number of results to return (default: 5, max: 20)",
+          "default": 5
+        }
+      },
+      "required": ["query"]
+    }
+  }
+}
