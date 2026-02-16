@@ -1,0 +1,94 @@
+{
+  "name": "jira-manager",
+  "version": "1.0.0",
+  "displayName": "Jira Manager",
+  "description": "Manage Jira projects and issues via the Jira REST API. List projects, create/get/update issues, transition statuses, search with JQL, add comments, and assign issues. Uses injected provider client for API access (BYOK).",
+  "category": "Project Management",
+  "icon": "Jira",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["jira", "issues", "projects", "agile", "project-management", "tickets", "atlassian", "devops"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "jira",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "jira-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "jira_manager",
+    "description": "Manage Jira projects and issues: list projects, get/create/update issues, transition issue statuses, search with JQL, add comments, list transitions, and assign issues. Layer 1 skill using injected provider client for Jira API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_projects", "get_issue", "create_issue", "update_issue", "transition_issue", "search_issues", "add_comment", "list_transitions", "assign_issue"],
+          "description": "list_projects (all projects), get_issue (issue details), create_issue (new issue), update_issue (modify fields), transition_issue (change status), search_issues (JQL search), add_comment (comment on issue), list_transitions (available transitions), assign_issue (assign to user)"
+        },
+        "issueKey": {
+          "type": "string",
+          "description": "Jira issue key (e.g. 'PROJ-123'). Required for get_issue, update_issue, transition_issue, add_comment, list_transitions, assign_issue."
+        },
+        "projectKey": {
+          "type": "string",
+          "description": "Jira project key (e.g. 'PROJ'). Required for create_issue."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Issue summary/title. Required for create_issue."
+        },
+        "issueType": {
+          "type": "string",
+          "description": "Issue type name (default: 'Task'). Used by create_issue."
+        },
+        "description": {
+          "type": "string",
+          "description": "Issue description. Used by create_issue."
+        },
+        "priority": {
+          "type": "string",
+          "description": "Priority name (e.g. 'High', 'Medium'). Used by create_issue."
+        },
+        "assignee": {
+          "type": "string",
+          "description": "Assignee account ID. Used by create_issue."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Labels to apply. Used by create_issue."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Object of fields to update. Required for update_issue."
+        },
+        "transitionId": {
+          "type": "string",
+          "description": "Transition ID to execute. Required for transition_issue."
+        },
+        "jql": {
+          "type": "string",
+          "description": "JQL query string. Required for search_issues."
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum results for search_issues (default: 50)."
+        },
+        "body": {
+          "type": "string",
+          "description": "Comment body text. Required for add_comment."
+        },
+        "accountId": {
+          "type": "string",
+          "description": "Atlassian account ID. Required for assign_issue."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

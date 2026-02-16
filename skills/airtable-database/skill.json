@@ -1,0 +1,80 @@
+{
+  "name": "airtable-database",
+  "version": "1.0.0",
+  "displayName": "Airtable Database",
+  "description": "Manage Airtable bases, tables, and records via the Airtable REST API. List bases, list tables, create/read/update/delete records, search with formulas, and bulk-create records. Uses injected provider client for API access (BYOK).",
+  "category": "Database",
+  "icon": "Database",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["database", "airtable", "no-code", "records", "bases", "tables"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "airtable",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "airtable-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "airtable_database",
+    "description": "Manage Airtable bases, tables, and records: list bases, list tables, list/get/create/update/delete records, search records by formula, and bulk create. Layer 1 skill using injected provider client for Airtable API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_records", "get_record", "create_record", "update_record", "delete_record", "search_records", "list_bases", "list_tables", "bulk_create"],
+          "description": "list_records (list records from table), get_record (get single record), create_record (create record), update_record (update record), delete_record (delete record), search_records (search by formula), list_bases (list accessible bases), list_tables (list tables in base), bulk_create (create multiple records)"
+        },
+        "baseId": {
+          "type": "string",
+          "description": "Airtable base ID. Required for all actions except list_bases."
+        },
+        "tableId": {
+          "type": "string",
+          "description": "Airtable table ID or name. Required for record actions."
+        },
+        "recordId": {
+          "type": "string",
+          "description": "Record ID. Required for get_record, update_record, delete_record."
+        },
+        "fields": {
+          "type": "object",
+          "description": "Fields object for create_record and update_record."
+        },
+        "records": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "Array of {fields} objects for bulk_create. Max 10 at a time."
+        },
+        "maxRecords": {
+          "type": "number",
+          "description": "Maximum number of records to return (default 100)."
+        },
+        "filterByFormula": {
+          "type": "string",
+          "description": "Airtable formula to filter records (optional for list_records)."
+        },
+        "formula": {
+          "type": "string",
+          "description": "Airtable formula for search_records."
+        },
+        "sort": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "Sort configuration for list_records."
+        },
+        "view": {
+          "type": "string",
+          "description": "View name or ID (optional for list_records)."
+        }
+      },
+      "required": ["action"]
+    }
+  },
+  "timeout": 30000
+}

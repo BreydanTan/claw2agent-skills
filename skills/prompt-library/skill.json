@@ -1,0 +1,38 @@
+{
+  "name": "prompt-library",
+  "version": "1.0.0",
+  "displayName": "Prompt Library",
+  "description": "Store, search, and manage reusable prompt templates. Supports categorization, variable interpolation, and version tracking.",
+  "category": "AI",
+  "icon": "Library",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["prompt", "template", "library", "ai", "reusable"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "prompt_library",
+    "description": "Manage a library of reusable prompt templates. Add, search, list, delete, and render prompts with variable interpolation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["add", "get", "search", "list", "delete", "render", "categories"],
+          "description": "The operation to perform"
+        },
+        "name": { "type": "string", "description": "Unique prompt name/identifier" },
+        "template": { "type": "string", "description": "Prompt template text with {{variable}} placeholders" },
+        "category": { "type": "string", "description": "Category for organization" },
+        "description": { "type": "string", "description": "Brief description of the prompt" },
+        "tags": { "type": "array", "description": "Tags for search/filtering" },
+        "variables": { "type": "object", "description": "Key-value pairs for template rendering" },
+        "query": { "type": "string", "description": "Search query string" }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "rss-monitor",
+  "version": "1.0.0",
+  "displayName": "RSS Feed Monitor",
+  "description": "Subscribe to, fetch, and monitor RSS/Atom feeds. Parse feed entries, track new items, and filter by keywords.",
+  "category": "Research",
+  "icon": "Rss",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["rss", "atom", "feed", "monitor", "news", "subscription"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "rss_monitor",
+    "description": "Monitor RSS/Atom feeds. Subscribe to feeds, fetch latest entries, check for new items, and filter by keywords.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["subscribe", "unsubscribe", "fetch", "list", "check"],
+          "description": "subscribe (add feed), unsubscribe (remove feed), fetch (get entries from a URL), list (show subscriptions), check (check all feeds for new items)"
+        },
+        "url": { "type": "string", "description": "RSS/Atom feed URL" },
+        "name": { "type": "string", "description": "Friendly name for the subscription" },
+        "maxItems": { "type": "number", "description": "Max items to return (default: 10)" },
+        "keywords": { "type": "array", "description": "Filter entries containing these keywords", "items": { "type": "string" } }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "name": "tavily-search",
+  "version": "1.0.0",
+  "displayName": "Tavily Search",
+  "description": "Web search and content extraction powered by Tavily API. Supports general search, news, images, academic papers, code repositories, direct answers, content extraction, and batch search.",
+  "category": "Research",
+  "icon": "Search",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Tavily API Key",
+  "tags": ["search", "web", "tavily", "research"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 60000,
+    "featureFlags": {}
+  },
+  "actions": ["search", "extract", "search_news", "search_images", "get_answer", "search_academic", "search_code", "batch_search"],
+  "timeout": 30000,
+  "toolDefinition": {
+    "name": "tavily_search",
+    "description": "Web search and content extraction powered by Tavily API. Supports general search, news, images, academic papers, code repositories, direct answers, content extraction, and batch search. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["search", "extract", "search_news", "search_images", "get_answer", "search_academic", "search_code", "batch_search"],
+          "description": "The action to perform"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string (required for search, search_news, search_images, get_answer, search_academic, search_code)"
+        },
+        "urls": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Array of URLs to extract content from (required for extract)"
+        },
+        "queries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "query": { "type": "string" },
+              "maxResults": { "type": "number" }
+            },
+            "required": ["query"]
+          },
+          "description": "Array of search queries for batch_search (max 5)"
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum number of results to return (default: 5)"
+        },
+        "searchDepth": {
+          "type": "string",
+          "enum": ["basic", "advanced"],
+          "description": "Search depth level (default: basic)"
+        },
+        "includeDomains": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Only include results from these domains"
+        },
+        "excludeDomains": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Exclude results from these domains"
+        },
+        "includeAnswer": {
+          "type": "boolean",
+          "description": "Include a direct answer in search results (default: false)"
+        },
+        "includeRawContent": {
+          "type": "boolean",
+          "description": "Include raw content in get_answer results (default: false)"
+        },
+        "extractDepth": {
+          "type": "string",
+          "enum": ["basic", "advanced"],
+          "description": "Content extraction depth (default: basic)"
+        },
+        "days": {
+          "type": "number",
+          "description": "Number of days to look back for news (default: 7)"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic filter for news search"
+        },
+        "year": {
+          "type": "number",
+          "description": "Filter academic papers by publication year"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language filter for code search"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

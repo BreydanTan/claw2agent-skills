@@ -1,0 +1,48 @@
+{
+  "name": "prompt-optimizer",
+  "version": "1.0.0",
+  "displayName": "Prompt Optimizer",
+  "description": "Analyze and optimize prompts for AI models. Provides scoring, suggestions, restructuring, and best-practice checks.",
+  "category": "AI",
+  "icon": "Sparkles",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["prompt", "optimizer", "ai", "quality", "engineering"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "prompt_optimizer",
+    "description": "Analyze and optimize prompts for AI models. Score prompt quality, get improvement suggestions, and restructure prompts following best practices.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["analyze", "optimize", "score", "compare"],
+          "description": "analyze (detailed analysis), optimize (rewrite with improvements), score (numerical quality score), compare (compare two prompts)"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "The prompt text to analyze/optimize"
+        },
+        "promptA": {
+          "type": "string",
+          "description": "First prompt for comparison"
+        },
+        "promptB": {
+          "type": "string",
+          "description": "Second prompt for comparison"
+        },
+        "targetModel": {
+          "type": "string",
+          "description": "Target AI model (claude, gpt, general)",
+          "default": "general"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

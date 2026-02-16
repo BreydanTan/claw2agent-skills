@@ -1,0 +1,34 @@
+{
+  "name": "pii-redaction",
+  "version": "1.0.0",
+  "displayName": "PII Detection & Redaction",
+  "description": "Detect and redact personally identifiable information (PII) from text. Supports emails, phone numbers, SSNs, credit cards, IP addresses, and more.",
+  "category": "Security",
+  "icon": "Shield",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["pii", "redaction", "privacy", "security", "compliance", "gdpr"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "pii_redaction",
+    "description": "Detect and redact PII from text. Identifies emails, phone numbers, SSNs, credit card numbers, IP addresses, dates of birth, and names patterns.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["detect", "redact", "report"],
+          "description": "detect (find PII), redact (replace PII with placeholders), report (detailed analysis)"
+        },
+        "text": { "type": "string", "description": "Text to scan for PII" },
+        "types": { "type": "array", "description": "Specific PII types to look for (default: all)", "items": { "type": "string" } },
+        "replacement": { "type": "string", "description": "Custom replacement pattern (default: [REDACTED_TYPE])" }
+      },
+      "required": ["action", "text"]
+    }
+  }
+}

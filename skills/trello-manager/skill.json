@@ -1,0 +1,74 @@
+{
+  "name": "trello-manager",
+  "version": "1.0.0",
+  "displayName": "Trello Manager",
+  "description": "Manage Trello boards, lists, and cards via the Trello API. List boards, get board info, manage lists and cards, move cards between lists, and add comments. Uses injected provider client for API access (BYOK).",
+  "category": "Productivity",
+  "icon": "Trello",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["trello", "boards", "cards", "lists", "kanban", "project-management", "productivity"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "trello",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "trello-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "trello_manager",
+    "description": "Manage Trello boards, lists, and cards: list boards, get board info, list lists, list/get/create/update/move cards, and add comments. Layer 1 skill using injected provider client for Trello API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_boards", "get_board", "list_lists", "list_cards", "get_card", "create_card", "update_card", "move_card", "add_comment"],
+          "description": "list_boards (user's boards), get_board (board info), list_lists (lists in board), list_cards (cards in list), get_card (card details), create_card (new card), update_card (modify card), move_card (move to list), add_comment (comment on card)"
+        },
+        "boardId": {
+          "type": "string",
+          "description": "Board ID. Required for get_board, list_lists."
+        },
+        "listId": {
+          "type": "string",
+          "description": "List ID. Required for list_cards, create_card, move_card."
+        },
+        "cardId": {
+          "type": "string",
+          "description": "Card ID. Required for get_card, update_card, move_card, add_comment."
+        },
+        "name": {
+          "type": "string",
+          "description": "Card name/title. Required for create_card. Optional for update_card."
+        },
+        "desc": {
+          "type": "string",
+          "description": "Card description. Optional for create_card, update_card."
+        },
+        "due": {
+          "type": "string",
+          "description": "Due date (ISO 8601). Optional for create_card, update_card."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Label IDs to apply. Optional for create_card, update_card."
+        },
+        "closed": {
+          "type": "boolean",
+          "description": "Whether the card is archived/closed. Optional for update_card."
+        },
+        "text": {
+          "type": "string",
+          "description": "Comment text. Required for add_comment."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

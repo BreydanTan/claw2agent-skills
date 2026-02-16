@@ -1,0 +1,72 @@
+{
+  "name": "image-generation",
+  "version": "1.0.0",
+  "displayName": "Image Generation",
+  "description": "Generate, edit, and create variations of images using AI model APIs. Supports multiple models, sizes, quality levels, and styles. Layer 1 skill using provider client for API access.",
+  "category": "AI",
+  "icon": "Image",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Image Generation API Key",
+  "tags": ["image", "generation", "ai", "dall-e", "art", "creative", "visual"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 60000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "image_generation",
+    "description": "Generate images from text prompts, create variations of existing images, edit images with text instructions, and list available models. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["generate", "variations", "edit", "list_models"],
+          "description": "generate (create image from prompt), variations (generate variations of an image), edit (edit image with prompt), list_models (list available models)"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Text prompt describing the image to generate. Required for generate and edit actions."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the source image. Required for variations and edit actions."
+        },
+        "mask": {
+          "type": "string",
+          "description": "URL of the mask image for edit action. Transparent areas indicate where the image should be edited."
+        },
+        "model": {
+          "type": "string",
+          "description": "Model to use for generation (default: dall-e-3)."
+        },
+        "size": {
+          "type": "string",
+          "enum": ["256x256", "512x512", "1024x1024", "1024x1792", "1792x1024"],
+          "description": "Image size (default: 1024x1024)."
+        },
+        "quality": {
+          "type": "string",
+          "enum": ["standard", "hd"],
+          "description": "Image quality level (default: standard)."
+        },
+        "style": {
+          "type": "string",
+          "enum": ["vivid", "natural"],
+          "description": "Image style (default: vivid)."
+        },
+        "n": {
+          "type": "number",
+          "description": "Number of images to generate (default: 1, max: 4)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

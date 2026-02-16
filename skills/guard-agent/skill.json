@@ -1,0 +1,64 @@
+{
+  "name": "guard-agent",
+  "version": "1.0.0",
+  "displayName": "Guard Agent (Security Scanner)",
+  "description": "Scan text, prompts, URLs, and configurations for security threats. Detects injection attacks, prompt injection, sensitive data exposure, malicious URLs, and insecure configurations.",
+  "category": "Security",
+  "icon": "ShieldAlert",
+  "author": "claw2agent",
+  "layer": "L2",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["security", "scanner", "injection", "xss", "prompt-injection", "guard", "firewall"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "gateway",
+    "model": null,
+    "timeoutMs": 30000,
+    "maxCostUsd": 0.10,
+    "maxTokens": 4096
+  },
+  "toolDefinition": {
+    "name": "guard_agent",
+    "description": "Security scanner that detects injection attacks, prompt injection, sensitive data exposure, malicious URLs, and insecure configurations. Uses local regex rules for most scans and optional LLM-based deep analysis for prompt injection detection.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["scan_text", "scan_prompt", "scan_url", "scan_config", "report"],
+          "description": "scan_text (detect injection/exposure threats), scan_prompt (detect prompt injection), scan_url (validate URL safety), scan_config (audit configuration security), report (comprehensive security report)"
+        },
+        "text": {
+          "type": "string",
+          "description": "Text to scan (for scan_text action)"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "AI prompt to scan for injection attempts (for scan_prompt action)"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to validate for safety (for scan_url action)"
+        },
+        "config": {
+          "type": "object",
+          "description": "Configuration object to audit (for scan_config action)"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Multiple inputs for comprehensive report (for report action). Keys: text, prompt, url, config.",
+          "properties": {
+            "text": { "type": "string" },
+            "prompt": { "type": "string" },
+            "url": { "type": "string" },
+            "config": { "type": "object" }
+          }
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

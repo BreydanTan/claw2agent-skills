@@ -1,0 +1,96 @@
+{
+  "name": "notion-integration",
+  "version": "1.0.0",
+  "displayName": "Notion Integration",
+  "description": "Interact with Notion workspaces via the Notion API. Search pages and databases, get/create/update pages, query databases, create database entries, and list blocks. Uses injected provider client for API access (BYOK).",
+  "category": "Productivity",
+  "icon": "FileText",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["notion", "workspace", "pages", "databases", "blocks", "productivity", "wiki", "knowledge-base"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "notion",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "notion-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "notion_integration",
+    "description": "Interact with Notion workspaces: search, get/create/update pages, get/query databases, create database entries, and list blocks. Layer 1 skill using injected provider client for Notion API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["search", "get_page", "create_page", "update_page", "get_database", "query_database", "create_database_entry", "list_blocks"],
+          "description": "search (search workspace), get_page (get a page), create_page (create a new page), update_page (update page properties), get_database (get database info), query_database (query a database), create_database_entry (add entry to database), list_blocks (list child blocks)"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string (required for search)."
+        },
+        "filter": {
+          "type": "string",
+          "enum": ["page", "database"],
+          "description": "Filter search results by object type (optional for search)."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["last_edited", "created"],
+          "description": "Sort order for search results (default: last_edited)."
+        },
+        "pageSize": {
+          "type": "number",
+          "description": "Number of results to return (default varies by action)."
+        },
+        "pageId": {
+          "type": "string",
+          "description": "Notion page ID (required for get_page, update_page)."
+        },
+        "parentId": {
+          "type": "string",
+          "description": "Parent page or database ID (required for create_page)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Page title (required for create_page)."
+        },
+        "content": {
+          "type": "string",
+          "description": "Page content as markdown or plain text (optional for create_page)."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Page icon emoji (optional for create_page)."
+        },
+        "cover": {
+          "type": "string",
+          "description": "Page cover image URL (optional for create_page)."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Property updates object (required for update_page, create_database_entry)."
+        },
+        "databaseId": {
+          "type": "string",
+          "description": "Notion database ID (required for get_database, query_database, create_database_entry)."
+        },
+        "sorts": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "Sort conditions for query_database."
+        },
+        "blockId": {
+          "type": "string",
+          "description": "Block or page ID (required for list_blocks)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

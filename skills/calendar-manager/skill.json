@@ -1,0 +1,86 @@
+{
+  "name": "calendar-manager",
+  "version": "1.0.0",
+  "displayName": "Calendar Manager",
+  "description": "Manage calendar events with full CRUD operations, search, and upcoming event queries. Supports recurring events, attendees, reminders, and date range filtering.",
+  "category": "Productivity",
+  "icon": "Calendar",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["calendar", "events", "scheduling", "productivity", "reminders", "recurring"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "calendar_manager",
+    "description": "Manage calendar events. Create, list, update, delete, search, and query upcoming events. Supports recurring events, attendees, reminders, and date range filtering.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create", "list", "update", "delete", "search", "upcoming"],
+          "description": "create (new event), list (all events with optional date range), update (modify event by id), delete (remove event by id), search (keyword search), upcoming (events within time window)"
+        },
+        "id": {
+          "type": "string",
+          "description": "Event ID (required for update and delete)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Event title (required for create)"
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Event start time as ISO 8601 string (required for create)"
+        },
+        "endTime": {
+          "type": "string",
+          "description": "Event end time as ISO 8601 string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Event description"
+        },
+        "location": {
+          "type": "string",
+          "description": "Event location"
+        },
+        "attendees": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of attendee names or emails"
+        },
+        "reminders": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "Reminder offsets in minutes before the event"
+        },
+        "recurring": {
+          "type": "string",
+          "enum": ["daily", "weekly", "monthly", "yearly"],
+          "description": "Recurrence pattern for the event"
+        },
+        "startRange": {
+          "type": "string",
+          "description": "Start of date range filter (ISO 8601) for list action"
+        },
+        "endRange": {
+          "type": "string",
+          "description": "End of date range filter (ISO 8601) for list action"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search keyword for the search action"
+        },
+        "hours": {
+          "type": "number",
+          "description": "Number of hours to look ahead for the upcoming action (default: 24)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

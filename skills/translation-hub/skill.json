@@ -1,0 +1,38 @@
+{
+  "name": "translation-hub",
+  "version": "1.0.0",
+  "displayName": "Translation Hub",
+  "description": "Translate text between languages using configurable translation providers. Supports language detection, batch translation, and multiple provider backends.",
+  "category": "AI",
+  "icon": "Languages",
+  "author": "claw2agent",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Translation Provider API Key",
+  "tags": ["translation", "language", "i18n", "localization", "multilingual"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "libre"
+  },
+  "toolDefinition": {
+    "name": "translation_hub",
+    "description": "Translate text between languages. Supports translation, language detection, batch translation, and listing supported languages.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["translate", "detect", "batch", "languages"],
+          "description": "translate (single text), detect (identify language), batch (translate multiple texts), languages (list supported)"
+        },
+        "text": { "type": "string", "description": "Text to translate or detect language of" },
+        "texts": { "type": "array", "description": "Array of texts for batch translation", "items": { "type": "string" } },
+        "from": { "type": "string", "description": "Source language code (ISO 639-1, e.g. 'en'). Use 'auto' for detection.", "default": "auto" },
+        "to": { "type": "string", "description": "Target language code (ISO 639-1, e.g. 'zh')" },
+        "provider": { "type": "string", "description": "Translation provider to use", "default": "libre" }
+      },
+      "required": ["action"]
+    }
+  }
+}

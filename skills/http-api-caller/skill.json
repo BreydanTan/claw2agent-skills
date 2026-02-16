@@ -1,0 +1,59 @@
+{
+  "name": "http-api-caller",
+  "version": "1.0.0",
+  "displayName": "HTTP / API Caller",
+  "description": "Make HTTP requests to external APIs. Supports GET, POST, PUT, PATCH, DELETE with headers, body, query params, authentication, timeout, and retry.",
+  "category": "Development",
+  "icon": "Globe",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["http", "api", "rest", "request", "fetch", "client"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "http_api_caller",
+    "description": "Make HTTP requests to external APIs with full control over method, headers, body, query parameters, timeout, and retry policy.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "The request URL (must be https)"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+          "description": "HTTP method",
+          "default": "GET"
+        },
+        "headers": {
+          "type": "object",
+          "description": "Request headers as key-value pairs"
+        },
+        "body": {
+          "description": "Request body (object for JSON, string for text)"
+        },
+        "queryParams": {
+          "type": "object",
+          "description": "URL query parameters as key-value pairs"
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Request timeout in ms (default: 30000, max: 60000)"
+        },
+        "retries": {
+          "type": "number",
+          "description": "Number of retries on failure (default: 0, max: 3)"
+        },
+        "auth": {
+          "type": "object",
+          "description": "Auth config: { type: 'bearer'|'basic', token?, username?, password? }"
+        }
+      },
+      "required": ["url"]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "name": "multi-agent-orchestration",
+  "version": "1.0.0",
+  "displayName": "Multi-Agent Orchestration",
+  "description": "Manage workflows where multiple agents collaborate on tasks. Define sequential, parallel, or conditional workflows with dependency tracking and simulated execution.",
+  "category": "AI",
+  "icon": "Network",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["multi-agent", "orchestration", "workflow", "automation", "agents"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "multi_agent_orchestration",
+    "description": "Manage multi-agent workflows. Create sequential, parallel, or conditional workflows, add/remove steps with dependency tracking, simulate execution, and monitor status.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_workflow",
+            "add_step",
+            "remove_step",
+            "execute_workflow",
+            "get_status",
+            "list_workflows",
+            "cancel_workflow"
+          ],
+          "description": "create_workflow (new workflow), add_step (add step to workflow), remove_step (remove step), execute_workflow (simulate execution), get_status (workflow info), list_workflows (list all), cancel_workflow (delete workflow)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Workflow or step name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Workflow description"
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["sequential", "parallel", "conditional"],
+          "description": "Workflow execution mode (default: sequential)"
+        },
+        "workflowId": {
+          "type": "string",
+          "description": "ID of the target workflow"
+        },
+        "step": {
+          "type": "object",
+          "description": "Step definition: { name, agentType, task, dependsOn?, condition? }",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Step name (unique within workflow)"
+            },
+            "agentType": {
+              "type": "string",
+              "description": "Type of agent for this step"
+            },
+            "task": {
+              "type": "string",
+              "description": "Task description for the agent"
+            },
+            "dependsOn": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Names of steps this step depends on"
+            },
+            "condition": {
+              "type": "string",
+              "description": "Condition expression for conditional workflows"
+            }
+          }
+        },
+        "stepName": {
+          "type": "string",
+          "description": "Name of the step to remove"
+        },
+        "input": {
+          "type": "object",
+          "description": "Input data for workflow execution"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

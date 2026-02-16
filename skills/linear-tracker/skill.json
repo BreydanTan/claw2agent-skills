@@ -1,0 +1,112 @@
+{
+  "name": "linear-tracker",
+  "version": "1.0.0",
+  "displayName": "Linear Tracker",
+  "description": "Manage Linear issues, projects, and cycles via the Linear GraphQL API. Create/update/list/get issues, create/list projects, add comments, search issues, and manage cycles. Uses injected provider client for API access (BYOK).",
+  "category": "Project Management",
+  "icon": "Linear",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["project-management", "linear", "issue-tracking", "cycles", "graphql"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "linear",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "linear-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "linear_tracker",
+    "description": "Manage Linear issues, projects, and cycles: create/update/list/get issues, create/list projects, add comments, search issues, and manage cycles. Layer 1 skill using injected provider client for Linear GraphQL API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_issue", "update_issue", "list_issues", "get_issue", "create_project", "list_projects", "add_comment", "search_issues", "manage_cycle"],
+          "description": "create_issue (new issue), update_issue (modify issue), list_issues (filter issues), get_issue (issue details), create_project (new project), list_projects (all projects), add_comment (comment on issue), search_issues (text search), manage_cycle (create/list/get/add_issue to cycles)"
+        },
+        "issueId": {
+          "type": "string",
+          "description": "Linear issue ID. Required for get_issue, update_issue, add_comment, manage_cycle (subAction: add_issue)."
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue title. Required for create_issue."
+        },
+        "description": {
+          "type": "string",
+          "description": "Issue or project description. Used by create_issue, update_issue, create_project."
+        },
+        "teamId": {
+          "type": "string",
+          "description": "Linear team ID. Required for create_issue, manage_cycle (subAction: create). Used by list_issues."
+        },
+        "priority": {
+          "type": "number",
+          "description": "Issue priority (0=none, 1=urgent, 2=high, 3=medium, 4=low). Used by create_issue, update_issue."
+        },
+        "assigneeId": {
+          "type": "string",
+          "description": "User ID for assignment. Used by create_issue, update_issue, list_issues."
+        },
+        "labelIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Label IDs to apply. Used by create_issue."
+        },
+        "stateId": {
+          "type": "string",
+          "description": "Workflow state ID. Used by create_issue, update_issue, list_issues."
+        },
+        "name": {
+          "type": "string",
+          "description": "Project or cycle name. Required for create_project, manage_cycle (subAction: create)."
+        },
+        "teamIds": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Team IDs for project. Required for create_project."
+        },
+        "targetDate": {
+          "type": "string",
+          "description": "Target date (ISO 8601). Used by create_project."
+        },
+        "body": {
+          "type": "string",
+          "description": "Comment body text. Required for add_comment."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string. Required for search_issues."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default: 25, max: 100). Used by list_issues, list_projects, search_issues."
+        },
+        "subAction": {
+          "type": "string",
+          "enum": ["create", "list", "get", "add_issue"],
+          "description": "Sub-action for manage_cycle."
+        },
+        "cycleId": {
+          "type": "string",
+          "description": "Cycle ID. Required for manage_cycle (subAction: get, add_issue)."
+        },
+        "startsAt": {
+          "type": "string",
+          "description": "Cycle start date (ISO 8601). Required for manage_cycle (subAction: create)."
+        },
+        "endsAt": {
+          "type": "string",
+          "description": "Cycle end date (ISO 8601). Required for manage_cycle (subAction: create)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

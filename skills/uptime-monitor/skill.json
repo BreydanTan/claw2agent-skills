@@ -1,0 +1,59 @@
+{
+  "name": "uptime-monitor",
+  "version": "1.0.0",
+  "displayName": "Website Uptime Monitor",
+  "description": "Monitor website uptime by registering URLs, performing HTTP health checks, and tracking availability history. Supports configurable intervals, timeouts, and expected status codes.",
+  "category": "DevOps",
+  "icon": "Activity",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["uptime", "monitor", "health-check", "availability", "devops", "http"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "uptime_monitor",
+    "description": "Monitor website uptime. Register URLs to watch, perform HTTP health checks, view current status, and review check history.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["add", "remove", "check", "status", "list", "history"],
+          "description": "add (register URL), remove (unregister), check (probe now), status (current state), list (all monitors), history (past checks)"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to monitor or check (must be http:// or https://)"
+        },
+        "id": {
+          "type": "string",
+          "description": "Monitor ID (for remove, check, status, history actions)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Friendly name for the monitor (optional, used with add)"
+        },
+        "interval": {
+          "type": "number",
+          "description": "Check interval in minutes (optional, default: 5)"
+        },
+        "expectedStatus": {
+          "type": "number",
+          "description": "Expected HTTP status code (optional, default: 200)"
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Request timeout in ms (optional, default: 10000, max: 30000)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of history entries to return (optional, default: 20)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

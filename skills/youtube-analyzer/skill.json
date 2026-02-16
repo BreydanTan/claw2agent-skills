@@ -1,0 +1,71 @@
+{
+  "name": "youtube-analyzer",
+  "version": "1.0.0",
+  "displayName": "YouTube Analyzer",
+  "description": "Analyze YouTube videos, channels, and playlists. Get video details, search content, list comments, retrieve transcripts, browse playlists, and calculate engagement metrics. Uses injected provider client for API access (BYOK).",
+  "category": "Content & Media",
+  "icon": "Youtube",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["youtube", "video", "analytics", "engagement", "comments", "transcript", "playlist", "channel", "media"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "youtube",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "youtube-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "youtube_analyzer",
+    "description": "Analyze YouTube content: get video details, search videos, get channel info, list comments, retrieve transcripts, browse playlists, and calculate engagement metrics. Layer 1 skill using injected provider client for YouTube API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_video", "search", "get_channel", "list_comments", "get_transcript", "get_playlist", "analyze_engagement"],
+          "description": "get_video (video details), search (search videos/channels/playlists), get_channel (channel info), list_comments (video comments), get_transcript (video transcript/captions), get_playlist (playlist items), analyze_engagement (engagement metrics)"
+        },
+        "videoId": {
+          "type": "string",
+          "description": "YouTube video ID. Required for get_video, list_comments, get_transcript, analyze_engagement."
+        },
+        "channelId": {
+          "type": "string",
+          "description": "YouTube channel ID. Required for get_channel."
+        },
+        "playlistId": {
+          "type": "string",
+          "description": "YouTube playlist ID. Required for get_playlist."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string. Required for search."
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum number of results to return (default varies by action)."
+        },
+        "order": {
+          "type": "string",
+          "enum": ["relevance", "date", "viewCount", "rating", "time"],
+          "description": "Sort order for search (relevance|date|viewCount|rating) or comments (relevance|time)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["video", "channel", "playlist"],
+          "description": "Content type filter for search (default: video)."
+        },
+        "language": {
+          "type": "string",
+          "description": "Language code for transcript (default: en)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

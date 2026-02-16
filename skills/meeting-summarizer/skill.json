@@ -1,0 +1,35 @@
+{
+  "name": "meeting-summarizer",
+  "version": "1.0.0",
+  "displayName": "Meeting Summarizer",
+  "description": "Analyze meeting transcripts to extract summaries, action items, decisions, participation stats, and generate formatted minutes. Pure local text processing.",
+  "category": "Productivity",
+  "icon": "ClipboardList",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["meeting", "summarizer", "transcript", "minutes", "productivity"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "meeting_summarizer",
+    "description": "Analyze meeting transcripts to extract summaries, action items, decisions, participation stats, and generate formatted meeting minutes.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["summarize", "extract_actions", "extract_decisions", "generate_minutes", "analyze_participation"],
+          "description": "summarize (structured summary), extract_actions (action items), extract_decisions (decisions made), generate_minutes (full minutes document), analyze_participation (speaker distribution)"
+        },
+        "transcript": {
+          "type": "string",
+          "description": "The meeting transcript text to analyze"
+        }
+      },
+      "required": ["action", "transcript"]
+    }
+  }
+}

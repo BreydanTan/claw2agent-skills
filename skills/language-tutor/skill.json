@@ -1,0 +1,39 @@
+{
+  "name": "language-tutor",
+  "version": "1.0.0",
+  "displayName": "Language Tutor",
+  "description": "Interactive language learning assistant. Practice vocabulary, generate exercises, track progress, and get grammar explanations.",
+  "category": "Education",
+  "icon": "GraduationCap",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["language", "learning", "tutor", "vocabulary", "grammar", "education"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "language_tutor",
+    "description": "Interactive language learning. Add vocabulary, generate practice exercises, review with spaced repetition, and track learning progress.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["add_vocab", "quiz", "review", "progress", "list_vocab", "delete_vocab", "hint"],
+          "description": "add_vocab (add word), quiz (generate quiz), review (spaced repetition review), progress (view stats), list_vocab (list all words), delete_vocab (remove word), hint (get hint for a word)"
+        },
+        "word": { "type": "string", "description": "The word or phrase to learn" },
+        "translation": { "type": "string", "description": "Translation/meaning of the word" },
+        "language": { "type": "string", "description": "Target language being learned (e.g. 'spanish', 'french')" },
+        "example": { "type": "string", "description": "Example sentence using the word" },
+        "tags": { "type": "array", "description": "Tags for categorizing vocabulary", "items": { "type": "string" } },
+        "answer": { "type": "string", "description": "User's answer for quiz/review" },
+        "quizType": { "type": "string", "enum": ["translate", "fill_blank", "multiple_choice"], "description": "Type of quiz question" },
+        "count": { "type": "number", "description": "Number of quiz questions (default: 5)" }
+      },
+      "required": ["action"]
+    }
+  }
+}

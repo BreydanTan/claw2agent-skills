@@ -1,0 +1,66 @@
+{
+  "name": "stock-crypto-analyzer",
+  "version": "1.0.0",
+  "displayName": "Stock & Crypto Analyzer",
+  "description": "Real-time stock and cryptocurrency quotes, technical analysis (SMA, RSI, MACD, Bollinger Bands), symbol comparison, and price alert watchlists. Requires a platform gateway adapter for market data access.",
+  "category": "Finance",
+  "icon": "TrendingUp",
+  "author": "claw2agent",
+  "layer": "L2",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["stocks", "crypto", "finance", "market-data", "technical-analysis", "trading", "watchlist", "alerts"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "gateway",
+    "timeoutMs": 15000,
+    "maxCostUsd": 0.50,
+    "rateLimitProfile": "market-data",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "stock_crypto_analyzer",
+    "description": "Analyze stocks and cryptocurrencies: get quotes, run technical analysis (SMA, RSI, MACD, Bollinger Bands), compare symbols, and manage price alert watchlists. Layer 2 skill requiring platform gateway for market data.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["quote", "analyze", "compare", "watchlist_add", "watchlist_remove", "watchlist_list", "alert"],
+          "description": "quote (current price), analyze (technical analysis), compare (multi-symbol comparison), watchlist_add/remove/list (manage watchlist), alert (check triggered alerts)"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Ticker symbol (e.g. AAPL, BTC, ETH). Required for quote, analyze, watchlist_add, watchlist_remove."
+        },
+        "symbols": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Array of ticker symbols for compare action."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["stock", "crypto"],
+          "description": "Asset type (default: stock)."
+        },
+        "period": {
+          "type": "string",
+          "enum": ["1w", "1m", "3m", "6m", "1y"],
+          "description": "Historical data period for analyze/compare (default: 1m)."
+        },
+        "targetPrice": {
+          "type": "number",
+          "description": "Target price for watchlist alert."
+        },
+        "alertType": {
+          "type": "string",
+          "enum": ["above", "below"],
+          "description": "Alert trigger direction (default: above)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

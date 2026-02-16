@@ -1,0 +1,90 @@
+{
+  "name": "todoist-manager",
+  "version": "1.0.0",
+  "displayName": "Todoist Manager",
+  "description": "Manage Todoist projects and tasks via the Todoist API. List/create projects, list/create/update/complete/delete tasks. Uses injected provider client for API access (BYOK).",
+  "category": "Productivity",
+  "icon": "CheckSquare",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["todoist", "tasks", "projects", "productivity", "todo", "task-management"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "todoist",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "todoist-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "todoist_manager",
+    "description": "Manage Todoist projects and tasks: list/get/create projects, list/get/create/update/complete/delete tasks. Layer 1 skill using injected provider client for Todoist API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "list_projects", "get_project", "create_project",
+            "list_tasks", "get_task", "create_task", "update_task",
+            "complete_task", "delete_task"
+          ],
+          "description": "list_projects (all projects), get_project (project details), create_project (new project), list_tasks (tasks with optional filters), get_task (task details), create_task (new task), update_task (modify task), complete_task (mark done), delete_task (remove task)"
+        },
+        "projectId": {
+          "type": "string",
+          "description": "Project ID. Required for get_project. Optional for list_tasks and create_task."
+        },
+        "taskId": {
+          "type": "string",
+          "description": "Task ID. Required for get_task, update_task, complete_task, delete_task."
+        },
+        "name": {
+          "type": "string",
+          "description": "Project name (required for create_project)."
+        },
+        "color": {
+          "type": "string",
+          "description": "Project color (optional for create_project)."
+        },
+        "isFavorite": {
+          "type": "boolean",
+          "description": "Whether the project is a favorite (optional for create_project)."
+        },
+        "content": {
+          "type": "string",
+          "description": "Task content/title (required for create_task, optional for update_task)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Task description (optional for create_task, update_task)."
+        },
+        "priority": {
+          "type": "number",
+          "description": "Task priority 1-4 where 4 is urgent (optional for create_task, update_task)."
+        },
+        "dueString": {
+          "type": "string",
+          "description": "Natural language due date e.g. 'tomorrow', 'next Monday' (optional for create_task, update_task)."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Labels to apply to a task (optional for create_task, update_task)."
+        },
+        "filter": {
+          "type": "string",
+          "description": "Todoist filter string for list_tasks (optional)."
+        },
+        "label": {
+          "type": "string",
+          "description": "Filter tasks by label name for list_tasks (optional)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "webhook-receiver",
+  "version": "1.0.0",
+  "displayName": "Webhook Receiver",
+  "description": "Register, manage, and inspect incoming webhook endpoints. Store received webhook payloads for later inspection and processing.",
+  "category": "Integration",
+  "icon": "Webhook",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["webhook", "http", "endpoint", "receiver", "integration", "api"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "webhook_receiver",
+    "description": "Manage webhook endpoints. Register endpoints with optional secret validation, inspect received payloads, list endpoints, and manage stored webhooks.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["register", "unregister", "list", "inspect", "receive", "clear"],
+          "description": "register (create endpoint), unregister (remove), list (show all), inspect (view payloads), receive (simulate incoming webhook), clear (clear stored payloads)"
+        },
+        "endpointId": {
+          "type": "string",
+          "description": "Unique endpoint identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-friendly endpoint name"
+        },
+        "secret": {
+          "type": "string",
+          "description": "Shared secret for HMAC-SHA256 signature validation"
+        },
+        "payload": {
+          "description": "Webhook payload data (for receive action)"
+        },
+        "headers": {
+          "type": "object",
+          "description": "Webhook request headers (for receive action)"
+        },
+        "maxPayloads": {
+          "type": "number",
+          "description": "Max payloads to store per endpoint (default: 100)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

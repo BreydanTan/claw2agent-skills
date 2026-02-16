@@ -1,0 +1,53 @@
+{
+  "name": "topic-monitor",
+  "version": "1.0.0",
+  "displayName": "Topic Monitor",
+  "description": "Monitor topics and keywords across web sources. Set up keyword watches, track mentions, and get alerts when new content matches your topics.",
+  "category": "Research",
+  "icon": "Bell",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["monitor", "topic", "keyword", "alert", "watch", "tracking"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "topic_monitor",
+    "description": "Monitor topics and keywords. Create keyword watches, check for new mentions, manage alerts, and analyze topic trends.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["watch", "unwatch", "list", "check", "matches", "stats"],
+          "description": "watch (add topic), unwatch (remove), list (show all watches), check (scan for new mentions), matches (view stored matches), stats (topic statistics)"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic name/identifier"
+        },
+        "keywords": {
+          "type": "array",
+          "description": "Keywords to monitor for this topic",
+          "items": { "type": "string" }
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Whether keyword matching is case-sensitive",
+          "default": false
+        },
+        "content": {
+          "type": "string",
+          "description": "Content to scan for matches (for check action)"
+        },
+        "source": {
+          "type": "string",
+          "description": "Source label for the content being checked"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

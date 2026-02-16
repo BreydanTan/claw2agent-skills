@@ -1,0 +1,70 @@
+{
+  "name": "database-query",
+  "version": "1.0.0",
+  "displayName": "Database Query",
+  "description": "Execute database queries through the platform gateway. Supports read-only queries, write operations with confirmation, table inspection, and query plan analysis. All queries are routed through the gateway client - no direct database connections.",
+  "category": "Data",
+  "icon": "Database",
+  "author": "claw2agent",
+  "layer": "L2",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["database", "sql", "query", "data", "tables", "schema"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "gateway",
+    "timeoutMs": 30000,
+    "maxCostUsd": 0.10,
+    "maxRows": 1000,
+    "allowedDatabases": ["default"]
+  },
+  "toolDefinition": {
+    "name": "database_query",
+    "description": "Execute database queries through the platform gateway. Supports SELECT queries, write operations (with confirmation), table schema inspection, table listing, and query execution plan analysis. All operations go through the gateway client for security.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["query", "execute", "describe_table", "list_tables", "explain"],
+          "description": "query (read-only SELECT), execute (INSERT/UPDATE/DELETE with confirmation), describe_table (get table schema), list_tables (list all tables), explain (query execution plan)"
+        },
+        "sql": {
+          "type": "string",
+          "description": "SQL statement to execute (for query, execute, explain actions)"
+        },
+        "database": {
+          "type": "string",
+          "description": "Database connection name/alias (required for all actions)"
+        },
+        "table": {
+          "type": "string",
+          "description": "Table name (for describe_table action)"
+        },
+        "params": {
+          "type": "array",
+          "description": "Parameterized query values (positional placeholders)"
+        },
+        "schema": {
+          "type": "string",
+          "description": "Database schema to filter tables (for list_tables action)"
+        },
+        "confirm": {
+          "type": "boolean",
+          "description": "Confirmation flag required for write operations (execute action)"
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Query timeout in milliseconds (default 30000, max 60000)"
+        },
+        "maxRows": {
+          "type": "number",
+          "description": "Maximum rows to return (default 1000)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

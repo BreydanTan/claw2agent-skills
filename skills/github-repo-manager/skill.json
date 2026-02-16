@@ -1,0 +1,106 @@
+{
+  "name": "github-repo-manager",
+  "version": "1.0.0",
+  "displayName": "GitHub Repository Manager",
+  "description": "Manage GitHub repositories via the GitHub API. Get repo info, list repos, create and list issues, create and list pull requests, and search code. Uses injected provider client for API access (BYOK).",
+  "category": "Developer Tools",
+  "icon": "Github",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["github", "repository", "issues", "pull-requests", "code-search", "developer", "git", "devops"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "github",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "github-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "github_repo_manager",
+    "description": "Manage GitHub repositories: get repo info, list repos, create/list/get issues, create/list/get pull requests, and search code. Layer 1 skill using injected provider client for GitHub API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_repo", "list_repos", "create_issue", "list_issues", "get_issue", "create_pr", "list_prs", "get_pr", "search_code"],
+          "description": "get_repo (repository info), list_repos (repos for user/org), create_issue (new issue), list_issues (issues for repo), get_issue (single issue), create_pr (new pull request), list_prs (pull requests for repo), get_pr (single PR), search_code (search code in repo)"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner (user or organization). Required for all actions."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name. Required for all actions except list_repos."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title for issue or pull request (required for create_issue, create_pr)."
+        },
+        "body": {
+          "type": "string",
+          "description": "Body/description for issue or pull request."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Labels to apply to an issue (create_issue) or filter by (list_issues)."
+        },
+        "assignees": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Assignees for an issue (create_issue)."
+        },
+        "state": {
+          "type": "string",
+          "enum": ["open", "closed", "all"],
+          "description": "Filter issues/PRs by state (default: open)."
+        },
+        "issueNumber": {
+          "type": "number",
+          "description": "Issue number (required for get_issue)."
+        },
+        "head": {
+          "type": "string",
+          "description": "The head branch for a pull request (required for create_pr)."
+        },
+        "base": {
+          "type": "string",
+          "description": "The base branch for a pull request (required for create_pr)."
+        },
+        "draft": {
+          "type": "boolean",
+          "description": "Whether the pull request is a draft (default: false)."
+        },
+        "prNumber": {
+          "type": "number",
+          "description": "Pull request number (required for get_pr)."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query for search_code action (required for search_code)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["all", "owner", "public", "private"],
+          "description": "Repository type filter for list_repos (default: all)."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["created", "updated", "pushed", "full_name"],
+          "description": "Sort field for list_repos (default: updated)."
+        },
+        "perPage": {
+          "type": "number",
+          "description": "Number of results per page (default: 30, max: 100)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

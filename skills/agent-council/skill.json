@@ -1,0 +1,83 @@
+{
+  "name": "agent-council",
+  "version": "1.0.0",
+  "displayName": "Agent Council",
+  "description": "Manage a council of virtual agents that deliberate on decisions using structured debate patterns. Pure local multi-agent collaboration logic with role-based perspective generation and configurable voting methods.",
+  "category": "AI & Agents",
+  "icon": "Users",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["agents", "council", "deliberation", "voting", "multi-agent", "collaboration", "decision-making"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "agent_council",
+    "description": "Manage a council of virtual agents that deliberate on decisions using structured debate patterns. Supports creating councils, adding/removing members with distinct roles, running deliberations, and voting with majority, unanimous, or weighted methods.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_council", "add_member", "remove_member", "deliberate", "vote", "get_council", "list_councils"],
+          "description": "create_council (new council), add_member (add virtual agent), remove_member (remove agent), deliberate (structured debate), vote (council votes on proposal), get_council (council details), list_councils (list all)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the council (required for create_council)"
+        },
+        "topic": {
+          "type": "string",
+          "description": "Topic the council focuses on (required for create_council)"
+        },
+        "votingMethod": {
+          "type": "string",
+          "enum": ["majority", "unanimous", "weighted"],
+          "description": "Voting method for the council: majority (default), unanimous, or weighted"
+        },
+        "councilId": {
+          "type": "string",
+          "description": "Council ID (required for add_member, remove_member, deliberate, vote, get_council)"
+        },
+        "member": {
+          "type": "object",
+          "description": "Member to add: { name, role, perspective, weight? }",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Member name"
+            },
+            "role": {
+              "type": "string",
+              "enum": ["analyst", "critic", "optimist", "pessimist", "domain_expert", "devil_advocate"],
+              "description": "Member role determining their perspective pattern"
+            },
+            "perspective": {
+              "type": "string",
+              "description": "Additional perspective context for the member"
+            },
+            "weight": {
+              "type": "number",
+              "description": "Vote weight for weighted voting (default 1.0)"
+            }
+          }
+        },
+        "memberName": {
+          "type": "string",
+          "description": "Name of member to remove (required for remove_member)"
+        },
+        "question": {
+          "type": "string",
+          "description": "Question for deliberation (required for deliberate)"
+        },
+        "proposal": {
+          "type": "string",
+          "description": "Proposal to vote on (required for vote)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

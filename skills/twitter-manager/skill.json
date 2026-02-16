@@ -1,0 +1,70 @@
+{
+  "name": "twitter-manager",
+  "version": "1.0.0",
+  "displayName": "Twitter Manager",
+  "description": "Manage Twitter/X interactions via the Twitter API. Post tweets, get tweet details, search tweets, get user profiles, view timelines, delete tweets, like tweets, and retweet. Uses injected provider client for API access (BYOK).",
+  "category": "Social Media",
+  "icon": "Twitter",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["twitter", "x", "social-media", "tweets", "timeline", "retweet", "like", "search"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "twitter",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "twitter-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "twitter_manager",
+    "description": "Manage Twitter/X: post tweets, get tweet details, search tweets, get user profiles, view timelines, delete tweets, like tweets, and retweet. Layer 1 skill using injected provider client for Twitter API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["post_tweet", "get_tweet", "search_tweets", "get_user", "get_timeline", "delete_tweet", "like_tweet", "retweet"],
+          "description": "post_tweet (post a new tweet), get_tweet (get tweet details), search_tweets (search recent tweets), get_user (get user profile), get_timeline (get user timeline), delete_tweet (delete a tweet), like_tweet (like a tweet), retweet (retweet a tweet)"
+        },
+        "text": {
+          "type": "string",
+          "description": "Tweet text content (required for post_tweet, max 280 characters)."
+        },
+        "replyTo": {
+          "type": "string",
+          "description": "Tweet ID to reply to (optional, for post_tweet)."
+        },
+        "tweetId": {
+          "type": "string",
+          "description": "Tweet ID (required for get_tweet, delete_tweet, like_tweet, retweet)."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query (required for search_tweets)."
+        },
+        "maxResults": {
+          "type": "number",
+          "description": "Maximum number of results to return (default: 10, max: 100)."
+        },
+        "sortOrder": {
+          "type": "string",
+          "enum": ["recency", "relevancy"],
+          "description": "Sort order for search results (default: recency)."
+        },
+        "username": {
+          "type": "string",
+          "description": "Twitter username (required for get_user)."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Twitter user ID (required for get_timeline)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "markdown-writer",
+  "version": "1.0.0",
+  "displayName": "Markdown Document Writer",
+  "description": "Create, format, and convert Markdown documents. Supports generating structured documents, tables, lists, code blocks, and converting between formats.",
+  "category": "Productivity",
+  "icon": "FileText",
+  "author": "claw2agent",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["markdown", "document", "writing", "formatting", "converter"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {},
+  "toolDefinition": {
+    "name": "markdown_writer",
+    "description": "Create and format Markdown documents. Generate tables, lists, headings, code blocks, and full documents from structured input.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create", "table", "list", "codeblock", "toc", "format"],
+          "description": "The operation: create (full document), table (generate table), list (generate list), codeblock (wrap code), toc (table of contents), format (prettify markdown)"
+        },
+        "title": { "type": "string", "description": "Document or section title" },
+        "sections": { "type": "array", "description": "Array of {heading, content} for document creation" },
+        "headers": { "type": "array", "description": "Table column headers" },
+        "rows": { "type": "array", "description": "Table rows as arrays of strings" },
+        "items": { "type": "array", "description": "List items" },
+        "ordered": { "type": "boolean", "description": "Whether list is ordered", "default": false },
+        "code": { "type": "string", "description": "Code content for codeblock" },
+        "language": { "type": "string", "description": "Language for code block syntax highlighting" },
+        "content": { "type": "string", "description": "Markdown content for format/toc actions" }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "name": "slack-integration",
+  "version": "1.0.0",
+  "displayName": "Slack Integration",
+  "description": "Interact with Slack workspaces via the Slack API. Send messages, manage channels, list messages, add reactions, and invite users. Uses injected provider client for API access (BYOK).",
+  "category": "Communication",
+  "icon": "Slack",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": false,
+  "apiKeyLabel": null,
+  "tags": ["slack", "messaging", "channels", "communication", "workspace", "chat", "reactions", "notifications"],
+  "verified": true,
+  "tier": "free",
+  "implemented": true,
+  "config": {
+    "provider": "slack",
+    "timeoutMs": 15000,
+    "rateLimitProfile": "slack-api",
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "slack_integration",
+    "description": "Interact with Slack workspaces: send messages, list/get/create channels, list messages, add reactions, invite users, and set channel topics. Layer 1 skill using injected provider client for Slack API access.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["send_message", "list_channels", "get_channel", "list_messages", "react", "create_channel", "invite_user", "set_topic"],
+          "description": "send_message (post to channel), list_channels (workspace channels), get_channel (channel info), list_messages (channel history), react (add emoji reaction), create_channel (new channel), invite_user (invite to channel), set_topic (set channel topic)"
+        },
+        "channel": {
+          "type": "string",
+          "description": "Channel ID or name. Required for send_message, get_channel, list_messages, react, invite_user, set_topic."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message text to send (required for send_message)."
+        },
+        "threadTs": {
+          "type": "string",
+          "description": "Thread timestamp for replying in a thread (send_message)."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["public", "private", "all"],
+          "description": "Channel type filter for list_channels (default: public)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return (default varies by action)."
+        },
+        "oldest": {
+          "type": "string",
+          "description": "Start of time range for list_messages (Unix timestamp)."
+        },
+        "latest": {
+          "type": "string",
+          "description": "End of time range for list_messages (Unix timestamp)."
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Message timestamp for react action (required for react)."
+        },
+        "emoji": {
+          "type": "string",
+          "description": "Emoji name without colons for react action (required for react)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Channel name for create_channel (required for create_channel)."
+        },
+        "isPrivate": {
+          "type": "boolean",
+          "description": "Whether to create a private channel (default: false)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Channel description/purpose for create_channel."
+        },
+        "user": {
+          "type": "string",
+          "description": "User ID to invite (required for invite_user)."
+        },
+        "topic": {
+          "type": "string",
+          "description": "Channel topic text (required for set_topic)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}
