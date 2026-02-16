@@ -1,0 +1,16 @@
+{
+  "name": "claw2agent-skills",
+  "version": "1.0.0",
+  "description": "Official skill package repository for the Claw2Agent platform",
+  "main": "registry.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "claw2agent",
+    "skills",
+    "agent",
+    "plugins"
+  ],
+  "license": "MIT"
+}

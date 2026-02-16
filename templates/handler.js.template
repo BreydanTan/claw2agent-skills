@@ -1,0 +1,52 @@
+/**
+ * Skill Handler Template
+ *
+ * Implement your skill logic by filling in the functions below.
+ */
+
+const meta = {
+  name: 'skill-name',
+  version: '1.0.0',
+  description: 'A brief description of what this skill does',
+};
+
+/**
+ * Execute the skill.
+ *
+ * @param {object} context - Execution context provided by the platform.
+ * @param {object} context.params  - Input parameters for this invocation.
+ * @param {object} context.config  - Skill configuration values.
+ * @param {object} context.logger  - Logger instance.
+ * @returns {Promise<object>} The result of the skill execution.
+ */
+async function execute(context) {
+  const { params, config, logger } = context;
+
+  logger.info(`Executing ${meta.name}...`);
+
+  // TODO: Implement your skill logic here
+
+  return {
+    success: true,
+    data: {},
+  };
+}
+
+/**
+ * Validate the skill configuration.
+ *
+ * @param {object} config - Configuration object to validate.
+ * @returns {boolean} True if the configuration is valid.
+ * @throws {Error} If the configuration is invalid.
+ */
+function validate(config) {
+  // TODO: Add your config validation logic here
+
+  return true;
+}
+
+module.exports = {
+  meta,
+  execute,
+  validate,
+};
