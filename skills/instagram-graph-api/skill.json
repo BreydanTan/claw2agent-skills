@@ -1,0 +1,63 @@
+{
+  "name": "instagram-graph-api",
+  "version": "1.0.0",
+  "displayName": "Instagram Graph API",
+  "description": "Interact with the Instagram Graph API to retrieve user profiles, media posts, hashtags, insights/analytics, comments, and stories. Layer 1 skill using provider client for API access.",
+  "category": "Social",
+  "icon": "Instagram",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Instagram Graph API Access Token",
+  "tags": ["instagram", "social", "api", "media", "photos", "stories", "insights"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "instagram_graph_api",
+    "description": "Interact with the Instagram Graph API to retrieve user profiles, media posts, hashtags, insights/analytics, comments, and stories. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_profile", "get_media", "list_media", "search_hashtag", "get_insights", "get_comments", "get_stories"],
+          "description": "get_profile (get user profile), get_media (get a media post), list_media (list user's media), search_hashtag (search hashtags), get_insights (get account analytics), get_comments (get media comments), get_stories (get user's active stories)"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Instagram user ID. Required for get_profile, list_media, get_insights, get_stories."
+        },
+        "mediaId": {
+          "type": "string",
+          "description": "Instagram media ID. Required for get_media, get_comments."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query for hashtag search (max 100 characters). Required for search_hashtag."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of results to return. Range varies by action (default: 25)."
+        },
+        "metrics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Metrics for get_insights. Valid values: impressions, reach, profile_views, follower_count. Defaults to all."
+        },
+        "period": {
+          "type": "string",
+          "enum": ["day", "week", "month"],
+          "description": "Time period for get_insights (default: day)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

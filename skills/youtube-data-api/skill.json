@@ -1,0 +1,69 @@
+{
+  "name": "youtube-data-api",
+  "version": "1.0.0",
+  "displayName": "YouTube Data API",
+  "description": "YouTube Data API interaction skill. Search videos, retrieve video and channel details, list comments, get trending videos, browse playlists, and list channel videos. Layer 1 skill using provider client for API access.",
+  "category": "Social",
+  "icon": "Video",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "YouTube Data API Key",
+  "tags": ["youtube", "video", "api", "search", "channels", "playlists", "comments"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "youtube_data_api",
+    "description": "Search YouTube videos, get video and channel details, list comments, get trending videos, browse playlists, and list channel videos. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["search_videos", "get_video", "get_channel", "get_comments", "get_trending", "get_playlist", "get_channel_videos"],
+          "description": "search_videos (search for videos), get_video (get video details), get_channel (get channel details), get_comments (get video comments), get_trending (get trending videos), get_playlist (get playlist items), get_channel_videos (list channel's videos)"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string. Required for search_videos. Max 500 characters."
+        },
+        "videoId": {
+          "type": "string",
+          "description": "YouTube video ID. Required for get_video and get_comments."
+        },
+        "channelId": {
+          "type": "string",
+          "description": "YouTube channel ID. Required for get_channel and get_channel_videos."
+        },
+        "playlistId": {
+          "type": "string",
+          "description": "YouTube playlist ID. Required for get_playlist."
+        },
+        "order": {
+          "type": "string",
+          "description": "Sort order. For search_videos: relevance|date|viewCount|rating (default: relevance). For get_comments: time|relevance (default: relevance). For get_channel_videos: date|viewCount (default: date)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of results to return. For search_videos/get_playlist/get_channel_videos: 1-50 (default: 25). For get_comments: 1-100 (default: 25)."
+        },
+        "category": {
+          "type": "string",
+          "description": "Video category filter. Optional for get_trending."
+        },
+        "region": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 region code. Optional for get_trending (default: US)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

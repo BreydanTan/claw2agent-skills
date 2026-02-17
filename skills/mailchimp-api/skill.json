@@ -1,0 +1,86 @@
+{
+  "name": "mailchimp-api",
+  "version": "1.0.0",
+  "displayName": "Mailchimp Marketing API",
+  "description": "Interact with the Mailchimp Marketing API to manage campaigns, audiences, subscribers, and reporting. Layer 1 skill using provider client for API access.",
+  "category": "Marketing",
+  "icon": "Mail",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Mailchimp API Key",
+  "tags": ["mailchimp", "email", "marketing", "campaigns", "newsletters", "subscribers"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "mailchimp_api",
+    "description": "Interact with the Mailchimp Marketing API to manage campaigns, audiences, subscribers, and reporting. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_campaigns", "get_campaign", "create_campaign", "list_audiences", "add_subscriber", "get_campaign_report", "search_members"],
+          "description": "list_campaigns (list email campaigns), get_campaign (get campaign details), create_campaign (create a new campaign), list_audiences (list audiences/lists), add_subscriber (add subscriber to list), get_campaign_report (get campaign performance report), search_members (search members across lists)"
+        },
+        "campaignId": {
+          "type": "string",
+          "description": "Campaign ID. Required for get_campaign and get_campaign_report actions."
+        },
+        "status": {
+          "type": "string",
+          "description": "Campaign status filter (save|paused|schedule|sending|sent) for list_campaigns, or subscriber status (subscribed|unsubscribed|pending) for add_subscriber."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return (1-100, default 25). Used by list_campaigns and list_audiences."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["regular", "plaintext"],
+          "description": "Campaign type (default: regular). Used by create_campaign."
+        },
+        "subjectLine": {
+          "type": "string",
+          "description": "Email subject line. Required for create_campaign."
+        },
+        "fromName": {
+          "type": "string",
+          "description": "Sender name. Required for create_campaign."
+        },
+        "replyTo": {
+          "type": "string",
+          "description": "Reply-to email address. Required for create_campaign."
+        },
+        "listId": {
+          "type": "string",
+          "description": "Audience/list ID. Required for create_campaign and add_subscriber. Optional for search_members."
+        },
+        "email": {
+          "type": "string",
+          "description": "Subscriber email address. Required for add_subscriber."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Subscriber first name. Optional for add_subscriber."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Subscriber last name. Optional for add_subscriber."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query (max 200 characters). Required for search_members."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

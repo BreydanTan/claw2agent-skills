@@ -1,0 +1,70 @@
+{
+  "name": "x-twitter-api",
+  "version": "1.0.0",
+  "displayName": "X/Twitter API",
+  "description": "Interact with the X/Twitter API: fetch tweets, search, get user profiles, timelines, post tweets, trending topics, and tweet likes. Layer 1 skill using provider client for API access.",
+  "category": "Social",
+  "icon": "Twitter",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "X/Twitter API Key",
+  "tags": ["twitter", "x", "social", "api", "tweets", "timeline"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "x_twitter_api",
+    "description": "Interact with the X/Twitter API: fetch tweets, search, get user profiles, timelines, post tweets, trending topics, and tweet likes. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_tweet", "search_tweets", "get_user", "get_timeline", "post_tweet", "get_trending", "get_likes"],
+          "description": "get_tweet (fetch tweet by ID), search_tweets (search tweets), get_user (get user profile), get_timeline (get user's tweets), post_tweet (post new tweet), get_trending (trending topics), get_likes (users who liked a tweet)"
+        },
+        "tweetId": {
+          "type": "string",
+          "description": "Tweet ID. Required for get_tweet and get_likes actions."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string (max 512 chars). Required for search_tweets."
+        },
+        "username": {
+          "type": "string",
+          "description": "Twitter/X username (alphanumeric + underscores, max 15 chars). Required for get_user and get_timeline."
+        },
+        "text": {
+          "type": "string",
+          "description": "Tweet text (max 280 chars). Required for post_tweet."
+        },
+        "replyTo": {
+          "type": "string",
+          "description": "Tweet ID to reply to. Optional for post_tweet."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["recency", "relevancy"],
+          "description": "Sort order for search results (default: recency)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return. Varies by action: search_tweets (1-100, default 25), get_timeline (1-100, default 25), get_likes (1-50, default 25)."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location for trending topics (default: worldwide)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

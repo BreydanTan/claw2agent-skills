@@ -1,0 +1,61 @@
+{
+  "name": "reddit-api-manager",
+  "version": "1.0.0",
+  "displayName": "Reddit API Manager",
+  "description": "Interact with the Reddit API to fetch posts, comments, subreddit info, user profiles, search, and list trending topics. Layer 1 skill using provider client for API access.",
+  "category": "Social",
+  "icon": "MessageCircle",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Reddit API Key",
+  "tags": ["reddit", "social", "api", "posts", "comments", "subreddits"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "reddit_api_manager",
+    "description": "Fetch Reddit posts, comments, subreddit info, user profiles, search content, and list trending topics. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_post", "list_posts", "search", "get_subreddit_info", "get_comments", "get_user_info", "list_trending"],
+          "description": "get_post (fetch a post by ID), list_posts (list posts from a subreddit), search (search Reddit), get_subreddit_info (get subreddit details), get_comments (get comments on a post), get_user_info (get user profile), list_trending (list trending subreddits/topics)"
+        },
+        "postId": {
+          "type": "string",
+          "description": "Reddit post ID. Required for get_post and get_comments."
+        },
+        "subreddit": {
+          "type": "string",
+          "description": "Subreddit name (alphanumeric and underscores only). Required for list_posts and get_subreddit_info. Optional for search."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query text. Required for search action."
+        },
+        "username": {
+          "type": "string",
+          "description": "Reddit username. Required for get_user_info."
+        },
+        "sort": {
+          "type": "string",
+          "description": "Sort order. Varies by action: list_posts (hot|new|top|rising), search (relevance|hot|top|new), get_comments (best|top|new|controversial)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return (1-100, default 25)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}
