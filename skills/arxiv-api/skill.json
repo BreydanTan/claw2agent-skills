@@ -1,0 +1,37 @@
+{
+  "name": "arxiv-api",
+  "version": "1.0.0",
+  "displayName": "arXiv API",
+  "description": "Search and retrieve academic papers from arXiv.",
+  "category": "Research",
+  "icon": "book-open",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "arXiv API Key",
+  "tags": ["arxiv", "research", "papers", "academic"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "arxiv_api",
+    "description": "Search and retrieve academic papers from arXiv. Actions: search_papers, get_paper, list_recent, get_categories.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["search_papers", "get_paper", "list_recent", "get_categories"],
+          "description": "The action to perform"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

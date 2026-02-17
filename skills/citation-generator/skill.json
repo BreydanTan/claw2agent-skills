@@ -1,0 +1,12 @@
+{
+  "name": "citation-generator",
+  "displayName": "Citation Generator",
+  "description": "Generate and manage academic citations in multiple formats (APA, MLA, Chicago, BibTeX).",
+  "layer": "L0",
+  "category": "Research",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["create_citation", "format_citation", "list_citations", "get_citation", "delete_citation", "export_bibliography"],
+  "tags": ["citations", "bibliography", "academic", "research"],
+  "timeout": 10000
+}
