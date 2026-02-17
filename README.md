@@ -1,95 +1,260 @@
 # Claw2Agent Skills
 
-Official skill package repository for the Claw2Agent platform.
+The official skill repository for the [Claw2Agent](https://github.com/BreydanTan) platform -- a modular AI agent framework where each skill is a self-contained plugin that extends the agent's capabilities.
 
-## Overview
+**76 skills** across 15+ categories, covering social media APIs, finance, productivity, DevOps, AI/ML, research, and more.
 
-This repository contains the official collection of skills (plugins) for Claw2Agent. Each skill extends the agent's capabilities by providing specialized functionality such as web search, data analysis, file management, and more.
-
-## Directory Structure
-
-```
-claw2agent-skills/
-├── README.md              # Project documentation
-├── LICENSE                 # MIT License
-├── package.json           # Package configuration
-├── registry.json          # Skill index and metadata registry
-├── skills/                # All skill packages
-│   ├── <skill-name>/
-│   │   ├── skill.json     # Skill metadata and configuration
-│   │   ├── handler.js     # Skill implementation
-│   │   └── README.md      # Skill documentation
-│   └── ...
-└── templates/             # Templates for creating new skills
-    ├── skill.json.template
-    └── handler.js.template
-```
-
-## Adding a New Skill
-
-### 1. Create the skill directory
+## Quick Start
 
 ```bash
-mkdir skills/<your-skill-name>
+git clone https://github.com/BreydanTan/claw2agent-skills.git
+cd claw2agent-skills
 ```
 
-### 2. Required files
-
-Every skill must include the following three files:
-
-| File | Description |
-|------|-------------|
-| `skill.json` | Skill metadata — name, description, category, version, author, dependencies, and config schema |
-| `handler.js` | Skill implementation — exports `meta`, `execute(context)`, and `validate(config)` |
-| `README.md` | Skill documentation — usage instructions, examples, and configuration details |
-
-### 3. Use the templates
-
-Copy the templates as a starting point:
+Run any skill's tests:
 
 ```bash
-cp templates/skill.json.template skills/<your-skill-name>/skill.json
-cp templates/handler.js.template skills/<your-skill-name>/handler.js
+node --test skills/<skill-name>/__tests__/handler.test.js
 ```
 
-Then edit the files to implement your skill logic.
+Run all tests:
 
-### 4. Register the skill
+```bash
+node --test skills/**/__tests__/handler.test.js
+```
 
-Add your skill entry to `registry.json` under the `skills` object:
+## Architecture
 
-```json
+Every skill follows a consistent interface with three exports:
+
+```js
+// ESM only
+export async function execute(params, context) { ... }
+export function validate(params) { ... }
+export const meta = { name, version, description, actions };
+```
+
+### Two Layers
+
+| Layer | Description | External API | Example |
+|-------|-------------|-------------|---------|
+| **L0** | Pure local computation, no network calls | No | excel-api, chart-generator, citation-generator |
+| **L1** | External API via injected provider/gateway client | Yes | weather-api, github-api, binance-api |
+
+**L1 skills never hardcode API URLs or keys.** All external access goes through an injected `context.providerClient` (preferred) or `context.gatewayClient` (fallback), enabling BYOK (Bring Your Own Key) and platform-managed authentication.
+
+### Standard Return Format
+
+```js
+// Success
 {
-  "version": "1.0.0",
-  "skills": {
-    "your-skill-name": {
-      "version": "1.0.0",
-      "path": "skills/your-skill-name",
-      "description": "A brief description of your skill",
-      "category": "utility"
-    }
-  }
+  result: "Human-readable description",
+  metadata: { success: true, action: "action_name", timestamp: "..." }
+}
+
+// Error
+{
+  result: "Error: description",
+  metadata: { success: false, error: "ERROR_CODE" }
 }
 ```
 
-## Installation
+### Error Codes
+
+| Code | Description |
+|------|-------------|
+| `INVALID_ACTION` | Action not recognized |
+| `INVALID_INPUT` | Missing or malformed parameter |
+| `PROVIDER_NOT_CONFIGURED` | No API client available (L1) |
+| `TIMEOUT` | Request exceeded timeout (L1) |
+| `UPSTREAM_ERROR` | External API returned an error (L1) |
+| `NOT_FOUND` | Resource does not exist |
+
+## Skill Catalog
+
+### Social & Marketing
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [reddit-api-manager](skills/reddit-api-manager) | L1 | Reddit API -- posts, comments, subreddits, user profiles |
+| [x-twitter-api](skills/x-twitter-api) | L1 | X/Twitter API -- tweets, search, user profiles, timelines |
+| [instagram-graph-api](skills/instagram-graph-api) | L1 | Instagram Graph API -- profiles, media, hashtags, insights |
+| [youtube-data-api](skills/youtube-data-api) | L1 | YouTube Data API -- search, video/channel details, playlists |
+| [mailchimp-api](skills/mailchimp-api) | L1 | Mailchimp Marketing API -- campaigns, audiences, subscribers |
+| [whatsapp-integration](skills/whatsapp-integration) | L1 | WhatsApp Cloud API -- messages, read receipts, templates |
+| [twitter-manager](skills/twitter-manager) | L1 | Twitter/X management -- post tweets, get details |
+| [slack-integration](skills/slack-integration) | L1 | Slack API -- messages, channels, users |
+| [discord-bot](skills/discord-bot) | -- | Discord API -- messages, channels |
+| [telegram-bot](skills/telegram-bot) | -- | Telegram Bot API -- messages, updates |
+
+### Finance & Crypto
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [binance-api](skills/binance-api) | L1 | Binance market data -- prices, order books, klines |
+| [coinbase-api](skills/coinbase-api) | L1 | Coinbase data -- spot prices, exchange rates, currencies |
+| [etherscan-api](skills/etherscan-api) | L1 | Ethereum blockchain -- balances, transactions, gas prices |
+| [stock-crypto-analyzer](skills/stock-crypto-analyzer) | L2 | Real-time quotes, technical analysis (SMA, RSI, MACD) |
+| [price-drop-monitor](skills/price-drop-monitor) | L1 | Track product prices, set alerts, analyze history |
+
+### Productivity & Documents
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [notion-api](skills/notion-api) | L1 | Notion API -- pages, databases, blocks, search |
+| [google-calendar-api](skills/google-calendar-api) | L1 | Google Calendar -- events CRUD, search, availability |
+| [excel-api](skills/excel-api) | L0 | Spreadsheet manipulation with JSON data structures |
+| [pptx-generator](skills/pptx-generator) | L0 | PowerPoint presentation data structure generation |
+| [pdf-ocr-parser](skills/pdf-ocr-parser) | L1 | PDF/image OCR -- text extraction, table parsing |
+| [note-taking](skills/note-taking) | L0 | Notes management with tags and folders |
+| [chart-generator](skills/chart-generator) | L0 | Chart.js-compatible chart configuration builder |
+| [spreadsheet-analyzer](skills/spreadsheet-analyzer) | L0 | Tabular data analysis -- stats, filtering, pivots |
+| [calendar-manager](skills/calendar-manager) | -- | Calendar event management |
+| [markdown-writer](skills/markdown-writer) | -- | Markdown document creation and formatting |
+| [meeting-summarizer](skills/meeting-summarizer) | -- | Meeting transcript analysis and summarization |
+
+### Development & DevOps
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [github-api](skills/github-api) | L1 | GitHub API -- repos, issues, PRs, code search |
+| [docker-api](skills/docker-api) | L1 | Docker Engine API -- containers, images, volumes |
+| [playwright](skills/playwright) | L1 | Browser automation -- navigation, screenshots, extraction |
+| [github-repo-manager](skills/github-repo-manager) | L1 | GitHub repository management |
+| [jira-manager](skills/jira-manager) | L1 | Jira projects and issues management |
+| [linear-tracker](skills/linear-tracker) | L1 | Linear issues, projects, and cycles |
+| [trello-manager](skills/trello-manager) | L1 | Trello boards, lists, and cards |
+| [todoist-manager](skills/todoist-manager) | L1 | Todoist projects and tasks |
+| [code-interpreter](skills/code-interpreter) | -- | Sandboxed JavaScript execution |
+| [uptime-monitor](skills/uptime-monitor) | -- | Website uptime monitoring |
+
+### AI & ML
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [whisper-transcribe](skills/whisper-transcribe) | L1 | OpenAI Whisper speech-to-text transcription |
+| [image-generation](skills/image-generation) | L1 | AI image generation, editing, and variations |
+| [image-upscaler](skills/image-upscaler) | L1 | AI-powered image upscaling and enhancement |
+| [voice-synthesizer](skills/voice-synthesizer) | L1 | Text-to-speech with multiple voices and formats |
+| [speech-to-text](skills/speech-to-text) | L1 | Audio transcription with language detection |
+| [translator-deepl-google](skills/translator-deepl-google) | L1 | Text translation and language detection |
+| [prompt-library](skills/prompt-library) | -- | Reusable prompt template management |
+| [prompt-optimizer](skills/prompt-optimizer) | -- | AI prompt analysis and optimization |
+| [multi-agent-orchestration](skills/multi-agent-orchestration) | -- | Multi-agent workflow orchestration |
+| [agent-council](skills/agent-council) | -- | Virtual agent deliberation council |
+
+### Data & Research
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [weather-api](skills/weather-api) | L1 | Open-Meteo weather data -- current, forecast, history |
+| [web-scraper](skills/web-scraper) | L1 | Web scraping and content extraction |
+| [tavily-search](skills/tavily-search) | L1 | Tavily-powered web search and extraction |
+| [deep-research](skills/deep-research) | -- | Multi-step research with DuckDuckGo |
+| [web-search](skills/web-search) | -- | DuckDuckGo web search |
+| [rss-monitor](skills/rss-monitor) | -- | RSS/Atom feed monitoring |
+| [topic-monitor](skills/topic-monitor) | -- | Topic and keyword tracking |
+| [data-analyzer](skills/data-analyzer) | -- | JSON data array analysis |
+
+### Communication
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [sms-sender-twilio](skills/sms-sender-twilio) | L1 | Twilio SMS/MMS -- send, retrieve, list messages |
+| [email-sender](skills/email-sender) | -- | Email sending via Resend API |
+| [crm-connector](skills/crm-connector) | L1 | CRM contacts, leads, and activity logs |
+
+### Integration & Automation
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [zapier-bridge](skills/zapier-bridge) | L1 | Zapier Zaps -- trigger, list, status, executions |
+| [airtable-database](skills/airtable-database) | L1 | Airtable bases, tables, and records |
+| [notion-integration](skills/notion-integration) | L1 | Notion workspace integration |
+| [webhook-receiver](skills/webhook-receiver) | -- | Incoming webhook endpoint management |
+| [http-api-caller](skills/http-api-caller) | -- | Generic HTTP API requests |
+| [scheduler](skills/scheduler) | -- | Cron-like task scheduling |
+
+### Utilities & Security
+
+| Skill | Layer | Description |
+|-------|-------|-------------|
+| [guard-agent](skills/guard-agent) | L2 | Security threat scanning -- injection, phishing detection |
+| [pii-redaction](skills/pii-redaction) | -- | PII detection and redaction |
+| [file-manager](skills/file-manager) | -- | Sandboxed file operations |
+| [memory-manager](skills/memory-manager) | -- | Persistent key-value storage |
+| [knowledge-base](skills/knowledge-base) | -- | In-memory keyword search store |
+| [remind-me](skills/remind-me) | -- | Timed reminder system |
+| [language-tutor](skills/language-tutor) | -- | Interactive language learning |
+| [coding-agent](skills/coding-agent) | -- | LLM-powered code generation |
+
+## File Structure
+
+Each skill follows this structure:
+
+```
+skills/<skill-name>/
+  handler.js              # Skill implementation
+  skill.json              # Metadata and configuration
+  README.md               # Documentation
+  package.json            # ESM config
+  __tests__/
+    handler.test.js       # Test suite (node:test + node:assert/strict)
+```
+
+## Contributing
+
+### Creating a New Skill
+
+1. Create the skill directory:
+   ```bash
+   mkdir -p skills/my-skill/__tests__
+   ```
+
+2. Implement the required files following the L0 or L1 pattern:
+   - `handler.js` -- must export `execute`, `validate`, `meta`
+   - `skill.json` -- metadata with name, layer, category, actions
+   - `README.md` -- documentation with actions, parameters, examples
+   - `__tests__/handler.test.js` -- comprehensive tests (80+ assertions for L1, 100+ for L0)
+   - `package.json` -- `{"type": "module"}`
+
+3. Run tests:
+   ```bash
+   node --test skills/my-skill/__tests__/handler.test.js
+   ```
+
+4. Submit a PR.
+
+### Conventions
+
+- **ESM only** -- `import`/`export`, no CommonJS
+- **No hardcoded secrets** -- L1 skills use injected clients, never embed API keys
+- **Structured errors** -- use standard error codes (`INVALID_INPUT`, `TIMEOUT`, etc.)
+- **Test framework** -- `node:test` with `node:assert/strict`
+- **Zero runtime dependencies** -- skills use Node.js built-ins and injected clients only
+
+## Testing
+
+All skills are tested using Node.js built-in test runner with strict assertions:
 
 ```bash
-npm install
+# Test a single skill
+node --test skills/weather-api/__tests__/handler.test.js
+
+# Test all skills
+node --test skills/**/__tests__/handler.test.js
 ```
 
-## Usage
+Current test coverage across fully-tested skills: **3,000+ tests, all passing.**
 
-```js
-const registry = require('./registry.json');
-const skill = require(`./skills/${skillName}/handler`);
+## Roadmap
 
-// Validate configuration
-skill.validate(config);
+- [ ] Batch 3: Finance & Research (defi-llama, finnhub, arxiv, semantic-scholar, citation-generator)
+- [ ] Batch 4: Platform & Automation (linkedin, tiktok, wordpress, outlook, podcast-index)
+- [ ] Batch 5: Media & IoT (home-assistant, plex, ffmpeg, music-generator)
+- [ ] Batch 6: Long-tail (ssh, ollama, vision, google-maps, and more)
 
-// Execute the skill
-const result = await skill.execute(context);
-```
+See individual skill READMEs for detailed API documentation.
 
 ## License
 
