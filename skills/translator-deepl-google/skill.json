@@ -1,0 +1,59 @@
+{
+  "name": "translator-deepl-google",
+  "displayName": "Translator (DeepL/Google)",
+  "version": "1.0.0",
+  "description": "Text translation and language detection via provider client",
+  "layer": "L1",
+  "category": "Data",
+  "icon": "Languages",
+  "author": "claw2agent",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Translation API Key",
+  "tags": ["translation", "deepl", "google-translate", "language", "i18n", "localization"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "translator_deepl_google",
+    "description": "Translate text, detect languages, batch translate, check usage, list supported languages, and manage glossaries via provider client (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["translate", "detect_language", "translate_batch", "get_usage", "list_languages", "get_glossaries"],
+          "description": "translate (translate text), detect_language (detect text language), translate_batch (translate multiple texts), get_usage (check API usage/quota), list_languages (list supported languages), get_glossaries (list glossaries)"
+        },
+        "text": {
+          "type": "string",
+          "description": "Text to translate or detect language for. Required for translate and detect_language. Max 10000 chars for translate, 5000 for detect."
+        },
+        "texts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Array of texts for batch translation. Required for translate_batch. Max 50 items, each max 5000 chars."
+        },
+        "source_lang": {
+          "type": "string",
+          "description": "Source language code (2-5 letters, e.g. 'en', 'de'). Optional, auto-detected if omitted."
+        },
+        "target_lang": {
+          "type": "string",
+          "description": "Target language code (2-5 letters, e.g. 'fr', 'es'). Required for translate and translate_batch."
+        },
+        "formality": {
+          "type": "string",
+          "enum": ["default", "more", "less"],
+          "description": "Formality level for translation. Optional, defaults to 'default'."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

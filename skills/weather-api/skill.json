@@ -1,0 +1,65 @@
+{
+  "name": "weather-api",
+  "version": "1.0.0",
+  "displayName": "Weather API",
+  "description": "Weather data retrieval via Open-Meteo API. Supports current weather, forecasts, hourly data, historical data, and location search. Layer 1 skill using provider client for API access.",
+  "category": "IoT/Data",
+  "icon": "Cloud",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Open-Meteo API Key",
+  "tags": ["weather", "forecast", "climate", "temperature", "open-meteo"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "weather_api",
+    "description": "Retrieve weather data via Open-Meteo API. Get current conditions, forecasts, hourly data, historical weather, and search locations. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_current", "get_forecast", "get_hourly", "get_historical", "search_location", "list_variables"],
+          "description": "get_current (current weather for a location), get_forecast (daily forecast up to 16 days), get_hourly (hourly forecast up to 168 hours), get_historical (historical weather data), search_location (search for a location by name), list_variables (list available weather variables)"
+        },
+        "lat": {
+          "type": "number",
+          "description": "Latitude of the location (-90 to 90). Required for get_current, get_forecast, get_hourly, get_historical."
+        },
+        "lon": {
+          "type": "number",
+          "description": "Longitude of the location (-180 to 180). Required for get_current, get_forecast, get_hourly, get_historical."
+        },
+        "days": {
+          "type": "integer",
+          "description": "Number of forecast days (1-16). Optional for get_forecast, defaults to 7."
+        },
+        "hours": {
+          "type": "integer",
+          "description": "Number of forecast hours (1-168). Optional for get_hourly, defaults to 24."
+        },
+        "start_date": {
+          "type": "string",
+          "description": "Start date in YYYY-MM-DD format. Required for get_historical."
+        },
+        "end_date": {
+          "type": "string",
+          "description": "End date in YYYY-MM-DD format. Required for get_historical."
+        },
+        "name": {
+          "type": "string",
+          "description": "Location name to search for. Required for search_location. Max 200 characters."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

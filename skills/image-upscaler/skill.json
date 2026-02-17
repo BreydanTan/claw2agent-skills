@@ -1,0 +1,67 @@
+{
+  "name": "image-upscaler",
+  "version": "1.0.0",
+  "displayName": "Image Upscaler",
+  "description": "AI-powered image upscaling and enhancement via provider client",
+  "category": "Media",
+  "icon": "Image",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Image Upscaling API Key",
+  "tags": ["image", "upscale", "super-resolution", "enhance", "ai", "media"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "image_upscaler",
+    "description": "AI-powered image upscaling and enhancement. Upscale images, enhance quality (denoise + sharpen), get image info, list available models, and check job status. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["upscale", "enhance", "get_info", "list_models", "check_status"],
+          "description": "upscale (upscale an image), enhance (denoise + sharpen an image), get_info (get image metadata), list_models (list available upscaling models), check_status (check processing job status)"
+        },
+        "image": {
+          "type": "string",
+          "description": "Image file path or URL. Required for upscale, enhance, and get_info."
+        },
+        "scale": {
+          "type": "integer",
+          "description": "Upscale factor (2, 3, or 4). Optional for upscale, defaults to 2.",
+          "minimum": 2,
+          "maximum": 4
+        },
+        "format": {
+          "type": "string",
+          "enum": ["png", "jpeg", "webp"],
+          "description": "Output image format. Optional for upscale, defaults to \"png\"."
+        },
+        "denoise_level": {
+          "type": "integer",
+          "description": "Denoise intensity level (0-3). Optional for enhance, defaults to 1.",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "sharpen": {
+          "type": "boolean",
+          "description": "Whether to apply sharpening. Optional for enhance, defaults to true."
+        },
+        "jobId": {
+          "type": "string",
+          "description": "Job ID for status checking. Required for check_status.",
+          "maxLength": 100
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

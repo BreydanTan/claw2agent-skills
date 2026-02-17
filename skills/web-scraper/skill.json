@@ -1,0 +1,70 @@
+{
+  "name": "web-scraper",
+  "version": "1.0.0",
+  "displayName": "Web Scraper",
+  "description": "Web scraping and content extraction via provider client. Fetch pages, extract text, links, metadata, structured data, and HTML tables using cheerio-based approach. Layer 1 skill using provider client for web access.",
+  "category": "Data",
+  "icon": "Globe",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Web Scraper Provider Key",
+  "tags": ["scraping", "web", "html", "extraction", "cheerio", "data"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "web-scraper",
+    "description": "Web scraping and content extraction via provider client. Fetch pages, extract text, links, metadata, structured data, and HTML tables. Layer 1 skill using provider client (BYOK). URL allowlist enforced.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["fetch_page", "extract_text", "extract_links", "extract_metadata", "extract_structured", "extract_tables"],
+          "description": "fetch_page (fetch HTML content), extract_text (extract text content), extract_links (extract all links), extract_metadata (extract page metadata), extract_structured (extract data using CSS selectors), extract_tables (extract HTML tables)"
+        },
+        "url": {
+          "type": "string",
+          "description": "Target URL (must be http:// or https://). Required for all actions."
+        },
+        "headers": {
+          "type": "object",
+          "description": "Custom HTTP headers for fetch_page action. Optional."
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector to target specific element (max 500 chars). Used with extract_text action."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of links to return (1-500, default 100). Used with extract_links action."
+        },
+        "selectors": {
+          "type": "array",
+          "description": "Array of { name, selector, attribute? } objects for structured extraction (max 50). Used with extract_structured action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "selector": { "type": "string" },
+              "attribute": { "type": "string" }
+            },
+            "required": ["name", "selector"]
+          }
+        },
+        "tableIndex": {
+          "type": "number",
+          "description": "Index of the table to extract (default 0). Used with extract_tables action."
+        }
+      },
+      "required": ["action", "url"]
+    }
+  }
+}

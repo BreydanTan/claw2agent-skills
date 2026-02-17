@@ -1,0 +1,12 @@
+{
+  "name": "chart-generator",
+  "displayName": "Chart Generator",
+  "description": "Create and manage chart configurations for data visualization",
+  "layer": "L0",
+  "category": "Data",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["create_chart", "update_chart", "get_chart", "delete_chart", "export_config", "list_charts", "list_chart_types"],
+  "tags": ["chart", "visualization", "graph", "data", "chartjs"],
+  "timeout": 10000
+}

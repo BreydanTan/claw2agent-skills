@@ -1,0 +1,60 @@
+{
+  "name": "crm-connector",
+  "version": "1.0.0",
+  "displayName": "CRM Connector",
+  "description": "Manage CRM contacts, leads, and activity logs via provider client. Supports Salesforce/HubSpot-style operations through injected client.",
+  "category": "Content",
+  "icon": "Users",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "CRM API Key",
+  "tags": ["crm", "contacts", "leads", "deals", "salesforce", "hubspot"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "crm_connector",
+    "description": "Manage CRM contacts, leads, and activity logs via provider client. Supports Salesforce/HubSpot-style operations (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["find_contact", "create_lead", "add_log", "list_deals"],
+          "description": "find_contact (search contacts), create_lead (create a new lead), add_log (add activity log to contact), list_deals (list deals with optional status filter)"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query for contacts. Required for find_contact."
+        },
+        "leadData": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object" }
+          ],
+          "description": "JSON lead data with name, email, company fields. Required for create_lead. Can be a JSON string or object."
+        },
+        "contactId": {
+          "type": "string",
+          "description": "Contact ID. Required for add_log."
+        },
+        "logContent": {
+          "type": "string",
+          "description": "Activity log content. Required for add_log."
+        },
+        "status": {
+          "type": "string",
+          "description": "Filter deals by status: all, open, won, lost. Optional for list_deals, defaults to 'all'."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "zapier-bridge",
+  "version": "1.0.0",
+  "displayName": "Zapier Bridge",
+  "description": "Manage and trigger Zapier Zaps, list executions, and check Zap status via provider client. Layer 1 skill using provider client for API access.",
+  "category": "Content",
+  "icon": "Zap",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Zapier API Key",
+  "tags": ["zapier", "automation", "zaps", "workflow", "integration"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "zapier_bridge",
+    "description": "Manage and trigger Zapier Zaps, list executions, and check Zap status. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_zaps", "run_zap", "get_zap_status", "list_executions"],
+          "description": "list_zaps (list all Zaps), run_zap (trigger a Zap), get_zap_status (check Zap enabled/disabled), list_executions (list recent Zap executions)"
+        },
+        "zapId": {
+          "type": "string",
+          "description": "The Zap identifier. Required for run_zap, get_zap_status, and list_executions."
+        },
+        "status": {
+          "type": "string",
+          "description": "Filter by Zap status: 'enabled', 'disabled', or 'all'. Optional for list_zaps, defaults to 'all'."
+        },
+        "payload": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object" }
+          ],
+          "description": "JSON payload to send to the Zap. Optional for run_zap. Can be a JSON string or an object."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of executions to return. Optional for list_executions, defaults to 10."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

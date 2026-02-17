@@ -1,0 +1,61 @@
+{
+  "name": "whatsapp-integration",
+  "version": "1.0.0",
+  "displayName": "WhatsApp Integration",
+  "description": "Send messages, manage conversations, and handle read receipts via WhatsApp Cloud API. Layer 1 skill using provider client for API access.",
+  "category": "Social",
+  "icon": "MessageCircle",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "WhatsApp Cloud API Token",
+  "tags": ["whatsapp", "messaging", "chat", "social", "cloud-api"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "whatsapp_integration",
+    "description": "Send messages, manage conversations, and handle read receipts via WhatsApp Cloud API. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["send_message", "mark_read", "get_messages", "send_template"],
+          "description": "send_message (send a text message), mark_read (mark a message as read), get_messages (not supported -- webhook-based), send_template (send a template message)"
+        },
+        "to": {
+          "type": "string",
+          "description": "Recipient phone number. Required for send_message and send_template."
+        },
+        "content": {
+          "type": "string",
+          "description": "Message text. Required for send_message."
+        },
+        "messageId": {
+          "type": "string",
+          "description": "Message ID to mark as read. Required for mark_read."
+        },
+        "conversationId": {
+          "type": "string",
+          "description": "Filter by conversation ID. Optional for get_messages."
+        },
+        "templateName": {
+          "type": "string",
+          "description": "Template name. Required for send_template."
+        },
+        "language": {
+          "type": "string",
+          "description": "Language code for template (e.g. \"en\", \"es\"). Optional, defaults to \"en\"."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}
