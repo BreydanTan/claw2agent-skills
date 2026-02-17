@@ -1,0 +1,91 @@
+{
+  "name": "notion-api",
+  "version": "1.0.0",
+  "displayName": "Notion API",
+  "description": "Interact with the Notion API to manage pages, databases, blocks, and search across workspaces. Layer 1 skill using provider client for API access.",
+  "category": "Productivity",
+  "icon": "FileText",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Notion Integration Token",
+  "tags": ["notion", "api", "pages", "databases", "workspace", "notes"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "notion_api",
+    "description": "Interact with the Notion API to get/create/update pages, search the workspace, get/query databases, and get block children. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_page", "create_page", "update_page", "search", "get_database", "query_database", "get_block_children"],
+          "description": "get_page (retrieve a page), create_page (create a new page), update_page (update page properties), search (search workspace), get_database (get database details), query_database (query database entries), get_block_children (get child blocks)"
+        },
+        "pageId": {
+          "type": "string",
+          "description": "UUID of the Notion page. Required for get_page and update_page."
+        },
+        "parentId": {
+          "type": "string",
+          "description": "UUID of the parent page or database. Required for create_page."
+        },
+        "title": {
+          "type": "string",
+          "description": "Page title (max 2000 chars). Required for create_page."
+        },
+        "content": {
+          "type": "string",
+          "description": "Optional text content for the page body. Used with create_page."
+        },
+        "parentType": {
+          "type": "string",
+          "enum": ["database", "page"],
+          "description": "Type of parent (default: page). Used with create_page."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Properties object to update. Required for update_page."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query string (max 500 chars). Required for search."
+        },
+        "filter": {
+          "type": "string",
+          "description": "Filter results by type: page or database. Optional for search. Object filter for query_database."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["last_edited_time", "created_time"],
+          "description": "Sort by timestamp (default: last_edited_time). Used with search."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return (1-100). Defaults vary by action."
+        },
+        "databaseId": {
+          "type": "string",
+          "description": "UUID of the Notion database. Required for get_database and query_database."
+        },
+        "sorts": {
+          "type": "array",
+          "description": "Array of sort objects for query_database."
+        },
+        "blockId": {
+          "type": "string",
+          "description": "UUID of the block. Required for get_block_children."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

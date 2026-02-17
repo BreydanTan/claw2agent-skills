@@ -1,0 +1,87 @@
+{
+  "name": "github-api",
+  "version": "1.0.0",
+  "displayName": "GitHub API",
+  "description": "Interact with the GitHub API to manage repositories, issues, pull requests, and search code. Layer 1 skill using provider client for API access.",
+  "category": "Development",
+  "icon": "GitHub",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "GitHub API Token",
+  "tags": ["github", "git", "api", "repos", "issues", "pull-requests", "code"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "github_api",
+    "description": "Interact with the GitHub API to manage repositories, issues, pull requests, and search code. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_repo", "list_repos", "get_issue", "list_issues", "create_issue", "get_pull_request", "list_pull_requests", "search_code"],
+          "description": "get_repo (get repository details), list_repos (list user repos), get_issue (get issue details), list_issues (list issues in a repo), create_issue (create a new issue), get_pull_request (get PR details), list_pull_requests (list PRs in a repo), search_code (search code across repos)"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Repository owner (username or org). Required for repo, issue, and PR actions."
+        },
+        "repo": {
+          "type": "string",
+          "description": "Repository name. Required for repo, issue, and PR actions."
+        },
+        "username": {
+          "type": "string",
+          "description": "GitHub username. Required for list_repos."
+        },
+        "issueNumber": {
+          "type": "number",
+          "description": "Issue number (positive integer). Required for get_issue."
+        },
+        "prNumber": {
+          "type": "number",
+          "description": "Pull request number (positive integer). Required for get_pull_request."
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue title (max 256 chars). Required for create_issue."
+        },
+        "body": {
+          "type": "string",
+          "description": "Issue body text (max 65536 chars). Optional for create_issue."
+        },
+        "labels": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Array of label strings. Optional for create_issue."
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query (max 256 chars). Required for search_code."
+        },
+        "state": {
+          "type": "string",
+          "enum": ["open", "closed", "all"],
+          "description": "Filter by state (default: open). Used for list_issues and list_pull_requests."
+        },
+        "sort": {
+          "type": "string",
+          "description": "Sort order. Varies by action: list_repos (updated|created|pushed|full_name), list_issues (created|updated|comments), list_pull_requests (created|updated|popularity)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of results to return (1-100, default: 30)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

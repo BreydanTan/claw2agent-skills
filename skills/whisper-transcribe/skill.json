@@ -1,0 +1,58 @@
+{
+  "name": "whisper-transcribe",
+  "version": "1.0.0",
+  "displayName": "Whisper Transcribe",
+  "description": "OpenAI Whisper speech-to-text transcription skill. Transcribe audio, translate to English, detect language, and list supported models and formats. Layer 1 skill using provider client for API access.",
+  "category": "AI",
+  "icon": "Mic",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "OpenAI API Key",
+  "tags": ["whisper", "transcription", "speech-to-text", "audio", "openai"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 60000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "whisper_transcribe",
+    "description": "Transcribe audio to text, translate audio to English, detect audio language, and list supported models and response formats using OpenAI Whisper. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["transcribe", "translate", "detect_language", "list_models", "list_formats"],
+          "description": "transcribe (audio to text), translate (audio to English), detect_language (identify audio language), list_models (list available models), list_formats (list response formats)"
+        },
+        "file": {
+          "type": "string",
+          "description": "Audio file URL or path. Required for transcribe, translate, and detect_language actions."
+        },
+        "model": {
+          "type": "string",
+          "description": "Model to use for transcription (default: whisper-1)."
+        },
+        "language": {
+          "type": "string",
+          "description": "ISO 639-1 two-letter language code (e.g. en, fr, de). Optional for transcribe."
+        },
+        "responseFormat": {
+          "type": "string",
+          "enum": ["json", "text", "srt", "vtt", "verbose_json"],
+          "description": "Response format (default: json)."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Optional context hint for transcription (max 500 characters)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

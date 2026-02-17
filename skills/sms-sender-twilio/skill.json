@@ -1,0 +1,65 @@
+{
+  "name": "sms-sender-twilio",
+  "version": "1.0.0",
+  "displayName": "SMS Sender (Twilio)",
+  "description": "Send SMS/MMS messages, retrieve message details, list messages, get account info, and look up phone numbers via Twilio API. Layer 1 skill using provider client for API access.",
+  "category": "Communication",
+  "icon": "MessageSquare",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Twilio API Key",
+  "tags": ["twilio", "sms", "mms", "messaging", "phone", "communication"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "sms_sender_twilio",
+    "description": "Send SMS/MMS messages, retrieve message details, list messages, get Twilio account info, and look up phone numbers. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["send_sms", "get_message", "list_messages", "send_mms", "get_account", "check_number"],
+          "description": "send_sms (send an SMS), get_message (get message details by SID), list_messages (list messages with optional filters), send_mms (send MMS with media), get_account (get Twilio account info), check_number (look up phone number info)"
+        },
+        "to": {
+          "type": "string",
+          "description": "Destination phone number in E.164 format (e.g. +15551234567). Required for send_sms and send_mms, optional filter for list_messages."
+        },
+        "from": {
+          "type": "string",
+          "description": "Sender phone number in E.164 format (e.g. +15559876543). Required for send_sms and send_mms, optional filter for list_messages."
+        },
+        "body": {
+          "type": "string",
+          "description": "Message body text (max 1600 characters). Required for send_sms, optional for send_mms."
+        },
+        "messageSid": {
+          "type": "string",
+          "description": "Twilio message SID (starts with SM or MM, 34 characters). Required for get_message."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return for list_messages (1-100, default 25)."
+        },
+        "mediaUrl": {
+          "type": "string",
+          "description": "HTTP(S) URL of the media to attach. Required for send_mms."
+        },
+        "number": {
+          "type": "string",
+          "description": "Phone number in E.164 format for lookup. Required for check_number."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

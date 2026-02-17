@@ -1,0 +1,12 @@
+{
+  "name": "pptx-generator",
+  "displayName": "PPTX Generator",
+  "description": "Generate PowerPoint presentation data structures (JSON-based slide definitions)",
+  "layer": "L0",
+  "category": "Productivity",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["create_presentation", "add_slide", "add_text", "add_image", "get_presentation", "list_presentations"],
+  "tags": ["powerpoint", "pptx", "presentation", "slides", "generator"],
+  "timeout": 10000
+}
