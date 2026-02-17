@@ -1,0 +1,49 @@
+{
+  "name": "linkedin-marketing-api",
+  "version": "1.0.0",
+  "displayName": "LinkedIn Marketing API",
+  "description": "Manage LinkedIn posts, company pages, and ad campaigns via Marketing API.",
+  "category": "Social",
+  "icon": "briefcase",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "LinkedIn Marketing API API Key",
+  "tags": [
+    "linkedin",
+    "social",
+    "marketing",
+    "posts"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "linkedin_marketing_api",
+    "description": "Manage LinkedIn posts, company pages, and ad campaigns via Marketing API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_post",
+            "get_profile",
+            "list_posts",
+            "get_analytics"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

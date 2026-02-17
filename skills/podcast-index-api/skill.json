@@ -1,0 +1,49 @@
+{
+  "name": "podcast-index-api",
+  "version": "1.0.0",
+  "displayName": "Podcast Index API",
+  "description": "Search podcasts, get episode data, and trending feeds via Podcast Index.",
+  "category": "Content",
+  "icon": "headphones",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Podcast Index API API Key",
+  "tags": [
+    "podcast",
+    "audio",
+    "rss",
+    "content"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "podcast_index_api",
+    "description": "Search podcasts, get episode data, and trending feeds via Podcast Index.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "search_podcasts",
+            "get_podcast",
+            "get_episodes",
+            "get_trending"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

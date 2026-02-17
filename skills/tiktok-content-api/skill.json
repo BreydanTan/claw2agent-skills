@@ -1,0 +1,49 @@
+{
+  "name": "tiktok-content-api",
+  "version": "1.0.0",
+  "displayName": "TikTok Content API",
+  "description": "Manage TikTok content publishing and analytics via Content Posting API.",
+  "category": "Social",
+  "icon": "video",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "TikTok Content API API Key",
+  "tags": [
+    "tiktok",
+    "social",
+    "video",
+    "content"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "tiktok_content_api",
+    "description": "Manage TikTok content publishing and analytics via Content Posting API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_post",
+            "get_post_status",
+            "list_videos",
+            "get_analytics"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

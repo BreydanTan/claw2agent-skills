@@ -1,0 +1,49 @@
+{
+  "name": "outlook-microsoft-graph-api",
+  "version": "1.0.0",
+  "displayName": "Outlook (Microsoft Graph) API",
+  "description": "Send emails, manage inbox, and handle calendar events via Microsoft Graph API.",
+  "category": "Content",
+  "icon": "mail",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Outlook (Microsoft Graph) API API Key",
+  "tags": [
+    "outlook",
+    "email",
+    "microsoft",
+    "graph"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "outlook_microsoft_graph_api",
+    "description": "Send emails, manage inbox, and handle calendar events via Microsoft Graph API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "send_email",
+            "list_messages",
+            "get_message",
+            "search_messages"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

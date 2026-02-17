@@ -1,0 +1,50 @@
+{
+  "name": "crm-api-salesforce-hubspot",
+  "version": "1.0.0",
+  "displayName": "CRM API (Salesforce/HubSpot)",
+  "description": "Unified CRM access for Salesforce and HubSpot — manage contacts, deals, and pipelines.",
+  "category": "Content",
+  "icon": "users",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "CRM API (Salesforce/HubSpot) API Key",
+  "tags": [
+    "crm",
+    "salesforce",
+    "hubspot",
+    "contacts"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "crm_api_salesforce_hubspot",
+    "description": "Unified CRM access for Salesforce and HubSpot — manage contacts, deals, and pipelines.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "find_contact",
+            "create_contact",
+            "list_deals",
+            "update_deal",
+            "get_pipeline"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

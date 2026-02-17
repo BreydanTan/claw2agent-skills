@@ -1,0 +1,49 @@
+{
+  "name": "meta-ad-library-api",
+  "version": "1.0.0",
+  "displayName": "Meta Ad Library API",
+  "description": "Search and analyze ads from Meta platforms (Facebook/Instagram) via Ad Library API.",
+  "category": "Social",
+  "icon": "megaphone",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Meta Ad Library API API Key",
+  "tags": [
+    "meta",
+    "facebook",
+    "instagram",
+    "ads"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "meta_ad_library_api",
+    "description": "Search and analyze ads from Meta platforms (Facebook/Instagram) via Ad Library API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "search_ads",
+            "get_ad_details",
+            "get_page_ads",
+            "get_ad_spend"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

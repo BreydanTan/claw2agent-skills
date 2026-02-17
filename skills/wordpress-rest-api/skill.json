@@ -1,0 +1,50 @@
+{
+  "name": "wordpress-rest-api",
+  "version": "1.0.0",
+  "displayName": "WordPress REST API",
+  "description": "Manage WordPress posts, pages, and media via REST API.",
+  "category": "Content",
+  "icon": "edit",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "WordPress REST API API Key",
+  "tags": [
+    "wordpress",
+    "cms",
+    "blog",
+    "content"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "wordpress_rest_api",
+    "description": "Manage WordPress posts, pages, and media via REST API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_post",
+            "list_posts",
+            "update_post",
+            "delete_post",
+            "upload_media"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

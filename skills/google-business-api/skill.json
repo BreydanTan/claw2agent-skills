@@ -1,0 +1,49 @@
+{
+  "name": "google-business-api",
+  "version": "1.0.0",
+  "displayName": "Google Business API",
+  "description": "Manage Google Business Profile listings, reviews, and posts.",
+  "category": "Social",
+  "icon": "map-pin",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Google Business API API Key",
+  "tags": [
+    "google",
+    "business",
+    "reviews",
+    "local"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "google_business_api",
+    "description": "Manage Google Business Profile listings, reviews, and posts.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_listing",
+            "list_reviews",
+            "reply_review",
+            "create_post"
+          ],
+          "description": "The action to perform"
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}
