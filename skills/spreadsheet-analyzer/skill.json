@@ -1,0 +1,11 @@
+{
+  "name": "spreadsheet-analyzer",
+  "displayName": "Spreadsheet Analyzer",
+  "description": "Analyze tabular data with statistics, filtering, sorting, aggregation, and pivot tables",
+  "layer": "L0",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["analyze", "filter", "sort", "aggregate", "pivot", "describe_columns", "find_duplicates", "validate_data"],
+  "tags": ["data", "spreadsheet", "analysis", "statistics"],
+  "timeout": 10000
+}

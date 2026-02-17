@@ -1,0 +1,22 @@
+{
+  "name": "note-taking",
+  "displayName": "Note Taking",
+  "description": "Create, manage, search, and organize notes with tags and folders",
+  "layer": "L0",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": [
+    "create_note",
+    "get_note",
+    "update_note",
+    "delete_note",
+    "list_notes",
+    "search_notes",
+    "add_tag",
+    "remove_tag",
+    "move_to_folder",
+    "list_folders"
+  ],
+  "tags": ["notes", "productivity", "organization"],
+  "timeout": 5000
+}

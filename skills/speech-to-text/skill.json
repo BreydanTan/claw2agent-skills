@@ -1,0 +1,11 @@
+{
+  "name": "speech-to-text",
+  "displayName": "Speech to Text",
+  "description": "Transcribe audio to text with language detection, timestamps, and multiple format support",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["transcribe", "translate", "detect_language", "list_languages", "list_models", "transcribe_with_timestamps"],
+  "tags": ["stt", "whisper", "audio", "transcription"],
+  "timeout": 120000
+}

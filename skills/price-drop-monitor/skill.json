@@ -1,0 +1,11 @@
+{
+  "name": "price-drop-monitor",
+  "displayName": "Price Drop Monitor",
+  "description": "Track product prices, set price alerts, and analyze price history",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["check_price", "set_alert", "list_alerts", "remove_alert", "price_history", "compare_prices", "find_deals", "analyze_trend"],
+  "tags": ["shopping", "price", "monitor", "deals"],
+  "timeout": 30000
+}

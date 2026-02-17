@@ -1,0 +1,11 @@
+{
+  "name": "voice-synthesizer",
+  "displayName": "Voice Synthesizer",
+  "description": "Convert text to speech with multiple voices, languages, and audio formats",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["synthesize", "list_voices", "list_languages", "estimate_duration", "synthesize_ssml", "batch_synthesize"],
+  "tags": ["tts", "voice", "audio", "speech"],
+  "timeout": 60000
+}
