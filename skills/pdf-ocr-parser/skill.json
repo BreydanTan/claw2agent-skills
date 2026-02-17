@@ -1,0 +1,49 @@
+{
+  "name": "pdf-ocr-parser",
+  "version": "1.0.0",
+  "displayName": "PDF OCR Parser",
+  "description": "Parse PDFs and images via OCR provider client for text extraction, table extraction, and metadata retrieval. Layer 1 skill using provider client for API access.",
+  "category": "Document",
+  "icon": "FileText",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "OCR API Key",
+  "tags": ["pdf", "ocr", "parser", "text-extraction", "tables", "document"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "pdf_ocr_parser",
+    "description": "Parse PDFs and images via OCR for text extraction, table extraction, and metadata retrieval. Layer 1 skill using provider client for API access (BYOK).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["parse_pdf", "parse_image", "extract_tables", "get_metadata", "list_languages"],
+          "description": "parse_pdf (OCR a PDF file), parse_image (OCR an image file), extract_tables (extract tables from PDF), get_metadata (get PDF metadata), list_languages (list supported OCR languages)"
+        },
+        "file": {
+          "type": "string",
+          "description": "File URL or path. Required for parse_pdf, parse_image, extract_tables, and get_metadata."
+        },
+        "pages": {
+          "type": "string",
+          "description": "Pages to process: \"all\", a single number (e.g. \"3\"), or a range (e.g. \"1-5\"). Optional, defaults to \"all\"."
+        },
+        "language": {
+          "type": "string",
+          "description": "OCR language as ISO 639-1 code (e.g. \"eng\", \"fra\", \"deu\"). Optional, defaults to \"eng\"."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

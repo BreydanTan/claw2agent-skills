@@ -1,0 +1,61 @@
+{
+  "name": "docker-api",
+  "version": "1.0.0",
+  "displayName": "Docker Engine API",
+  "description": "Interact with the Docker Engine API to list/inspect/start/stop containers, list images, fetch container logs, and retrieve container resource stats. Layer 1 skill using provider client for API access. HIGH RISK: includes command whitelisting for container exec.",
+  "category": "DevOps",
+  "icon": "Container",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Docker API Key",
+  "tags": ["docker", "containers", "devops", "api", "images", "logs"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 15000,
+    "maxTimeoutMs": 30000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "docker_api",
+    "description": "Interact with the Docker Engine API to manage containers, images, logs, and stats. Layer 1 skill using provider client for API access (BYOK). HIGH RISK: includes container ID sanitization to prevent injection.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["list_containers", "get_container", "start_container", "stop_container", "list_images", "get_logs", "container_stats"],
+          "description": "list_containers (list all containers), get_container (inspect a container), start_container (start a stopped container), stop_container (stop a running container), list_images (list Docker images), get_logs (get container logs), container_stats (get container resource stats)"
+        },
+        "containerId": {
+          "type": "string",
+          "description": "Container ID or name (alphanumeric, hyphens, underscores, dots; max 128 chars). Required for get_container, start_container, stop_container, get_logs, container_stats."
+        },
+        "all": {
+          "type": "boolean",
+          "description": "Include stopped containers in list_containers (default false)."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Number of results to return for list_containers and list_images (1-100, default 25)."
+        },
+        "timeout": {
+          "type": "number",
+          "description": "Seconds to wait before killing the container for stop_container (0-300, default 10)."
+        },
+        "tail": {
+          "type": "number",
+          "description": "Number of log lines to return for get_logs (1-1000, default 100)."
+        },
+        "timestamps": {
+          "type": "boolean",
+          "description": "Include timestamps in log output for get_logs (default true)."
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

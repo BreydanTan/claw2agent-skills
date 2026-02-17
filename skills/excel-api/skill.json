@@ -1,0 +1,12 @@
+{
+  "name": "excel-api",
+  "displayName": "Excel API",
+  "description": "Excel/spreadsheet manipulation skill with JSON data structures representing spreadsheets",
+  "layer": "L0",
+  "category": "Productivity",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["create_workbook", "add_sheet", "set_cells", "get_sheet", "compute_formula", "export_csv", "list_workbooks"],
+  "tags": ["excel", "spreadsheet", "csv", "workbook", "formulas", "data"],
+  "timeout": 10000
+}

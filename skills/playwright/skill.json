@@ -1,0 +1,74 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "displayName": "Playwright Browser Automation",
+  "description": "Browser automation via provider client. Navigate pages, take screenshots, extract text and links, fill forms, and evaluate JavaScript snippets. Layer 1 skill using provider client for browser access. HIGH RISK: URL allowlist enforced, no arbitrary code execution.",
+  "category": "Automation",
+  "icon": "Globe",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Playwright Provider Key",
+  "tags": ["playwright", "browser", "automation", "scraping", "testing", "web"],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 60000,
+    "featureFlags": {}
+  },
+  "toolDefinition": {
+    "name": "playwright",
+    "description": "Browser automation via provider client. Navigate pages, take screenshots, extract text/links, fill forms, and evaluate JavaScript. Layer 1 skill using provider client (BYOK). HIGH RISK: URL allowlist enforced.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["navigate", "screenshot", "get_text", "get_links", "fill_form", "evaluate"],
+          "description": "navigate (go to URL), screenshot (capture page image), get_text (extract text content), get_links (extract links), fill_form (fill form fields), evaluate (run JS snippet on page)"
+        },
+        "url": {
+          "type": "string",
+          "description": "Target URL (must be http:// or https://). Required for all actions."
+        },
+        "fullPage": {
+          "type": "boolean",
+          "description": "Capture full page screenshot (default false). Used with screenshot action."
+        },
+        "format": {
+          "type": "string",
+          "enum": ["png", "jpeg"],
+          "description": "Screenshot image format (default png). Used with screenshot action."
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector to target specific element (max 200 chars). Used with get_text action."
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of links to return (1-500, default 100). Used with get_links action."
+        },
+        "fields": {
+          "type": "array",
+          "description": "Array of { selector, value } objects for form filling (max 50). Used with fill_form action.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "selector": { "type": "string" },
+              "value": { "type": "string" }
+            },
+            "required": ["selector", "value"]
+          }
+        },
+        "script": {
+          "type": "string",
+          "description": "JavaScript code to evaluate on the page (max 2000 chars). Used with evaluate action. Script is sent to provider, not executed locally."
+        }
+      },
+      "required": ["action", "url"]
+    }
+  }
+}
