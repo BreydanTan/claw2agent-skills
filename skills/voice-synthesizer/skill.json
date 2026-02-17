@@ -7,5 +7,59 @@
   "author": "claw2agent",
   "actions": ["synthesize", "list_voices", "list_languages", "estimate_duration", "synthesize_ssml", "batch_synthesize"],
   "tags": ["tts", "voice", "audio", "speech"],
-  "timeout": 60000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "voice_synthesizer",
+    "description": "Convert text to speech with multiple voices, languages, speed control, and audio format selection.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["synthesize", "list_voices", "list_languages", "estimate_duration", "synthesize_ssml", "batch_synthesize"],
+          "description": "Action to perform"
+        },
+        "text": {
+          "type": "string",
+          "description": "Text to synthesize (max 4096 chars)"
+        },
+        "voice": {
+          "type": "string",
+          "enum": ["alloy", "echo", "fable", "onyx", "nova", "shimmer"],
+          "description": "Voice to use (default: alloy)"
+        },
+        "speed": {
+          "type": "number",
+          "description": "Playback speed 0.25-4.0 (default: 1.0)"
+        },
+        "responseFormat": {
+          "type": "string",
+          "enum": ["mp3", "opus", "aac", "flac", "wav"],
+          "description": "Audio format (default: mp3)"
+        },
+        "model": {
+          "type": "string",
+          "description": "TTS model (default: tts-1)"
+        },
+        "ssml": {
+          "type": "string",
+          "description": "SSML input for synthesize_ssml"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "voice": { "type": "string" },
+              "speed": { "type": "number" }
+            },
+            "required": ["text"]
+          },
+          "description": "Batch items (max 5) for batch_synthesize"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }

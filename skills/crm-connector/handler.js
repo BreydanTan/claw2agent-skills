@@ -237,11 +237,8 @@ function validate(params) {
       return { valid: true };
     }
     case 'list_deals': {
-      // status is optional, defaults to 'all'
-      if (params.status !== undefined && params.status !== null) {
-        if (typeof params.status !== 'string') {
-          return { valid: false, error: 'The "status" parameter must be a string.' };
-        }
+      if (params.status && typeof params.status !== 'string') {
+        return { valid: false, error: 'The "status" parameter must be a string.' };
       }
       return { valid: true };
     }

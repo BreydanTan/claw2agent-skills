@@ -18,5 +18,53 @@
     "list_folders"
   ],
   "tags": ["notes", "productivity", "organization"],
-  "timeout": 5000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "note_taking",
+    "description": "Create, manage, search, and organize notes with tags and folders. Pure local computation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_note", "get_note", "update_note", "delete_note", "list_notes", "search_notes", "add_tag", "remove_tag", "move_to_folder", "list_folders"],
+          "description": "Action to perform"
+        },
+        "title": {
+          "type": "string",
+          "description": "Note title (for create_note, update_note)"
+        },
+        "content": {
+          "type": "string",
+          "description": "Note body text (for create_note, update_note)"
+        },
+        "noteId": {
+          "type": "string",
+          "description": "ID of the note"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags to add/remove or initial tags"
+        },
+        "folder": {
+          "type": "string",
+          "description": "Folder name"
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag to filter by (for list_notes)"
+        },
+        "query": {
+          "type": "string",
+          "description": "Search query (for search_notes)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results to return"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }

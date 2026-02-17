@@ -1,0 +1,34 @@
+{
+  "name": "coinbase-api",
+  "displayName": "Coinbase API",
+  "description": "Access Coinbase cryptocurrency data including spot prices, exchange rates, and supported currencies",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["get_spot_price", "get_exchange_rates", "list_currencies", "get_buy_price", "get_sell_price"],
+  "tags": ["crypto", "coinbase", "trading", "market-data"],
+  "implemented": true,
+  "toolDefinition": {
+    "name": "coinbase_api",
+    "description": "Access Coinbase cryptocurrency data including spot prices, exchange rates, buy/sell prices, and supported currencies.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_spot_price", "get_exchange_rates", "list_currencies", "get_buy_price", "get_sell_price"],
+          "description": "Action to perform"
+        },
+        "currencyPair": {
+          "type": "string",
+          "description": "Currency pair (e.g. BTC-USD)"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Base currency for exchange rates (e.g. USD)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

@@ -7,5 +7,66 @@
   "author": "claw2agent",
   "actions": ["check_price", "set_alert", "list_alerts", "remove_alert", "price_history", "compare_prices", "find_deals", "analyze_trend"],
   "tags": ["shopping", "price", "monitor", "deals"],
-  "timeout": 30000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "price_drop_monitor",
+    "description": "Track product prices, set price alerts, compare prices across stores, find deals, and analyze price trends.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["check_price", "set_alert", "list_alerts", "remove_alert", "price_history", "compare_prices", "find_deals", "analyze_trend"],
+          "description": "Action to perform"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Product ID or URL"
+        },
+        "url": {
+          "type": "string",
+          "description": "Product URL (alternative to productId)"
+        },
+        "store": {
+          "type": "string",
+          "description": "Store name"
+        },
+        "stores": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of stores for compare_prices"
+        },
+        "targetPrice": {
+          "type": "number",
+          "description": "Target price for set_alert"
+        },
+        "notifyMethod": {
+          "type": "string",
+          "enum": ["email", "sms", "push", "webhook"],
+          "description": "Notification method for alerts (default: email)"
+        },
+        "alertId": {
+          "type": "string",
+          "description": "Alert ID for remove_alert"
+        },
+        "days": {
+          "type": "number",
+          "description": "Number of days for price_history/analyze_trend (default: 30)"
+        },
+        "category": {
+          "type": "string",
+          "description": "Product category for find_deals"
+        },
+        "maxPrice": {
+          "type": "number",
+          "description": "Max price filter for find_deals"
+        },
+        "minDiscount": {
+          "type": "number",
+          "description": "Min discount percentage for find_deals"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }

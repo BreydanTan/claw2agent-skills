@@ -7,5 +7,100 @@
   "author": "claw2agent",
   "actions": ["analyze", "filter", "sort", "aggregate", "pivot", "describe_columns", "find_duplicates", "validate_data"],
   "tags": ["data", "spreadsheet", "analysis", "statistics"],
-  "timeout": 10000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "spreadsheet_analyzer",
+    "description": "Analyze tabular data (array of objects) with statistics, filtering, sorting, aggregation, pivot tables, and validation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["analyze", "filter", "sort", "aggregate", "pivot", "describe_columns", "find_duplicates", "validate_data"],
+          "description": "Action to perform"
+        },
+        "data": {
+          "type": "array",
+          "description": "Array of row objects to analyze",
+          "items": { "type": "object" }
+        },
+        "columns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Columns to analyze or check"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "operator": { "type": "string", "enum": ["eq", "neq", "gt", "gte", "lt", "lte", "contains", "startsWith", "endsWith"] },
+              "value": { "type": ["string", "number", "boolean"] }
+            }
+          },
+          "description": "Filter conditions (for filter)"
+        },
+        "sortBy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "direction": { "type": "string", "enum": ["asc", "desc"] }
+            }
+          },
+          "description": "Sort order (for sort)"
+        },
+        "groupBy": {
+          "type": "string",
+          "description": "Column to group by (for aggregate)"
+        },
+        "aggregations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "function": { "type": "string", "enum": ["sum", "avg", "count", "min", "max"] }
+            }
+          },
+          "description": "Aggregation functions (for aggregate)"
+        },
+        "rowField": {
+          "type": "string",
+          "description": "Row field for pivot"
+        },
+        "columnField": {
+          "type": "string",
+          "description": "Column field for pivot"
+        },
+        "valueField": {
+          "type": "string",
+          "description": "Value field to aggregate for pivot"
+        },
+        "aggregation": {
+          "type": "string",
+          "enum": ["sum", "avg", "count", "min", "max"],
+          "description": "Aggregation function for pivot"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "column": { "type": "string" },
+              "rule": { "type": "string", "enum": ["not_null", "unique", "type", "range", "pattern"] },
+              "min": { "type": "number" },
+              "max": { "type": "number" },
+              "pattern": { "type": "string" },
+              "expectedType": { "type": "string" }
+            }
+          },
+          "description": "Validation rules (for validate_data)"
+        }
+      },
+      "required": ["action", "data"]
+    }
+  }
 }

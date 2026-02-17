@@ -1,0 +1,42 @@
+{
+  "name": "etherscan-api",
+  "displayName": "Etherscan API",
+  "description": "Access Ethereum blockchain data including balances, transactions, and gas prices",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["get_balance", "get_transactions", "get_gas_price", "get_token_balance", "get_block"],
+  "tags": ["crypto", "ethereum", "blockchain", "etherscan"],
+  "implemented": true,
+  "toolDefinition": {
+    "name": "etherscan_api",
+    "description": "Access Ethereum blockchain data including account balances, transactions, gas prices, token balances, and blocks.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_balance", "get_transactions", "get_gas_price", "get_token_balance", "get_block"],
+          "description": "Action to perform"
+        },
+        "address": {
+          "type": "string",
+          "description": "Ethereum address (0x...)"
+        },
+        "contractAddress": {
+          "type": "string",
+          "description": "ERC-20 token contract address"
+        },
+        "blockNumber": {
+          "type": "string",
+          "description": "Block number or 'latest'"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results to return"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

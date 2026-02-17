@@ -8,5 +8,66 @@
   "author": "claw2agent",
   "actions": ["create_presentation", "add_slide", "add_text", "add_image", "get_presentation", "list_presentations"],
   "tags": ["powerpoint", "pptx", "presentation", "slides", "generator"],
-  "timeout": 10000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "pptx_generator",
+    "description": "Generate PowerPoint presentation data structures (JSON-based slide definitions). Pure local computation.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_presentation", "add_slide", "add_text", "add_image", "get_presentation", "list_presentations"],
+          "description": "Action to perform: create_presentation, add_slide, add_text, add_image, get_presentation, list_presentations"
+        },
+        "title": {
+          "type": "string",
+          "description": "Presentation title (for create_presentation) or slide title (for add_slide)"
+        },
+        "author": {
+          "type": "string",
+          "description": "Presentation author (for create_presentation)"
+        },
+        "theme": {
+          "type": "string",
+          "enum": ["default", "dark", "corporate", "minimal"],
+          "description": "Presentation theme (for create_presentation)"
+        },
+        "presentationId": {
+          "type": "string",
+          "description": "ID of the presentation to modify or retrieve"
+        },
+        "layout": {
+          "type": "string",
+          "enum": ["title", "content", "two_column", "image", "blank"],
+          "description": "Slide layout (for add_slide)"
+        },
+        "body": {
+          "type": "string",
+          "description": "Slide body text (for add_slide)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Speaker notes (for add_slide)"
+        },
+        "slideIndex": {
+          "type": "number",
+          "description": "Index of slide to modify (for add_text, add_image)"
+        },
+        "text": {
+          "type": "string",
+          "description": "Text content to add (for add_text)"
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of image to add (for add_image)"
+        },
+        "options": {
+          "type": "object",
+          "description": "Formatting/positioning options (for add_text, add_image)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }

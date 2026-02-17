@@ -8,5 +8,59 @@
   "author": "claw2agent",
   "actions": ["create_workbook", "add_sheet", "set_cells", "get_sheet", "compute_formula", "export_csv", "list_workbooks"],
   "tags": ["excel", "spreadsheet", "csv", "workbook", "formulas", "data"],
-  "timeout": 10000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "excel_api",
+    "description": "Excel/spreadsheet manipulation with JSON structures. Create workbooks, sheets, set cells, computed formulas.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_workbook", "add_sheet", "set_cells", "get_sheet", "compute_formula", "export_csv", "list_workbooks"],
+          "description": "Action to perform"
+        },
+        "name": {
+          "type": "string",
+          "description": "Workbook name (for create_workbook)"
+        },
+        "workbookId": {
+          "type": "string",
+          "description": "ID of the workbook"
+        },
+        "sheetName": {
+          "type": "string",
+          "description": "Name of the sheet"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": { "type": "number" },
+              "col": { "type": "number" },
+              "value": { "type": ["string", "number", "boolean", "null"] }
+            }
+          },
+          "description": "Array of cells to set (for set_cells)"
+        },
+        "formula": {
+          "type": "string",
+          "enum": ["SUM", "AVG", "COUNT", "MIN", "MAX", "MEDIAN"],
+          "description": "Formula to compute (for compute_formula)"
+        },
+        "range": {
+          "type": "object",
+          "properties": {
+            "startRow": { "type": "number" },
+            "startCol": { "type": "number" },
+            "endRow": { "type": "number" },
+            "endCol": { "type": "number" }
+          },
+          "description": "Cell range for formula (for compute_formula)"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }

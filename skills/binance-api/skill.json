@@ -1,0 +1,39 @@
+{
+  "name": "binance-api",
+  "displayName": "Binance API",
+  "description": "Access Binance cryptocurrency market data including prices, order books, and trading pairs",
+  "layer": "L1",
+  "version": "1.0.0",
+  "author": "claw2agent",
+  "actions": ["get_price", "get_order_book", "get_ticker", "list_symbols", "get_klines"],
+  "tags": ["crypto", "binance", "trading", "market-data"],
+  "implemented": true,
+  "toolDefinition": {
+    "name": "binance_api",
+    "description": "Access Binance cryptocurrency market data including prices, order books, tickers, and candlestick data.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["get_price", "get_order_book", "get_ticker", "list_symbols", "get_klines"],
+          "description": "Action to perform"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Trading pair symbol (e.g. BTCUSDT)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Max results to return"
+        },
+        "interval": {
+          "type": "string",
+          "enum": ["1m", "5m", "15m", "1h", "4h", "1d", "1w"],
+          "description": "Kline/candlestick interval"
+        }
+      },
+      "required": ["action"]
+    }
+  }
+}

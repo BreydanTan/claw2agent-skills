@@ -8,5 +8,66 @@
   "author": "claw2agent",
   "actions": ["create_chart", "update_chart", "get_chart", "delete_chart", "export_config", "list_charts", "list_chart_types"],
   "tags": ["chart", "visualization", "graph", "data", "chartjs"],
-  "timeout": 10000
+  "implemented": true,
+  "toolDefinition": {
+    "name": "chart_generator",
+    "description": "Create and manage chart configurations for data visualization (Chart.js compatible).",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["create_chart", "update_chart", "get_chart", "delete_chart", "export_config", "list_charts", "list_chart_types"],
+          "description": "Action to perform"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["line", "bar", "pie", "doughnut", "radar", "scatter", "area"],
+          "description": "Chart type (for create_chart)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Chart title"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "labels": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "X-axis labels"
+            },
+            "datasets": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": { "type": "string" },
+                  "data": { "type": "array", "items": { "type": "number" } }
+                },
+                "required": ["label", "data"]
+              },
+              "description": "Data series"
+            }
+          },
+          "description": "Chart data object"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "responsive": { "type": "boolean" },
+            "legend": { "type": "boolean" },
+            "backgroundColor": { "type": "string" },
+            "borderColor": { "type": "string" }
+          },
+          "description": "Chart options"
+        },
+        "chartId": {
+          "type": "string",
+          "description": "ID of the chart to operate on"
+        }
+      },
+      "required": ["action"]
+    }
+  }
 }
