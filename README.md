@@ -247,14 +247,185 @@ node --test skills/**/__tests__/handler.test.js
 
 Current test coverage across fully-tested skills: **3,000+ tests, all passing.**
 
+## Using with OpenClaw
+
+[OpenClaw](https://github.com/openclaw/openclaw) is an open-source AI agent platform that supports workspace skills. Claw2Agent skills can be integrated with OpenClaw in two ways:
+
+### Method 1: Workspace Skill (Recommended)
+
+Each claw2agent skill can be loaded as an OpenClaw workspace skill by adding a `SKILL.md` file that teaches the agent how to invoke the handler.
+
+**Step 1:** Clone this repo into your OpenClaw workspace:
+
+```bash
+cd ~/.openclaw/workspace
+git clone https://github.com/BreydanTan/claw2agent-skills.git
+```
+
+**Step 2:** Symlink the skills you want into the workspace skills directory:
+
+```bash
+# Link a single skill
+ln -s ~/.openclaw/workspace/claw2agent-skills/skills/weather-api \
+      ~/.openclaw/workspace/skills/claw2agent-weather
+
+# Or link multiple skills at once
+for skill in weather-api web-scraper github-api binance-api; do
+  ln -s ~/.openclaw/workspace/claw2agent-skills/skills/$skill \
+        ~/.openclaw/workspace/skills/claw2agent-$skill
+done
+```
+
+**Step 3:** Create a `SKILL.md` in each linked skill folder. Example for `weather-api`:
+
+```markdown
+---
+name: claw2agent-weather
+description: Fetch current weather, forecasts, and historical weather data for any location. Use when the user asks about weather, temperature, or climate.
+user-invocable: true
+metadata:
+  {"openclaw":{"requires":{"bins":["node"]},"emoji":"🌤️"}}
+---
+
+# Weather API Skill
+
+This skill provides weather data via the claw2agent weather-api handler.
+
+## Available Actions
+
+- `get_current` — Get current weather for a location
+- `get_forecast` — Get multi-day forecast
+- `get_history` — Get historical weather data
+- `list_locations` — Search for location coordinates
+
+## Usage
+
+To call this skill, use the exec tool to run the handler:
+
+\```bash
+node -e "
+  import('./handler.js').then(async m => {
+    const result = await m.execute(
+      { action: 'get_current', location: 'Tokyo' },
+      { providerClient: { request: async (method, path) => {
+          const res = await fetch('https://api.open-meteo.com/v1' + path);
+          return res.json();
+        }
+      }}
+    );
+    console.log(JSON.stringify(result, null, 2));
+  });
+"
+\```
+
+When the user asks for weather, determine the appropriate action and parameters, then invoke using the pattern above.
+```
+
+**Step 4:** Enable in `openclaw.json` (optional, workspace skills are enabled by default):
+
+```json
+{
+  "skills": {
+    "entries": {
+      "claw2agent-weather": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+### Method 2: Direct Node.js Integration
+
+If you're building a custom OpenClaw setup or using the Gateway API directly, you can import skills as ESM modules:
+
+```js
+import { execute, validate, meta } from './skills/weather-api/handler.js';
+
+// Validate parameters
+const validation = validate({ action: 'get_current', location: 'Tokyo' });
+if (!validation.valid) {
+  console.error(validation.error);
+  process.exit(1);
+}
+
+// Execute with a provider client
+const result = await execute(
+  { action: 'get_current', location: 'Tokyo' },
+  {
+    providerClient: {
+      request: async (method, path, body, opts) => {
+        // Route through OpenClaw Gateway or direct API call
+        const response = await fetch(`https://your-api-base${path}`, {
+          method,
+          headers: { 'Authorization': `Bearer ${process.env.API_KEY}` },
+          body: body ? JSON.stringify(body) : undefined,
+          signal: opts?.signal,
+        });
+        return response.json();
+      }
+    },
+    config: { timeoutMs: 30000 }
+  }
+);
+
+console.log(result);
+// { result: "Current weather in Tokyo: 18°C, partly cloudy", metadata: { success: true, ... } }
+```
+
+### Method 3: ClawHub Publishing
+
+To publish individual skills to [ClawHub](https://clawdhub.com) for community distribution:
+
+```bash
+# Install ClawHub CLI
+npm install -g clawdhub
+
+# Navigate to a skill
+cd skills/weather-api
+
+# Publish (requires ClawHub account)
+clawdhub publish
+```
+
+### Provider Client Pattern
+
+The key concept for OpenClaw integration is the **provider client**. L1 skills expect a `context.providerClient` object with a `request(method, path, body, opts)` method. This allows OpenClaw's Gateway to manage API keys and routing centrally:
+
+```js
+// The providerClient abstraction
+const providerClient = {
+  request: async (method, path, body, opts) => {
+    // OpenClaw Gateway handles auth, rate limiting, and routing
+    return await openclawGateway.routeRequest({
+      skill: 'weather-api',
+      method,
+      path,
+      body,
+      signal: opts?.signal
+    });
+  }
+};
+```
+
+This design means skills never touch API keys directly -- the platform manages all credentials, enabling BYOK (Bring Your Own Key) and centralized secret management.
+
 ## Roadmap
 
 - [ ] Batch 3: Finance & Research (defi-llama, finnhub, arxiv, semantic-scholar, citation-generator)
 - [ ] Batch 4: Platform & Automation (linkedin, tiktok, wordpress, outlook, podcast-index)
 - [ ] Batch 5: Media & IoT (home-assistant, plex, ffmpeg, music-generator)
 - [ ] Batch 6: Long-tail (ssh, ollama, vision, google-maps, and more)
+- [ ] SKILL.md auto-generation for all skills
+- [ ] ClawHub publishing pipeline
 
 See individual skill READMEs for detailed API documentation.
+
+## Resources
+
+- [OpenClaw Documentation](https://docs.openclaw.ai/tools/skills) -- Official skills guide
+- [ClawHub Registry](https://clawdhub.com) -- Community skill marketplace
+- [OpenClaw GitHub](https://github.com/openclaw/openclaw) -- Platform source code
 
 ## License
 
