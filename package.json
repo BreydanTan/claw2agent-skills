@@ -4,7 +4,19 @@
   "description": "Official skill package repository for the Claw2Agent platform",
   "main": "registry.json",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test skills/**/__tests__/handler.test.js",
+    "test:handler": "node --test skills/**/__tests__/handler.test.js",
+    "test:skillmd": "node --test skills/**/__tests__/skillmd.test.js",
+    "gen:skill-md": "node --input-type=module < scripts/gen-skill-md.js",
+    "gen:skillmd-tests": "node --input-type=module < scripts/gen-skillmd-tests.js",
+    "gen:plugin-bundles": "node --input-type=module < scripts/gen-plugin-bundles.js",
+    "gen:test-report": "node --input-type=module < scripts/gen-test-report.js",
+    "gen:security-report": "node --input-type=module < scripts/gen-security-report.js",
+    "lint:skill-md": "node --input-type=module < scripts/lint-skill-md.js",
+    "lint:consistency": "node --input-type=module < scripts/check-skill-consistency.js",
+    "lint:manifest": "node --input-type=module < scripts/validate-plugin-manifest.js",
+    "ci": "npm run lint:skill-md && npm run lint:consistency && npm run lint:manifest",
+    "ci:full": "npm run ci && npm run test:handler && npm run test:skillmd && npm run gen:test-report && npm run gen:security-report"
   },
   "keywords": [
     "claw2agent",
@@ -14,3 +26,4 @@
   ],
   "license": "MIT"
 }
+

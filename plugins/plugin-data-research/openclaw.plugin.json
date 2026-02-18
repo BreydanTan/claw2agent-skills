@@ -1,0 +1,40 @@
+{
+  "id": "@claw2agent/plugin-data-research",
+  "name": "Data & Research Plugin",
+  "version": "1.0.0",
+  "description": "Skills for web search, data analysis, academic research, charts, databases, and translation.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "data",
+    "research",
+    "search",
+    "analysis",
+    "academic"
+  ],
+  "skills": [
+    "../../skills/airtable-database",
+    "../../skills/apple-health-parser",
+    "../../skills/arxiv-api",
+    "../../skills/chart-generator",
+    "../../skills/citation-generator",
+    "../../skills/data-analyzer",
+    "../../skills/database-query",
+    "../../skills/deep-research",
+    "../../skills/excel-handler",
+    "../../skills/google-maps-api",
+    "../../skills/google-trends-api",
+    "../../skills/rss-monitor",
+    "../../skills/semantic-scholar-api",
+    "../../skills/tavily-search",
+    "../../skills/topic-monitor",
+    "../../skills/translator-deepl-google",
+    "../../skills/web-scraper",
+    "../../skills/web-search"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "data-research"
+  }
+}

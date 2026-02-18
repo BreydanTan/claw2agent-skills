@@ -1,0 +1,22 @@
+{
+  "name": "@claw2agent/plugin-automation-integration",
+  "version": "1.0.0",
+  "description": "Skills for Zapier, webhooks, Playwright browser automation, and workflow scheduling.",
+  "type": "module",
+  "keywords": [
+    "automation",
+    "integration",
+    "zapier",
+    "webhooks",
+    "playwright"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/playwright/SKILL.md",
+      "../../skills/scheduler/SKILL.md",
+      "../../skills/webhook-receiver/SKILL.md"
+    ]
+  }
+}

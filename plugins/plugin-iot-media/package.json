@@ -1,0 +1,32 @@
+{
+  "name": "@claw2agent/plugin-iot-media",
+  "version": "1.0.0",
+  "description": "Skills for Home Assistant, Plex, Frigate NVR, video editing, music generation, and media management.",
+  "type": "module",
+  "keywords": [
+    "iot",
+    "media",
+    "home-assistant",
+    "plex",
+    "video",
+    "music"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/calibre-api/SKILL.md",
+      "../../skills/color-palette-extractor/SKILL.md",
+      "../../skills/frigate-nvr-api/SKILL.md",
+      "../../skills/home-assistant-api/SKILL.md",
+      "../../skills/image-upscaler/SKILL.md",
+      "../../skills/minecraft-bot-controller/SKILL.md",
+      "../../skills/music-generator/SKILL.md",
+      "../../skills/plex-api/SKILL.md",
+      "../../skills/transmission-rpc/SKILL.md",
+      "../../skills/video-downloader/SKILL.md",
+      "../../skills/video-editor-ffmpeg/SKILL.md",
+      "../../skills/weather-api/SKILL.md"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "@claw2agent/plugin-automation-integration",
+  "name": "Automation & Integration Plugin",
+  "version": "1.0.0",
+  "description": "Skills for Zapier, webhooks, Playwright browser automation, and workflow scheduling.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "automation",
+    "integration",
+    "zapier",
+    "webhooks",
+    "playwright"
+  ],
+  "skills": [
+    "../../skills/playwright",
+    "../../skills/scheduler",
+    "../../skills/webhook-receiver"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "automation-integration"
+  }
+}

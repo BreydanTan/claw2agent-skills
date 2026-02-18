@@ -1,0 +1,31 @@
+{
+  "name": "@claw2agent/plugin-ai-ml",
+  "version": "1.0.0",
+  "description": "Skills for AI orchestration, image generation, local LLMs, vision models, sentiment analysis, and prompt engineering.",
+  "type": "module",
+  "keywords": [
+    "ai",
+    "ml",
+    "llm",
+    "vision",
+    "sentiment",
+    "prompts"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/agent-council/SKILL.md",
+      "../../skills/image-generation/SKILL.md",
+      "../../skills/multi-agent-orchestration/SKILL.md",
+      "../../skills/ollama-local-llm/SKILL.md",
+      "../../skills/prompt-generator/SKILL.md",
+      "../../skills/prompt-library/SKILL.md",
+      "../../skills/prompt-optimizer/SKILL.md",
+      "../../skills/sentiment-analysis/SKILL.md",
+      "../../skills/translation-hub/SKILL.md",
+      "../../skills/vision-model/SKILL.md",
+      "../../skills/whisper-transcribe/SKILL.md"
+    ]
+  }
+}

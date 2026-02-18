@@ -1,0 +1,37 @@
+{
+  "id": "@claw2agent/plugin-development-devops",
+  "name": "Development & DevOps Plugin",
+  "version": "1.0.0",
+  "description": "Skills for code execution, Docker, SSH, GitHub, SQL analysis, log monitoring, and API tooling.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "devops",
+    "development",
+    "docker",
+    "github",
+    "sql",
+    "ssh"
+  ],
+  "skills": [
+    "../../skills/code-interpreter",
+    "../../skills/code-sandbox-e2b",
+    "../../skills/coding-agent",
+    "../../skills/docker-api",
+    "../../skills/github-api",
+    "../../skills/github-repo-manager",
+    "../../skills/http-api-caller",
+    "../../skills/log-monitor",
+    "../../skills/npm-audit-snyk",
+    "../../skills/sql-analyzer",
+    "../../skills/ssh-client",
+    "../../skills/swagger-openapi-generator",
+    "../../skills/test-generator",
+    "../../skills/uptime-monitor"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "development-devops"
+  }
+}

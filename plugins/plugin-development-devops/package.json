@@ -1,0 +1,34 @@
+{
+  "name": "@claw2agent/plugin-development-devops",
+  "version": "1.0.0",
+  "description": "Skills for code execution, Docker, SSH, GitHub, SQL analysis, log monitoring, and API tooling.",
+  "type": "module",
+  "keywords": [
+    "devops",
+    "development",
+    "docker",
+    "github",
+    "sql",
+    "ssh"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/code-interpreter/SKILL.md",
+      "../../skills/code-sandbox-e2b/SKILL.md",
+      "../../skills/coding-agent/SKILL.md",
+      "../../skills/docker-api/SKILL.md",
+      "../../skills/github-api/SKILL.md",
+      "../../skills/github-repo-manager/SKILL.md",
+      "../../skills/http-api-caller/SKILL.md",
+      "../../skills/log-monitor/SKILL.md",
+      "../../skills/npm-audit-snyk/SKILL.md",
+      "../../skills/sql-analyzer/SKILL.md",
+      "../../skills/ssh-client/SKILL.md",
+      "../../skills/swagger-openapi-generator/SKILL.md",
+      "../../skills/test-generator/SKILL.md",
+      "../../skills/uptime-monitor/SKILL.md"
+    ]
+  }
+}

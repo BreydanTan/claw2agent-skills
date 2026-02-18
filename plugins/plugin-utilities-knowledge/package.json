@@ -1,0 +1,30 @@
+{
+  "name": "@claw2agent/plugin-utilities-knowledge",
+  "version": "1.0.0",
+  "description": "Skills for file management, memory storage, knowledge bases, reminders, and general utilities.",
+  "type": "module",
+  "keywords": [
+    "utilities",
+    "knowledge",
+    "files",
+    "memory",
+    "reminders"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/binance-api/SKILL.md",
+      "../../skills/coinbase-api/SKILL.md",
+      "../../skills/etherscan-api/SKILL.md",
+      "../../skills/file-manager/SKILL.md",
+      "../../skills/knowledge-base/SKILL.md",
+      "../../skills/memory-manager/SKILL.md",
+      "../../skills/note-taking/SKILL.md",
+      "../../skills/price-drop-monitor/SKILL.md",
+      "../../skills/speech-to-text/SKILL.md",
+      "../../skills/spreadsheet-analyzer/SKILL.md",
+      "../../skills/voice-synthesizer/SKILL.md"
+    ]
+  }
+}

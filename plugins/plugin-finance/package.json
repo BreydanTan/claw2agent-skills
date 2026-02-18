@@ -1,0 +1,22 @@
+{
+  "name": "@claw2agent/plugin-finance",
+  "version": "1.0.0",
+  "description": "Skills for stock/crypto market data, DeFi analytics, and financial research.",
+  "type": "module",
+  "keywords": [
+    "finance",
+    "crypto",
+    "stocks",
+    "defi",
+    "market"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/defi-llama-api/SKILL.md",
+      "../../skills/finnhub-api/SKILL.md",
+      "../../skills/stock-crypto-analyzer/SKILL.md"
+    ]
+  }
+}

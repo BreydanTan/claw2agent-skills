@@ -1,0 +1,36 @@
+{
+  "id": "@claw2agent/plugin-content",
+  "name": "Content Plugin",
+  "version": "1.0.0",
+  "description": "Skills for content creation, document handling, email validation, SEO, and CRM integrations.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "content",
+    "documents",
+    "pdf",
+    "seo",
+    "email",
+    "crm"
+  ],
+  "skills": [
+    "../../skills/crm-api-salesforce-hubspot",
+    "../../skills/crm-connector",
+    "../../skills/email-validator",
+    "../../skills/i18n-tool",
+    "../../skills/outlook-microsoft-graph-api",
+    "../../skills/pdf-compare",
+    "../../skills/pdf-ocr-parser",
+    "../../skills/pdf-reader",
+    "../../skills/podcast-index-api",
+    "../../skills/seo-optimizer",
+    "../../skills/wordpress-rest-api",
+    "../../skills/youtube-analyzer",
+    "../../skills/zapier-bridge"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "content"
+  }
+}

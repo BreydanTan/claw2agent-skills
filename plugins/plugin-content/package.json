@@ -1,0 +1,33 @@
+{
+  "name": "@claw2agent/plugin-content",
+  "version": "1.0.0",
+  "description": "Skills for content creation, document handling, email validation, SEO, and CRM integrations.",
+  "type": "module",
+  "keywords": [
+    "content",
+    "documents",
+    "pdf",
+    "seo",
+    "email",
+    "crm"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/crm-api-salesforce-hubspot/SKILL.md",
+      "../../skills/crm-connector/SKILL.md",
+      "../../skills/email-validator/SKILL.md",
+      "../../skills/i18n-tool/SKILL.md",
+      "../../skills/outlook-microsoft-graph-api/SKILL.md",
+      "../../skills/pdf-compare/SKILL.md",
+      "../../skills/pdf-ocr-parser/SKILL.md",
+      "../../skills/pdf-reader/SKILL.md",
+      "../../skills/podcast-index-api/SKILL.md",
+      "../../skills/seo-optimizer/SKILL.md",
+      "../../skills/wordpress-rest-api/SKILL.md",
+      "../../skills/youtube-analyzer/SKILL.md",
+      "../../skills/zapier-bridge/SKILL.md"
+    ]
+  }
+}

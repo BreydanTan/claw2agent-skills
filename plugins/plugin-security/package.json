@@ -1,0 +1,20 @@
+{
+  "name": "@claw2agent/plugin-security",
+  "version": "1.0.0",
+  "description": "Skills for PII redaction, guard agents, and security-focused automation.",
+  "type": "module",
+  "keywords": [
+    "security",
+    "pii",
+    "redaction",
+    "guard"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/guard-agent/SKILL.md",
+      "../../skills/pii-redaction/SKILL.md"
+    ]
+  }
+}

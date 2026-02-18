@@ -1,0 +1,33 @@
+{
+  "name": "@claw2agent/plugin-social",
+  "version": "1.0.0",
+  "description": "Skills for managing social media platforms: Twitter/X, LinkedIn, Instagram, TikTok, Reddit, and more.",
+  "type": "module",
+  "keywords": [
+    "social",
+    "twitter",
+    "linkedin",
+    "instagram",
+    "tiktok",
+    "reddit"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/google-business-api/SKILL.md",
+      "../../skills/instagram-graph-api/SKILL.md",
+      "../../skills/linkedin-marketing-api/SKILL.md",
+      "../../skills/mailchimp-api/SKILL.md",
+      "../../skills/meta-ad-library-api/SKILL.md",
+      "../../skills/quora-zhihu-manager/SKILL.md",
+      "../../skills/reddit-api-manager/SKILL.md",
+      "../../skills/social-poster/SKILL.md",
+      "../../skills/tiktok-content-api/SKILL.md",
+      "../../skills/twitter-manager/SKILL.md",
+      "../../skills/whatsapp-integration/SKILL.md",
+      "../../skills/x-twitter-api/SKILL.md",
+      "../../skills/youtube-data-api/SKILL.md"
+    ]
+  }
+}

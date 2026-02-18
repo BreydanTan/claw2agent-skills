@@ -1,0 +1,36 @@
+{
+  "id": "@claw2agent/plugin-social",
+  "name": "Social Media Plugin",
+  "version": "1.0.0",
+  "description": "Skills for managing social media platforms: Twitter/X, LinkedIn, Instagram, TikTok, Reddit, and more.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "social",
+    "twitter",
+    "linkedin",
+    "instagram",
+    "tiktok",
+    "reddit"
+  ],
+  "skills": [
+    "../../skills/google-business-api",
+    "../../skills/instagram-graph-api",
+    "../../skills/linkedin-marketing-api",
+    "../../skills/mailchimp-api",
+    "../../skills/meta-ad-library-api",
+    "../../skills/quora-zhihu-manager",
+    "../../skills/reddit-api-manager",
+    "../../skills/social-poster",
+    "../../skills/tiktok-content-api",
+    "../../skills/twitter-manager",
+    "../../skills/whatsapp-integration",
+    "../../skills/x-twitter-api",
+    "../../skills/youtube-data-api"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "social"
+  }
+}

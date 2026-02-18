@@ -1,0 +1,33 @@
+{
+  "name": "@claw2agent/plugin-productivity",
+  "version": "1.0.0",
+  "description": "Skills for calendars, task management, note-taking, meeting summaries, and project management.",
+  "type": "module",
+  "keywords": [
+    "productivity",
+    "calendar",
+    "tasks",
+    "notes",
+    "meetings"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/calendar-manager/SKILL.md",
+      "../../skills/excel-api/SKILL.md",
+      "../../skills/google-calendar-api/SKILL.md",
+      "../../skills/jira-manager/SKILL.md",
+      "../../skills/language-tutor/SKILL.md",
+      "../../skills/linear-tracker/SKILL.md",
+      "../../skills/markdown-writer/SKILL.md",
+      "../../skills/meeting-summarizer/SKILL.md",
+      "../../skills/notion-api/SKILL.md",
+      "../../skills/notion-integration/SKILL.md",
+      "../../skills/pptx-generator/SKILL.md",
+      "../../skills/remind-me/SKILL.md",
+      "../../skills/todoist-manager/SKILL.md",
+      "../../skills/trello-manager/SKILL.md"
+    ]
+  }
+}

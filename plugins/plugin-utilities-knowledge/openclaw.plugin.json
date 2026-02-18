@@ -1,0 +1,33 @@
+{
+  "id": "@claw2agent/plugin-utilities-knowledge",
+  "name": "Utilities & Knowledge Plugin",
+  "version": "1.0.0",
+  "description": "Skills for file management, memory storage, knowledge bases, reminders, and general utilities.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "utilities",
+    "knowledge",
+    "files",
+    "memory",
+    "reminders"
+  ],
+  "skills": [
+    "../../skills/binance-api",
+    "../../skills/coinbase-api",
+    "../../skills/etherscan-api",
+    "../../skills/file-manager",
+    "../../skills/knowledge-base",
+    "../../skills/memory-manager",
+    "../../skills/note-taking",
+    "../../skills/price-drop-monitor",
+    "../../skills/speech-to-text",
+    "../../skills/spreadsheet-analyzer",
+    "../../skills/voice-synthesizer"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "utilities-knowledge"
+  }
+}

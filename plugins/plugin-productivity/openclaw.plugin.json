@@ -1,0 +1,36 @@
+{
+  "id": "@claw2agent/plugin-productivity",
+  "name": "Productivity Plugin",
+  "version": "1.0.0",
+  "description": "Skills for calendars, task management, note-taking, meeting summaries, and project management.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "productivity",
+    "calendar",
+    "tasks",
+    "notes",
+    "meetings"
+  ],
+  "skills": [
+    "../../skills/calendar-manager",
+    "../../skills/excel-api",
+    "../../skills/google-calendar-api",
+    "../../skills/jira-manager",
+    "../../skills/language-tutor",
+    "../../skills/linear-tracker",
+    "../../skills/markdown-writer",
+    "../../skills/meeting-summarizer",
+    "../../skills/notion-api",
+    "../../skills/notion-integration",
+    "../../skills/pptx-generator",
+    "../../skills/remind-me",
+    "../../skills/todoist-manager",
+    "../../skills/trello-manager"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "productivity"
+  }
+}

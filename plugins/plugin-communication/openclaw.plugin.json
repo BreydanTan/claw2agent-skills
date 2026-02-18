@@ -1,0 +1,28 @@
+{
+  "id": "@claw2agent/plugin-communication",
+  "name": "Communication Plugin",
+  "version": "1.0.0",
+  "description": "Skills for Discord, Slack, Telegram, SMS, and email communication.",
+  "author": "claw2agent",
+  "license": "MIT",
+  "tags": [
+    "communication",
+    "discord",
+    "slack",
+    "telegram",
+    "sms",
+    "email"
+  ],
+  "skills": [
+    "../../skills/discord-bot",
+    "../../skills/email-sender",
+    "../../skills/slack-integration",
+    "../../skills/sms-sender-twilio",
+    "../../skills/telegram-bot"
+  ],
+  "configSchema": {},
+  "openclaw": {
+    "minVersion": "1.0.0",
+    "category": "communication"
+  }
+}

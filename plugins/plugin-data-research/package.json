@@ -1,0 +1,37 @@
+{
+  "name": "@claw2agent/plugin-data-research",
+  "version": "1.0.0",
+  "description": "Skills for web search, data analysis, academic research, charts, databases, and translation.",
+  "type": "module",
+  "keywords": [
+    "data",
+    "research",
+    "search",
+    "analysis",
+    "academic"
+  ],
+  "author": "claw2agent",
+  "license": "MIT",
+  "openclaw": {
+    "extensions": [
+      "../../skills/airtable-database/SKILL.md",
+      "../../skills/apple-health-parser/SKILL.md",
+      "../../skills/arxiv-api/SKILL.md",
+      "../../skills/chart-generator/SKILL.md",
+      "../../skills/citation-generator/SKILL.md",
+      "../../skills/data-analyzer/SKILL.md",
+      "../../skills/database-query/SKILL.md",
+      "../../skills/deep-research/SKILL.md",
+      "../../skills/excel-handler/SKILL.md",
+      "../../skills/google-maps-api/SKILL.md",
+      "../../skills/google-trends-api/SKILL.md",
+      "../../skills/rss-monitor/SKILL.md",
+      "../../skills/semantic-scholar-api/SKILL.md",
+      "../../skills/tavily-search/SKILL.md",
+      "../../skills/topic-monitor/SKILL.md",
+      "../../skills/translator-deepl-google/SKILL.md",
+      "../../skills/web-scraper/SKILL.md",
+      "../../skills/web-search/SKILL.md"
+    ]
+  }
+}
