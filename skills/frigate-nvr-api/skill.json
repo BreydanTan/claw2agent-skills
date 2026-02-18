@@ -1,0 +1,47 @@
+{
+  "name": "frigate-nvr-api",
+  "version": "1.0.0",
+  "displayName": "Frigate NVR API",
+  "description": "Monitor cameras, view events, and manage recordings via Frigate NVR.",
+  "category": "IoT",
+  "icon": "camera",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Frigate NVR API API Key",
+  "tags": [
+    "frigate",
+    "nvr",
+    "camera",
+    "security"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "frigate_nvr_api",
+    "description": "Monitor cameras, view events, and manage recordings via Frigate NVR.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_events",
+            "get_config",
+            "get_stats",
+            "get_recordings"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

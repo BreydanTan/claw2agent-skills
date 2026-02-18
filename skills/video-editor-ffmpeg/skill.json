@@ -1,0 +1,47 @@
+{
+  "name": "video-editor-ffmpeg",
+  "version": "1.0.0",
+  "displayName": "Video Editor (FFmpeg)",
+  "description": "Process and transform video/audio files using FFmpeg commands.",
+  "category": "Media",
+  "icon": "scissors",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Video Editor (FFmpeg) API Key",
+  "tags": [
+    "ffmpeg",
+    "video",
+    "audio",
+    "media"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "video_editor_ffmpeg",
+    "description": "Process and transform video/audio files using FFmpeg commands.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_info",
+            "convert",
+            "extract_audio",
+            "thumbnail"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

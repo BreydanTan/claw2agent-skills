@@ -1,0 +1,46 @@
+{
+  "name": "seo-optimizer",
+  "version": "1.0.0",
+  "displayName": "SEO Optimizer",
+  "description": "Analyze and optimize web pages for search engine rankings.",
+  "category": "Content",
+  "icon": "search",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "seo",
+    "search",
+    "optimization",
+    "web"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "seo_optimizer",
+    "description": "Analyze and optimize web pages for search engine rankings.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "analyze_page",
+            "check_keywords",
+            "get_backlinks",
+            "check_speed"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

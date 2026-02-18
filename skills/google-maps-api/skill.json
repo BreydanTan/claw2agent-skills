@@ -1,0 +1,46 @@
+{
+  "name": "google-maps-api",
+  "version": "1.0.0",
+  "displayName": "Google Maps API",
+  "description": "Geocode addresses, search places, and calculate routes via Google Maps.",
+  "category": "Data",
+  "icon": "map",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "google",
+    "maps",
+    "geocoding",
+    "places"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "google_maps_api",
+    "description": "Geocode addresses, search places, and calculate routes via Google Maps.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "geocode",
+            "search_places",
+            "get_directions",
+            "get_place_details"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

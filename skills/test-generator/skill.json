@@ -1,0 +1,46 @@
+{
+  "name": "test-generator",
+  "version": "1.0.0",
+  "displayName": "Test Generator",
+  "description": "Automatically generate unit and integration tests for code.",
+  "category": "DevOps",
+  "icon": "check-square",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "testing",
+    "automation",
+    "code",
+    "devops"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "test_generator",
+    "description": "Automatically generate unit and integration tests for code.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "generate_tests",
+            "analyze_coverage",
+            "suggest_cases",
+            "validate_tests"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

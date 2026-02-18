@@ -1,0 +1,46 @@
+{
+  "name": "ollama-local-llm",
+  "version": "1.0.0",
+  "displayName": "Ollama Local LLM",
+  "description": "Run local LLM inference via Ollama API.",
+  "category": "AI",
+  "icon": "cpu",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "ollama",
+    "llm",
+    "local",
+    "ai"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "ollama_local_llm",
+    "description": "Run local LLM inference via Ollama API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "generate",
+            "chat",
+            "list_models",
+            "pull_model"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "google-trends-api",
+  "version": "1.0.0",
+  "displayName": "Google Trends API",
+  "description": "Access Google Trends data for keyword research and trend analysis.",
+  "category": "Research",
+  "icon": "trending-up",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "google",
+    "trends",
+    "seo",
+    "research"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "google_trends_api",
+    "description": "Access Google Trends data for keyword research and trend analysis.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_interest",
+            "get_related",
+            "compare_keywords",
+            "get_trending"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "calibre-api",
+  "version": "1.0.0",
+  "displayName": "Calibre Content Server API",
+  "description": "Browse and manage ebook libraries via Calibre Content Server.",
+  "category": "Media",
+  "icon": "book",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Calibre Content Server API API Key",
+  "tags": [
+    "calibre",
+    "ebook",
+    "library",
+    "reading"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "calibre_api",
+    "description": "Browse and manage ebook libraries via Calibre Content Server.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "list_books",
+            "get_book",
+            "get_categories",
+            "search_books"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

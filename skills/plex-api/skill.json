@@ -1,0 +1,47 @@
+{
+  "name": "plex-api",
+  "version": "1.0.0",
+  "displayName": "Plex Media Server API",
+  "description": "Browse and manage media libraries on Plex Media Server.",
+  "category": "Media",
+  "icon": "film",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Plex Media Server API API Key",
+  "tags": [
+    "plex",
+    "media",
+    "streaming",
+    "library"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "plex_api",
+    "description": "Browse and manage media libraries on Plex Media Server.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_libraries",
+            "search_media",
+            "get_recently_added",
+            "get_sessions"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

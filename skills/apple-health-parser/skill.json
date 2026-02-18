@@ -1,0 +1,46 @@
+{
+  "name": "apple-health-parser",
+  "version": "1.0.0",
+  "displayName": "Apple Health Parser",
+  "description": "Parse and analyze Apple Health export data.",
+  "category": "Data",
+  "icon": "heart",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "apple",
+    "health",
+    "fitness",
+    "data"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "apple_health_parser",
+    "description": "Parse and analyze Apple Health export data.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "parse_export",
+            "get_summary",
+            "get_workouts",
+            "export_csv"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

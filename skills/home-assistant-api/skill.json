@@ -1,0 +1,47 @@
+{
+  "name": "home-assistant-api",
+  "version": "1.0.0",
+  "displayName": "Home Assistant API",
+  "description": "Control smart home devices and automations via Home Assistant API.",
+  "category": "IoT",
+  "icon": "home",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Home Assistant API API Key",
+  "tags": [
+    "home-assistant",
+    "iot",
+    "smart-home",
+    "automation"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "home_assistant_api",
+    "description": "Control smart home devices and automations via Home Assistant API.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_states",
+            "get_entity",
+            "call_service",
+            "get_history"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

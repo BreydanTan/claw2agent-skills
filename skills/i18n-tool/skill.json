@@ -1,0 +1,46 @@
+{
+  "name": "i18n-tool",
+  "version": "1.0.0",
+  "displayName": "i18n Tool",
+  "description": "Manage internationalization keys, translations, and locale files.",
+  "category": "Content",
+  "icon": "globe",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "i18n",
+    "localization",
+    "translation",
+    "content"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "i18n_tool",
+    "description": "Manage internationalization keys, translations, and locale files.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "extract_keys",
+            "translate_keys",
+            "validate_locale",
+            "merge_locales"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

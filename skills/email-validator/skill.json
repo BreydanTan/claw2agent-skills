@@ -1,0 +1,46 @@
+{
+  "name": "email-validator",
+  "version": "1.0.0",
+  "displayName": "Email Validator",
+  "description": "Validate email addresses and check deliverability.",
+  "category": "Content",
+  "icon": "at-sign",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "email",
+    "validation",
+    "verification",
+    "deliverability"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "email_validator",
+    "description": "Validate email addresses and check deliverability.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "validate_email",
+            "bulk_validate",
+            "check_domain",
+            "get_suggestions"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

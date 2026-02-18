@@ -1,0 +1,46 @@
+{
+  "name": "code-sandbox-e2b",
+  "version": "1.0.0",
+  "displayName": "Code Sandbox (E2B)",
+  "description": "Run code in isolated sandboxes via E2B platform.",
+  "category": "DevOps",
+  "icon": "box",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "sandbox",
+    "e2b",
+    "code",
+    "execution"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "code_sandbox_e2b",
+    "description": "Run code in isolated sandboxes via E2B platform.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_sandbox",
+            "exec_code",
+            "upload_file",
+            "close_sandbox"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

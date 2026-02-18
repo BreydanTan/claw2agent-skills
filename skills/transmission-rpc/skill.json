@@ -1,0 +1,47 @@
+{
+  "name": "transmission-rpc",
+  "version": "1.0.0",
+  "displayName": "Transmission RPC API",
+  "description": "Manage torrent downloads via Transmission RPC interface.",
+  "category": "Media",
+  "icon": "download",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "apiKeyLabel": "Transmission RPC API API Key",
+  "tags": [
+    "transmission",
+    "torrent",
+    "download",
+    "rpc"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "transmission_rpc",
+    "description": "Manage torrent downloads via Transmission RPC interface.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "list_torrents",
+            "add_torrent",
+            "remove_torrent",
+            "get_session"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

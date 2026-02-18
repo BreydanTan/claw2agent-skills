@@ -1,0 +1,46 @@
+{
+  "name": "minecraft-bot-controller",
+  "version": "1.0.0",
+  "displayName": "Minecraft Bot Controller",
+  "description": "Control Minecraft bots for building, mining, and exploring.",
+  "category": "Gaming",
+  "icon": "gamepad",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "minecraft",
+    "bot",
+    "gaming",
+    "automation"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "minecraft_bot_controller",
+    "description": "Control Minecraft bots for building, mining, and exploring.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "send_command",
+            "get_status",
+            "navigate_to",
+            "get_inventory"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

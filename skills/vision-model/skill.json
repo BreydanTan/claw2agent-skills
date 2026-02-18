@@ -1,0 +1,46 @@
+{
+  "name": "vision-model",
+  "version": "1.0.0",
+  "displayName": "Vision Model API",
+  "description": "Analyze images using vision AI models.",
+  "category": "AI",
+  "icon": "eye",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "vision",
+    "ai",
+    "image",
+    "analysis"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "vision_model",
+    "description": "Analyze images using vision AI models.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "analyze_image",
+            "detect_objects",
+            "extract_text",
+            "compare_images"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

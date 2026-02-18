@@ -1,0 +1,46 @@
+{
+  "name": "swagger-openapi-generator",
+  "version": "1.0.0",
+  "displayName": "Swagger/OpenAPI Generator",
+  "description": "Generate API clients, documentation, and specs from OpenAPI definitions.",
+  "category": "DevOps",
+  "icon": "code",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "swagger",
+    "openapi",
+    "api",
+    "codegen"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "swagger_openapi_generator",
+    "description": "Generate API clients, documentation, and specs from OpenAPI definitions.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "generate_client",
+            "validate_spec",
+            "generate_docs",
+            "convert_spec"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

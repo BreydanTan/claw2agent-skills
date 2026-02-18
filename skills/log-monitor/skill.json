@@ -1,0 +1,46 @@
+{
+  "name": "log-monitor",
+  "version": "1.0.0",
+  "displayName": "Log Monitor",
+  "description": "Monitor, search, and analyze application logs.",
+  "category": "DevOps",
+  "icon": "file-text",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "logs",
+    "monitoring",
+    "devops",
+    "analysis"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "log_monitor",
+    "description": "Monitor, search, and analyze application logs.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "search_logs",
+            "get_stats",
+            "create_alert",
+            "list_alerts"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

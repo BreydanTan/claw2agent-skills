@@ -1,0 +1,46 @@
+{
+  "name": "video-downloader",
+  "version": "1.0.0",
+  "displayName": "Video Downloader",
+  "description": "Download videos from supported platforms for processing.",
+  "category": "Media",
+  "icon": "download-cloud",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "video",
+    "download",
+    "media",
+    "extraction"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "video_downloader",
+    "description": "Download videos from supported platforms for processing.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "get_info",
+            "download",
+            "get_status",
+            "extract_audio"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

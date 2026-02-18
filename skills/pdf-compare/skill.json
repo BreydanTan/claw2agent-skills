@@ -1,0 +1,46 @@
+{
+  "name": "pdf-compare",
+  "version": "1.0.0",
+  "displayName": "PDF Compare",
+  "description": "Compare two PDF documents and highlight differences.",
+  "category": "Content",
+  "icon": "file-diff",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "pdf",
+    "compare",
+    "diff",
+    "document"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "pdf_compare",
+    "description": "Compare two PDF documents and highlight differences.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "compare_pdfs",
+            "get_text_diff",
+            "get_visual_diff",
+            "get_metadata_diff"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

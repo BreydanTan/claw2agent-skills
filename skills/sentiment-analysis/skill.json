@@ -1,0 +1,46 @@
+{
+  "name": "sentiment-analysis",
+  "version": "1.0.0",
+  "displayName": "Sentiment Analysis",
+  "description": "Analyze text sentiment, emotion, and tone.",
+  "category": "AI",
+  "icon": "smile",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "sentiment",
+    "nlp",
+    "ai",
+    "analysis"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "sentiment_analysis",
+    "description": "Analyze text sentiment, emotion, and tone.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "analyze_text",
+            "analyze_batch",
+            "detect_language",
+            "extract_entities"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

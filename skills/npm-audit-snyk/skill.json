@@ -1,0 +1,46 @@
+{
+  "name": "npm-audit-snyk",
+  "version": "1.0.0",
+  "displayName": "NPM Audit / Snyk",
+  "description": "Scan dependencies for security vulnerabilities via npm audit or Snyk.",
+  "category": "DevOps",
+  "icon": "shield",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "npm",
+    "snyk",
+    "security",
+    "audit"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "npm_audit_snyk",
+    "description": "Scan dependencies for security vulnerabilities via npm audit or Snyk.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "audit_deps",
+            "get_advisories",
+            "check_license",
+            "fix_vulnerabilities"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

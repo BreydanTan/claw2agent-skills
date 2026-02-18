@@ -1,0 +1,46 @@
+{
+  "name": "sql-analyzer",
+  "version": "1.0.0",
+  "displayName": "SQL Analyzer",
+  "description": "Analyze, optimize, and explain SQL queries.",
+  "category": "DevOps",
+  "icon": "database",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "sql",
+    "database",
+    "analysis",
+    "optimization"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "sql_analyzer",
+    "description": "Analyze, optimize, and explain SQL queries.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "analyze_query",
+            "explain_query",
+            "format_query",
+            "validate_query"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

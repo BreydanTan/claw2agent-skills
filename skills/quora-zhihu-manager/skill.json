@@ -1,0 +1,46 @@
+{
+  "name": "quora-zhihu-manager",
+  "version": "1.0.0",
+  "displayName": "Quora/Zhihu Manager",
+  "description": "Manage Q&A content on Quora and Zhihu platforms.",
+  "category": "Social",
+  "icon": "help-circle",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "quora",
+    "zhihu",
+    "qa",
+    "social"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "quora_zhihu_manager",
+    "description": "Manage Q&A content on Quora and Zhihu platforms.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "search_questions",
+            "get_answers",
+            "post_answer",
+            "get_trending"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

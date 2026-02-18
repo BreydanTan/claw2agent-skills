@@ -1,0 +1,46 @@
+{
+  "name": "social-poster",
+  "version": "1.0.0",
+  "displayName": "Social Poster",
+  "description": "Cross-post content to multiple social media platforms.",
+  "category": "Social",
+  "icon": "share",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "social",
+    "posting",
+    "cross-platform",
+    "content"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "social_poster",
+    "description": "Cross-post content to multiple social media platforms.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "create_post",
+            "get_post",
+            "list_posts",
+            "delete_post"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}

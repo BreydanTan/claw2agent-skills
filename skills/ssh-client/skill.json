@@ -1,0 +1,46 @@
+{
+  "name": "ssh-client",
+  "version": "1.0.0",
+  "displayName": "SSH Client",
+  "description": "Execute remote commands and manage files via SSH.",
+  "category": "DevOps",
+  "icon": "terminal",
+  "author": "claw2agent",
+  "layer": "L1",
+  "requiresApiKey": true,
+  "tags": [
+    "ssh",
+    "remote",
+    "devops",
+    "terminal"
+  ],
+  "verified": true,
+  "tier": "pro",
+  "implemented": true,
+  "config": {
+    "provider": "providerClient",
+    "timeoutMs": 30000,
+    "maxTimeoutMs": 120000
+  },
+  "toolDefinition": {
+    "name": "ssh_client",
+    "description": "Execute remote commands and manage files via SSH.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": [
+            "exec_command",
+            "upload_file",
+            "download_file",
+            "list_dir"
+          ]
+        }
+      },
+      "required": [
+        "action"
+      ]
+    }
+  }
+}
