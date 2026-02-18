@@ -1,14 +1,16 @@
 import assert from 'node:assert/strict';
-import { describe, it, beforeEach, mock } from 'node:test';
+import { describe, it, beforeEach } from 'node:test';
 import { execute, _clearStore, _storeSize } from '../handler.js';
 
 // ---------------------------------------------------------------------------
-// Reset store and restore mocks before every test
+// Reset store and restore fetch before every test
 // ---------------------------------------------------------------------------
+
+const originalFetch = globalThis.fetch;
 
 beforeEach(() => {
   _clearStore();
-  mock.restoreAll();
+  globalThis.fetch = originalFetch;
 });
 
 // ---------------------------------------------------------------------------
@@ -47,7 +49,9 @@ function mockFetch(opts = {}) {
     errorName = 'Error',
   } = opts;
 
-  const mockFn = mock.fn(async () => {
+  const calls = [];
+  const mockFn = async (...args) => {
+    calls.push(args);
     if (delay > 0) {
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
@@ -61,9 +65,10 @@ function mockFetch(opts = {}) {
       statusText,
       headers: new Map(),
     };
-  });
+  };
 
-  mock.method(globalThis, 'fetch', mockFn);
+  mockFn.mock = { calls };
+  globalThis.fetch = mockFn;
   return mockFn;
 }
 
@@ -382,7 +387,7 @@ describe('uptime-monitor: check', () => {
     const id = added.metadata.monitorId;
 
     await execute({ action: 'check', id }, {});
-    assert.equal(fetchMock.mock.calls.length, 1);
+    assert.equal(fetchMock.mock.calls.length, 1, 'fetch should have been called once');
   });
 
   it('should match custom expectedStatus for UP determination', async () => {
@@ -458,7 +463,6 @@ describe('uptime-monitor: status', () => {
     await execute({ action: 'check', id }, {});
 
     // 1 DOWN check
-    mock.restoreAll();
     mockFetch({ status: 503 });
     await execute({ action: 'check', id }, {});
 
@@ -586,7 +590,6 @@ describe('uptime-monitor: history', () => {
     await execute({ action: 'check', id }, {});
 
     // Last check: DOWN
-    mock.restoreAll();
     mockFetch({ status: 500 });
     await execute({ action: 'check', id }, {});
 

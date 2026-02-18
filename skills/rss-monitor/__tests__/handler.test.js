@@ -1,38 +1,6 @@
-const assert = require('assert');
-const { pathToFileURL } = require('url');
-const path = require('path');
-
-// ---------------------------------------------------------------------------
-// Test runner
-// ---------------------------------------------------------------------------
-
-const results = { passed: 0, failed: 0, errors: [] };
-
-async function test(name, fn) {
-  try {
-    await fn();
-    results.passed++;
-    console.log(`  PASS  ${name}`);
-  } catch (err) {
-    results.failed++;
-    results.errors.push({ name, message: err.message });
-    console.log(`  FAIL  ${name}`);
-    console.log(`        ${err.message}`);
-  }
-}
-
-function summary() {
-  console.log('');
-  console.log(`Results: ${results.passed} passed, ${results.failed} failed, ${results.passed + results.failed} total`);
-  if (results.failed > 0) {
-    console.log('');
-    console.log('Failures:');
-    for (const err of results.errors) {
-      console.log(`  - ${err.name}: ${err.message}`);
-    }
-    process.exit(1);
-  }
-}
+import assert from 'node:assert/strict';
+import { describe, it, beforeEach } from 'node:test';
+import { execute, parseFeedXml, _getSubscriptions } from '../handler.js';
 
 // ---------------------------------------------------------------------------
 // Sample XML fixtures
@@ -106,75 +74,66 @@ const SAMPLE_RSS_ENTITIES = `<?xml version="1.0" encoding="UTF-8"?>
 </rss>`;
 
 // ---------------------------------------------------------------------------
-// Main
+// Helper to reset subscriptions between test groups
 // ---------------------------------------------------------------------------
 
-async function main() {
-  // Dynamic import of the ES module handler
-  const handlerPath = path.resolve(__dirname, '..', 'handler.js');
-  const handlerUrl = pathToFileURL(handlerPath).href;
-  const { execute, parseFeedXml, _getSubscriptions } = await import(handlerUrl);
+function clearSubscriptions() {
+  const subs = _getSubscriptions();
+  subs.clear();
+}
 
-  console.log('RSS Feed Monitor Skill - Handler Tests');
-  console.log('======================================');
-  console.log('');
+// ---------------------------------------------------------------------------
+// Action validation
+// ---------------------------------------------------------------------------
 
-  // Helper to reset subscriptions between test groups
-  function clearSubscriptions() {
-    const subs = _getSubscriptions();
-    subs.clear();
-  }
-
-  // -----------------------------------------------------------------------
-  // Invalid / missing action
-  // -----------------------------------------------------------------------
-
-  console.log('Action validation');
-
-  await test('returns error for missing action', async () => {
-    const res = await execute({}, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_ACTION');
+describe('Action validation', () => {
+  beforeEach(() => {
+    clearSubscriptions();
   });
 
-  await test('returns error for invalid action', async () => {
+  it('returns error for missing action', async () => {
+    const res = await execute({}, {});
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_ACTION');
+  });
+
+  it('returns error for invalid action', async () => {
     const res = await execute({ action: 'unknown' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_ACTION');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_ACTION');
     assert.ok(res.result.includes('Error'));
   });
 
-  await test('returns error for null action', async () => {
+  it('returns error for null action', async () => {
     const res = await execute({ action: null }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_ACTION');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_ACTION');
   });
+});
 
-  // -----------------------------------------------------------------------
-  // XML parsing: RSS
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// XML parsing: RSS
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('XML parsing - RSS');
-
-  await test('parses standard RSS XML', async () => {
+describe('XML parsing - RSS', () => {
+  it('parses standard RSS XML', () => {
     const result = parseFeedXml(SAMPLE_RSS_XML);
-    assert.strictEqual(result.feedType, 'rss');
-    assert.strictEqual(result.feedTitle, 'Test RSS Feed');
-    assert.strictEqual(result.entries.length, 3);
+    assert.equal(result.feedType, 'rss');
+    assert.equal(result.feedTitle, 'Test RSS Feed');
+    assert.equal(result.entries.length, 3);
   });
 
-  await test('extracts RSS entry fields correctly', async () => {
+  it('extracts RSS entry fields correctly', () => {
     const result = parseFeedXml(SAMPLE_RSS_XML);
     const first = result.entries[0];
-    assert.strictEqual(first.title, 'First Article');
-    assert.strictEqual(first.link, 'https://example.com/article-1');
-    assert.strictEqual(first.pubDate, 'Mon, 01 Jan 2024 12:00:00 GMT');
-    assert.strictEqual(first.author, 'Alice');
-    assert.strictEqual(first.id, 'article-1');
+    assert.equal(first.title, 'First Article');
+    assert.equal(first.link, 'https://example.com/article-1');
+    assert.equal(first.pubDate, 'Mon, 01 Jan 2024 12:00:00 GMT');
+    assert.equal(first.author, 'Alice');
+    assert.equal(first.id, 'article-1');
   });
 
-  await test('strips CDATA and HTML from RSS descriptions', async () => {
+  it('strips CDATA and HTML from RSS descriptions', () => {
     const result = parseFeedXml(SAMPLE_RSS_XML);
     const first = result.entries[0];
     // CDATA wrapper should be removed and HTML tags stripped
@@ -185,47 +144,46 @@ async function main() {
     assert.ok(first.description.includes('article description'));
   });
 
-  await test('handles RSS entries without author', async () => {
+  it('handles RSS entries without author', () => {
     const result = parseFeedXml(SAMPLE_RSS_XML);
     const third = result.entries[2];
-    assert.strictEqual(third.title, 'Third Article');
-    assert.strictEqual(third.author, '');
+    assert.equal(third.title, 'Third Article');
+    assert.equal(third.author, '');
   });
 
-  await test('decodes XML entities in RSS', async () => {
+  it('decodes XML entities in RSS', () => {
     const result = parseFeedXml(SAMPLE_RSS_ENTITIES);
-    assert.strictEqual(result.feedTitle, 'Entity & Test Feed');
+    assert.equal(result.feedTitle, 'Entity & Test Feed');
     const entry = result.entries[0];
     assert.ok(entry.title.includes('&'));
     assert.ok(entry.title.includes('<special>'));
     assert.ok(entry.description.includes('"entities"'));
   });
+});
 
-  // -----------------------------------------------------------------------
-  // XML parsing: Atom
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// XML parsing: Atom
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('XML parsing - Atom');
-
-  await test('parses standard Atom XML', async () => {
+describe('XML parsing - Atom', () => {
+  it('parses standard Atom XML', () => {
     const result = parseFeedXml(SAMPLE_ATOM_XML);
-    assert.strictEqual(result.feedType, 'atom');
-    assert.strictEqual(result.feedTitle, 'Test Atom Feed');
-    assert.strictEqual(result.entries.length, 2);
+    assert.equal(result.feedType, 'atom');
+    assert.equal(result.feedTitle, 'Test Atom Feed');
+    assert.equal(result.entries.length, 2);
   });
 
-  await test('extracts Atom entry fields correctly', async () => {
+  it('extracts Atom entry fields correctly', () => {
     const result = parseFeedXml(SAMPLE_ATOM_XML);
     const first = result.entries[0];
-    assert.strictEqual(first.title, 'Atom Entry One');
-    assert.strictEqual(first.link, 'https://example.com/entry-1');
-    assert.strictEqual(first.pubDate, '2024-01-01T12:00:00Z');
-    assert.strictEqual(first.author, 'Charlie');
-    assert.strictEqual(first.id, 'urn:uuid:entry-1');
+    assert.equal(first.title, 'Atom Entry One');
+    assert.equal(first.link, 'https://example.com/entry-1');
+    assert.equal(first.pubDate, '2024-01-01T12:00:00Z');
+    assert.equal(first.author, 'Charlie');
+    assert.equal(first.id, 'urn:uuid:entry-1');
   });
 
-  await test('strips CDATA and HTML from Atom summaries', async () => {
+  it('strips CDATA and HTML from Atom summaries', () => {
     const result = parseFeedXml(SAMPLE_ATOM_XML);
     const first = result.entries[0];
     assert.ok(!first.description.includes('<![CDATA['));
@@ -233,257 +191,269 @@ async function main() {
     assert.ok(first.description.includes('first entry'));
   });
 
-  await test('uses updated date when published is missing in Atom', async () => {
+  it('uses updated date when published is missing in Atom', () => {
     const result = parseFeedXml(SAMPLE_ATOM_XML);
     const second = result.entries[1];
-    assert.strictEqual(second.pubDate, '2024-01-02T12:00:00Z');
+    assert.equal(second.pubDate, '2024-01-02T12:00:00Z');
   });
+});
 
-  // -----------------------------------------------------------------------
-  // XML parsing: errors
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// XML parsing: errors
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('XML parsing - errors');
-
-  await test('throws on null input', async () => {
+describe('XML parsing - errors', () => {
+  it('throws on null input', () => {
     assert.throws(() => parseFeedXml(null), /No XML content/);
   });
 
-  await test('throws on empty string', async () => {
+  it('throws on empty string', () => {
     assert.throws(() => parseFeedXml(''), /No XML content/);
   });
 
-  await test('throws on non-feed XML', async () => {
+  it('throws on non-feed XML', () => {
     assert.throws(() => parseFeedXml('<html><body>Not a feed</body></html>'), /Unrecognized feed format/);
   });
+});
 
-  // -----------------------------------------------------------------------
-  // subscribe action
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// subscribe action
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('subscribe action');
+describe('subscribe action', () => {
+  beforeEach(() => {
+    clearSubscriptions();
+  });
 
-  clearSubscriptions();
-
-  await test('subscribes to a valid feed URL', async () => {
+  it('subscribes to a valid feed URL', async () => {
     const res = await execute({
       action: 'subscribe',
       url: 'https://example.com/feed.xml',
       name: 'Example Feed'
     }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.action, 'subscribe');
-    assert.strictEqual(res.metadata.name, 'Example Feed');
-    assert.strictEqual(res.metadata.url, 'https://example.com/feed.xml');
-    assert.strictEqual(res.metadata.totalSubscriptions, 1);
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.action, 'subscribe');
+    assert.equal(res.metadata.name, 'Example Feed');
+    assert.equal(res.metadata.url, 'https://example.com/feed.xml');
+    assert.equal(res.metadata.totalSubscriptions, 1);
     assert.ok(res.result.includes('Subscribed'));
   });
 
-  await test('rejects duplicate subscription by name', async () => {
+  it('rejects duplicate subscription by name', async () => {
+    await execute({
+      action: 'subscribe',
+      url: 'https://example.com/feed.xml',
+      name: 'Example Feed'
+    }, {});
     const res = await execute({
       action: 'subscribe',
       url: 'https://other.com/feed.xml',
       name: 'Example Feed'
     }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'DUPLICATE_FEED');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'DUPLICATE_FEED');
   });
 
-  await test('rejects duplicate subscription by URL', async () => {
+  it('rejects duplicate subscription by URL', async () => {
+    await execute({
+      action: 'subscribe',
+      url: 'https://example.com/feed.xml',
+      name: 'Example Feed'
+    }, {});
     const res = await execute({
       action: 'subscribe',
       url: 'https://example.com/feed.xml',
       name: 'Different Name'
     }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'DUPLICATE_FEED');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'DUPLICATE_FEED');
   });
 
-  await test('rejects invalid URL (missing)', async () => {
+  it('rejects invalid URL (missing)', async () => {
     const res = await execute({ action: 'subscribe' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('rejects HTTP URL (not HTTPS)', async () => {
+  it('rejects HTTP URL (not HTTPS)', async () => {
     const res = await execute({
       action: 'subscribe',
       url: 'http://example.com/feed.xml',
       name: 'HTTP Feed'
     }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
     assert.ok(res.metadata.reason.includes('HTTPS'));
   });
 
-  await test('rejects private IP URL', async () => {
+  it('rejects private IP URL', async () => {
     const res = await execute({
       action: 'subscribe',
       url: 'https://192.168.1.1/feed.xml',
       name: 'Private Feed'
     }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
     assert.ok(res.metadata.reason.includes('private'));
   });
 
-  await test('rejects localhost URL', async () => {
+  it('rejects localhost URL', async () => {
     const res = await execute({
       action: 'subscribe',
       url: 'https://localhost/feed.xml',
       name: 'Localhost Feed'
     }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('uses URL as name when name is not provided', async () => {
-    clearSubscriptions();
+  it('uses URL as name when name is not provided', async () => {
     const res = await execute({
       action: 'subscribe',
       url: 'https://example.com/rss'
     }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.name, 'https://example.com/rss');
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.name, 'https://example.com/rss');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// unsubscribe action
+// ---------------------------------------------------------------------------
+
+describe('unsubscribe action', () => {
+  beforeEach(async () => {
+    clearSubscriptions();
+    await execute({ action: 'subscribe', url: 'https://example.com/feed.xml', name: 'My Feed' }, {});
+    await execute({ action: 'subscribe', url: 'https://other.com/feed.xml', name: 'Other Feed' }, {});
   });
 
-  // -----------------------------------------------------------------------
-  // unsubscribe action
-  // -----------------------------------------------------------------------
-
-  console.log('');
-  console.log('unsubscribe action');
-
-  clearSubscriptions();
-
-  // Set up a subscription to unsubscribe from
-  await execute({ action: 'subscribe', url: 'https://example.com/feed.xml', name: 'My Feed' }, {});
-  await execute({ action: 'subscribe', url: 'https://other.com/feed.xml', name: 'Other Feed' }, {});
-
-  await test('unsubscribes by name', async () => {
+  it('unsubscribes by name', async () => {
     const res = await execute({ action: 'unsubscribe', name: 'My Feed' }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.action, 'unsubscribe');
-    assert.strictEqual(res.metadata.name, 'My Feed');
-    assert.strictEqual(res.metadata.totalSubscriptions, 1);
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.action, 'unsubscribe');
+    assert.equal(res.metadata.name, 'My Feed');
+    assert.equal(res.metadata.totalSubscriptions, 1);
     assert.ok(res.result.includes('Unsubscribed'));
   });
 
-  await test('unsubscribes by URL', async () => {
+  it('unsubscribes by URL', async () => {
     const res = await execute({ action: 'unsubscribe', url: 'https://other.com/feed.xml' }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.name, 'Other Feed');
-    assert.strictEqual(res.metadata.totalSubscriptions, 0);
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.name, 'Other Feed');
+    assert.equal(res.metadata.totalSubscriptions, 1);
   });
 
-  await test('returns error for non-existing subscription', async () => {
+  it('returns error for non-existing subscription', async () => {
     const res = await execute({ action: 'unsubscribe', name: 'Nonexistent' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'FEED_NOT_FOUND');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'FEED_NOT_FOUND');
   });
 
-  await test('returns error when no name or URL provided', async () => {
+  it('returns error when no name or URL provided', async () => {
     const res = await execute({ action: 'unsubscribe' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'FEED_NOT_FOUND');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'FEED_NOT_FOUND');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// list action
+// ---------------------------------------------------------------------------
+
+describe('list action', () => {
+  beforeEach(() => {
+    clearSubscriptions();
   });
 
-  // -----------------------------------------------------------------------
-  // list action
-  // -----------------------------------------------------------------------
-
-  console.log('');
-  console.log('list action');
-
-  clearSubscriptions();
-
-  await test('lists empty subscriptions', async () => {
+  it('lists empty subscriptions', async () => {
     const res = await execute({ action: 'list' }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.action, 'list');
-    assert.strictEqual(res.metadata.subscriptionCount, 0);
-    assert.deepStrictEqual(res.metadata.subscriptions, []);
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.action, 'list');
+    assert.equal(res.metadata.subscriptionCount, 0);
+    assert.deepEqual(res.metadata.subscriptions, []);
     assert.ok(res.result.includes('No feed subscriptions'));
   });
 
-  await test('lists subscriptions after adding feeds', async () => {
+  it('lists subscriptions after adding feeds', async () => {
     await execute({ action: 'subscribe', url: 'https://example.com/feed1.xml', name: 'Feed One' }, {});
     await execute({ action: 'subscribe', url: 'https://example.com/feed2.xml', name: 'Feed Two' }, {});
 
     const res = await execute({ action: 'list' }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.subscriptionCount, 2);
-    assert.strictEqual(res.metadata.subscriptions.length, 2);
-    assert.strictEqual(res.metadata.subscriptions[0].name, 'Feed One');
-    assert.strictEqual(res.metadata.subscriptions[1].name, 'Feed Two');
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.subscriptionCount, 2);
+    assert.equal(res.metadata.subscriptions.length, 2);
+    assert.equal(res.metadata.subscriptions[0].name, 'Feed One');
+    assert.equal(res.metadata.subscriptions[1].name, 'Feed Two');
     assert.ok(res.result.includes('Feed One'));
     assert.ok(res.result.includes('Feed Two'));
     assert.ok(res.result.includes('https://example.com/feed1.xml'));
   });
 
-  await test('list shows lastCheckedAt as never when not yet checked', async () => {
+  it('list shows lastCheckedAt as never when not yet checked', async () => {
+    await execute({ action: 'subscribe', url: 'https://example.com/feed1.xml', name: 'Feed One' }, {});
     const res = await execute({ action: 'list' }, {});
-    assert.strictEqual(res.metadata.subscriptions[0].lastCheckedAt, null);
+    assert.equal(res.metadata.subscriptions[0].lastCheckedAt, null);
     assert.ok(res.result.includes('never'));
   });
+});
 
-  // -----------------------------------------------------------------------
-  // fetch action (URL validation only, no real network)
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// fetch action (URL validation only, no real network)
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('fetch action - URL validation');
+describe('fetch action - URL validation', () => {
+  beforeEach(() => {
+    clearSubscriptions();
+  });
 
-  await test('fetch rejects missing URL', async () => {
+  it('fetch rejects missing URL', async () => {
     const res = await execute({ action: 'fetch' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('fetch rejects HTTP URL', async () => {
+  it('fetch rejects HTTP URL', async () => {
     const res = await execute({ action: 'fetch', url: 'http://example.com/feed' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('fetch rejects malformed URL', async () => {
+  it('fetch rejects malformed URL', async () => {
     const res = await execute({ action: 'fetch', url: 'not-a-url' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('fetch rejects private IP 10.x', async () => {
+  it('fetch rejects private IP 10.x', async () => {
     const res = await execute({ action: 'fetch', url: 'https://10.0.0.1/feed' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
 
-  await test('fetch rejects 127.x URL', async () => {
+  it('fetch rejects 127.x URL', async () => {
     const res = await execute({ action: 'fetch', url: 'https://127.0.0.1/feed' }, {});
-    assert.strictEqual(res.metadata.success, false);
-    assert.strictEqual(res.metadata.error, 'INVALID_URL');
+    assert.equal(res.metadata.success, false);
+    assert.equal(res.metadata.error, 'INVALID_URL');
   });
+});
 
-  // -----------------------------------------------------------------------
-  // parseFeedXml: advanced parsing
-  // -----------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// parseFeedXml: advanced parsing
+// ---------------------------------------------------------------------------
 
-  console.log('');
-  console.log('parseFeedXml - advanced');
-
-  await test('parses RSS with no description', async () => {
+describe('parseFeedXml - advanced', () => {
+  it('parses RSS with no description', () => {
     const xml = `<rss><channel><title>Minimal</title>
       <item><title>No Desc</title><link>https://example.com/1</link><guid>1</guid></item>
     </channel></rss>`;
     const result = parseFeedXml(xml);
-    assert.strictEqual(result.entries.length, 1);
-    assert.strictEqual(result.entries[0].title, 'No Desc');
-    assert.strictEqual(result.entries[0].description, '');
+    assert.equal(result.entries.length, 1);
+    assert.equal(result.entries[0].title, 'No Desc');
+    assert.equal(result.entries[0].description, '');
   });
 
-  await test('parses Atom with content instead of summary', async () => {
+  it('parses Atom with content instead of summary', () => {
     const xml = `<feed xmlns="http://www.w3.org/2005/Atom">
       <title>Content Feed</title>
       <entry>
@@ -494,60 +464,49 @@ async function main() {
       </entry>
     </feed>`;
     const result = parseFeedXml(xml);
-    assert.strictEqual(result.entries.length, 1);
-    assert.strictEqual(result.entries[0].description, 'This is the full content.');
+    assert.equal(result.entries.length, 1);
+    assert.equal(result.entries[0].description, 'This is the full content.');
   });
 
-  await test('falls back to link as id when guid is missing in RSS', async () => {
+  it('falls back to link as id when guid is missing in RSS', () => {
     const xml = `<rss><channel><title>No GUID</title>
       <item><title>No GUID Item</title><link>https://example.com/no-guid</link></item>
     </channel></rss>`;
     const result = parseFeedXml(xml);
-    assert.strictEqual(result.entries[0].id, 'https://example.com/no-guid');
+    assert.equal(result.entries[0].id, 'https://example.com/no-guid');
   });
 
-  await test('falls back to title as id when both guid and link are missing in RSS', async () => {
+  it('falls back to title as id when both guid and link are missing in RSS', () => {
     const xml = `<rss><channel><title>Fallback</title>
       <item><title>Only Title</title><description>Some desc</description></item>
     </channel></rss>`;
     const result = parseFeedXml(xml);
-    assert.strictEqual(result.entries[0].id, 'Only Title');
+    assert.equal(result.entries[0].id, 'Only Title');
   });
 
-  await test('handles multiple items correctly', async () => {
+  it('handles multiple items correctly', () => {
     const result = parseFeedXml(SAMPLE_RSS_XML);
-    assert.strictEqual(result.entries.length, 3);
-    assert.strictEqual(result.entries[0].title, 'First Article');
-    assert.strictEqual(result.entries[1].title, 'Second Article');
-    assert.strictEqual(result.entries[2].title, 'Third Article');
+    assert.equal(result.entries.length, 3);
+    assert.equal(result.entries[0].title, 'First Article');
+    assert.equal(result.entries[1].title, 'Second Article');
+    assert.equal(result.entries[2].title, 'Third Article');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// check action (empty subscriptions)
+// ---------------------------------------------------------------------------
+
+describe('check action', () => {
+  beforeEach(() => {
+    clearSubscriptions();
   });
 
-  // -----------------------------------------------------------------------
-  // check action (empty subscriptions)
-  // -----------------------------------------------------------------------
-
-  console.log('');
-  console.log('check action');
-
-  clearSubscriptions();
-
-  await test('check with no subscriptions returns informative message', async () => {
+  it('check with no subscriptions returns informative message', async () => {
     const res = await execute({ action: 'check' }, {});
-    assert.strictEqual(res.metadata.success, true);
-    assert.strictEqual(res.metadata.action, 'check');
-    assert.strictEqual(res.metadata.subscriptionCount, 0);
+    assert.equal(res.metadata.success, true);
+    assert.equal(res.metadata.action, 'check');
+    assert.equal(res.metadata.subscriptionCount, 0);
     assert.ok(res.result.includes('No feed subscriptions'));
   });
-
-  // -----------------------------------------------------------------------
-  // Done
-  // -----------------------------------------------------------------------
-
-  clearSubscriptions();
-  summary();
-}
-
-main().catch(err => {
-  console.error('Test runner failed:', err);
-  process.exit(1);
 });

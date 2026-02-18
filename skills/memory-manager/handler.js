@@ -9,7 +9,15 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname } from "node:path";
 
-const MEMORY_FILE_PATH = "/data/memory.json";
+let MEMORY_FILE_PATH = "/data/memory.json";
+
+/**
+ * Override the memory file path. Exposed for test isolation.
+ * @param {string} newPath
+ */
+export function _setMemoryFilePath(newPath) {
+  MEMORY_FILE_PATH = newPath;
+}
 
 /**
  * Execute a memory management action.

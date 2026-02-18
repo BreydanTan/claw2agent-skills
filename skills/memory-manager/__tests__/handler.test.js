@@ -1,57 +1,28 @@
 import assert from 'node:assert/strict';
-import { describe, it, beforeEach, mock } from 'node:test';
-import { mkdtempSync, writeFileSync, readFileSync, existsSync as realExistsSync, rmSync, mkdirSync } from 'node:fs';
-import { readFile as realReadFile, writeFile as realWriteFile, mkdir as realMkdir } from 'node:fs/promises';
+import { describe, it, beforeEach } from 'node:test';
+import { mkdtempSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, dirname } from 'node:path';
+import { join } from 'node:path';
+import { execute, _setMemoryFilePath } from '../handler.js';
 
 // ---------------------------------------------------------------------------
-// Set up temp directory and redirect all /data/memory.json operations there
+// Temp directory helpers
 // ---------------------------------------------------------------------------
 
-const ORIGINAL_PATH = '/data/memory.json';
 let testDir;
 let testFilePath;
 
 function initTestDir() {
   testDir = mkdtempSync(join(tmpdir(), 'memory-manager-test-'));
   testFilePath = join(testDir, 'memory.json');
+  _setMemoryFilePath(testFilePath);
 }
 
 function cleanTestDir() {
-  if (testDir && realExistsSync(testDir)) {
+  if (testDir && existsSync(testDir)) {
     rmSync(testDir, { recursive: true, force: true });
   }
 }
-
-function redirectPath(p) {
-  if (p === ORIGINAL_PATH) return testFilePath;
-  if (p === dirname(ORIGINAL_PATH) || p === '/data') return testDir;
-  return p;
-}
-
-// ---------------------------------------------------------------------------
-// Mock node:fs and node:fs/promises to redirect /data/memory.json to temp dir
-// ---------------------------------------------------------------------------
-
-mock.module('node:fs', {
-  namedExports: {
-    existsSync: (p) => realExistsSync(redirectPath(p)),
-    // Re-export other things the module might use
-    default: undefined,
-  }
-});
-
-mock.module('node:fs/promises', {
-  namedExports: {
-    readFile: (p, enc) => realReadFile(redirectPath(p), enc),
-    writeFile: (p, data, enc) => realWriteFile(redirectPath(p), data, enc),
-    mkdir: (p, opts) => realMkdir(redirectPath(p), opts),
-  }
-});
-
-// Import handler AFTER mocking
-const { execute } = await import('../handler.js');
 
 // ===========================================================================
 // Parameter validation - unknown action
