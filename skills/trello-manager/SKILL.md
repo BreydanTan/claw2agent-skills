@@ -28,6 +28,12 @@ Supported actions:
 - Does not bypass API rate limits or authentication mechanisms
 - Does not perform operations outside the listed actions
 
+## Execution Model
+
+- This `SKILL.md` is the invocation contract and usage guide.
+- Real execution is implemented in `handler.js` via `execute(params, context)`.
+- Integrations (including OpenClaw wrappers) should route calls to the handler, not re-implement business logic in markdown.
+
 ## Trigger Semantics
 
 **Trigger keywords (invoke this skill when the user says):**
