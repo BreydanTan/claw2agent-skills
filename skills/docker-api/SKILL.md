@@ -1,6 +1,6 @@
 ---
 name: docker-api
-description: Interact with the Docker Engine API to list/inspect/start/stop containers, list images, fetch container logs, and retrieve container resource stats. Layer 1 skill using provider client for API access. HIGH RISK: includes command whitelisting for container exec.
+description: "Interact with the Docker Engine API to list/inspect/start/stop containers, list images, fetch container logs, and retrieve container resource stats. Layer 1 skill using provider client for API access. HIGH RISK: includes command whitelisting for container exec."
 user-invocable: true
 metadata: {"openclaw.category":"development-devops","openclaw.risk":"L2","openclaw.layer":"L1","openclaw.tags":"docker, containers, devops, api, images, logs","openclaw.requires":{"env":["DOCKER_API_API_KEY"]}}
 ---

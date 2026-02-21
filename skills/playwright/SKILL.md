@@ -1,6 +1,6 @@
 ---
 name: playwright
-description: Browser automation via provider client. Navigate pages, take screenshots, extract text and links, fill forms, and evaluate JavaScript snippets. Layer 1 skill using provider client for browser access. HIGH RISK: URL allowlist enforced, no arbitrary code execution.
+description: "Browser automation via provider client. Navigate pages, take screenshots, extract text and links, fill forms, and evaluate JavaScript snippets. Layer 1 skill using provider client for browser access. HIGH RISK: URL allowlist enforced, no arbitrary code execution."
 user-invocable: true
 metadata: {"openclaw.category":"automation-integration","openclaw.risk":"L1","openclaw.layer":"L1","openclaw.tags":"playwright, browser, automation, scraping, testing, web","openclaw.requires":{"env":["PLAYWRIGHT_API_KEY"]}}
 ---

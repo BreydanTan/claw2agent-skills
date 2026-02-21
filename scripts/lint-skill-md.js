@@ -54,6 +54,13 @@ function lintSkillMd(slug, content) {
   if (fm.description && fm.description.length < MIN_DESCRIPTION_LENGTH) {
     errors.push(`description too short (${fm.description.length} chars, min ${MIN_DESCRIPTION_LENGTH})`);
   }
+  const descLineMatch = content.match(/^description:\s*(.+)$/m);
+  if (descLineMatch) {
+    const rawDesc = descLineMatch[1].trim();
+    if (rawDesc.includes(': ') && !(rawDesc.startsWith('"') || rawDesc.startsWith("'"))) {
+      errors.push('description must be quoted when containing ":" to keep YAML frontmatter valid');
+    }
+  }
 
   // user-invocable must be boolean string
   if (fm['user-invocable'] && !['true', 'false'].includes(fm['user-invocable'])) {

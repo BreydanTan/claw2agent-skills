@@ -1,6 +1,6 @@
 ---
 name: x-twitter-api
-description: Interact with the X/Twitter API: fetch tweets, search, get user profiles, timelines, post tweets, trending topics, and tweet likes. Layer 1 skill using provider client for API access.
+description: "Interact with the X/Twitter API: fetch tweets, search, get user profiles, timelines, post tweets, trending topics, and tweet likes. Layer 1 skill using provider client for API access."
 user-invocable: true
 metadata: {"openclaw.category":"social","openclaw.risk":"L1","openclaw.layer":"L1","openclaw.tags":"twitter, x, social, api, tweets, timeline","openclaw.requires":{"env":["X_TWITTER_API_API_KEY"]}}
 ---

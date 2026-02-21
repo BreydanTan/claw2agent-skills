@@ -127,9 +127,12 @@ function genSkillMd(slug, sj, actions) {
     ? `- Request timeout enforced: default 30s, max 120s\n- Raw API error stacks are never exposed to the user`
     : `- Does not access the network or write to persistent storage (unless by design)`;
 
-  return `---
+  // Quote description to keep YAML frontmatter valid even when it contains ":".
+  const quotedDesc = JSON.stringify(desc);
+
+return `---
 name: ${slug}
-description: ${desc}
+description: ${quotedDesc}
 user-invocable: true
 metadata: ${metadataJson}
 ---
